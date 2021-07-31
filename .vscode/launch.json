@@ -5,32 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "g++.exe build and debug active file",
+            "name": "g++.exe - 활성 파일 빌드 및 디버그",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "C:/MinGW/bin",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb",
+            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
             "setupCommands": [
                 {
-                    "description": "Enable pretty-printing for gdb",
+                    "description": "gdb에 자동 서식 지정 사용",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
-        },
-        {
-            "name": "Python: Current File (integrated)",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
-            "stopOnEntry": true
+            ],
+            "preLaunchTask": "C/C++: g++.exe 활성 파일 빌드"
         }
     ]
 }
