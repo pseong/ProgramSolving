@@ -10,17 +10,16 @@ int main() {
     int n, k;
     cin >> n >> k;
 
-    int dp[210][210]{{ 0 }};
-    dp[1][n] = 1;
-    for(int i = 2; i <= k; i++)
-        for(int j = 0; j <= n; j++)
-            if(dp[i - 1][j])
-                for(int z = 0; z <= j; z++)
-                    dp[i][z] = (dp[i][z] + dp[i - 1][j]) % 1000000000;
-
-    int result = 0;
-    for(int i = 0; i <= n; i++) {
-        result = (result + dp[k][i]) % 1000000000;
+    int dp[201][201]{ 0 };
+    dp[0][0] = 1;
+    for(int i = 1; i <= k; i++) {
+        for(int j=0; j<=n; j++) {
+            for(int l=0; l<=j; l++) {
+                dp[i][j] += dp[i-1][j-l];
+                dp[i][j] %= 1000000000; 
+            }
+        }
     }
-    cout << result;
+
+    cout << dp[k][n];
 }
