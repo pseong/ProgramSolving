@@ -11,20 +11,14 @@ int main() {
     int cnt = 1;
     int n;
     cin >> n;
-    int i = 10;
-    while(1) {
-        if(n-(i-1) >= 0) {
-            ans += cnt * (i*0.9);
+    for(int start=1; start<=n; start*=10) {
+        int end = start*10-1;
+        if(end > n) {
+            end = n;
         }
-        else {
-            i *= 0.1;
-            i--;
-            int temp = n - i;
-            ans += cnt * temp;
-            break;
-        }
-        i *= 10;
+        ans += (end-start+1)*cnt;
         cnt++;
     }
     cout << ans;
+    
 }
