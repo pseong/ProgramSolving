@@ -9,19 +9,22 @@ int L, C;
 char a[20];
 vector<char> ans;
 
-void func(int start, int l, int moum, int jaum) {
-    if(l < 1 && moum >= 1 && jaum >= 2) {
-        for(char c : ans) {
-            cout << c;
+void func(int index, int moum, int jaum) {
+    if(ans.size() == L) {
+        if(moum >= 1 && jaum >= 2) {
+            for(char c : ans) {
+                cout << c;
+            }
+            cout << '\n';
+            return;
         }
-        cout << '\n';
         return;
     }
-    for(int i=start; i<=C; i++) {
-        ans.push_back(a[i]);
-        func(i+1, l-1, moum + is_moum[i], jaum + !is_moum[i]);
-        ans.pop_back();
-    }
+    if(index > C) return;
+    ans.push_back(a[index]);
+    func(index+1, moum + is_moum[index], jaum + !is_moum[index]);
+    ans.pop_back();
+    func(index+1, moum, jaum);
 }
 
 int main() {
@@ -40,5 +43,5 @@ int main() {
             is_moum[i] = 1;
         }
     }
-    func(1, L, false, 0);
+    func(1, 0, 0);
 }
