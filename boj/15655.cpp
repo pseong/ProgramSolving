@@ -20,7 +20,7 @@ void func(int start, int M) {
         show();
         return;
     }
-    for(int i=start+1; i<=n; i++) {
+    for(int i=1; i<=n; i++) {
         v.push_back(i);
         func(i, M-1);
         v.pop_back();
