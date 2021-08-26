@@ -22,6 +22,6 @@ int main() {
             cout << i << ' ';
         }
     } else {
-        cout << -1;\
+        cout << -1;
     }
 }
