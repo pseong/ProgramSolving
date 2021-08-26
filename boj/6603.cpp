@@ -4,44 +4,36 @@
 
 using namespace std;
 
-bool is_moum[20]{0};
-int L, C;
-char a[20];
-vector<char> ans;
-
-void func(int index, int moum, int jaum) {
-    if(ans.size() == L) {
-        if(moum >= 1 && jaum >= 2) {
-            for(char c : ans) {
-                cout << c;
-            }
-            cout << '\n';
-            return;
-        }
-        return;
-    }
-    if(index > C) return;
-    ans.push_back(a[index]);
-    func(index+1, moum + is_moum[index], jaum + !is_moum[index]);
-    ans.pop_back();
-    func(index+1, moum, jaum);
-}
-
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); 
     cout.tie(0);
 
-    cin >> L >> C;
-    
-    for(int i=1; i<=C; i++) {
-        cin >> a[i];
-    }
-    sort(a+1, a+C+1);
-    for(int i=1; i<=C; i++) {
-        if(a[i] == 'a' || a[i] == 'e' || a[i] == 'i' || a[i] == 'o' || a[i] == 'u') {
-            is_moum[i] = 1;
+    while(true) {
+        int n;
+        cin >> n;
+        if(n==0) break;
+        
+        vector<int> v;
+        for(int i=0; i<n; i++) {
+            if(i>=0 && i<=5) {
+                v.push_back(0);
+            } else {
+                v.push_back(1);
+            }
         }
+
+        int a[50]{0};
+        for(int i=0; i<n; i++) {
+            cin >> a[i];
+        }
+
+        do {
+            for(int i=0; i<n; i++) {
+                if(!v[i]) cout << a[i] << ' ';
+            }
+            cout << '\n';
+        } while(next_permutation(v.begin(), v.end()));
+        cout << '\n';
     }
-    func(1, 0, 0);
 }
