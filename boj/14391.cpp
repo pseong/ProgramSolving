@@ -35,11 +35,11 @@ int main() {
                     sum += a[j][k];
                     conti++;
                 } else {
-                    if(conti != 1) res += sum;
+                    res += sum;
                     sum = 0;
                 }
             }
-            if(conti != 1) res += sum;
+            res += sum;
         }
         for(int j=0; j<m; j++) {
             int sum=0;
