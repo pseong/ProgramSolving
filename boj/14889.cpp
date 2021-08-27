@@ -18,10 +18,6 @@ void func(int index) {
             for(int j=i+1; j<n/2; j++) {
                 a += s[one[i]][one[j]];
                 a += s[one[j]][one[i]];
-            }
-        }
-        for(int i=0; i<n/2; i++) {
-            for(int j=i+1; j<n/2; j++) {
                 b += s[two[i]][two[j]];
                 b += s[two[j]][two[i]];
             }
