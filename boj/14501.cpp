@@ -14,11 +14,7 @@ void func(int now, int money) {
         if(ans<money) ans = money;
         return;
     }
-    if(now+t[now] > n+1) {
-        if(ans<money) ans = money;
-        if(now < n+1) {
-            func(now+1, money);
-        }
+    if(now > n+1) {
         return;
     }
     func(now+t[now], money+p[now]);
