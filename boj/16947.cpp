@@ -8,15 +8,6 @@ vector<int> v[3001];
 int visit[3001]{0};
 int dist[3001]{0};
 
-//visit
-//0 : 방문하지 않은 노드
-//1 : 방문했지만 사이클이 아닌 노드
-//2 : 방문했지만 사이클인 노드
-
-//res
-//1~n : 사이클 시작 노드
-//0 : 사이클 못찾음
-//-1 : 사이클을 찾았지만, 포함하지 않음
 int dfs(int node, int pre) {
     for (int vert : v[node]) {
         if(vert==pre) continue;
