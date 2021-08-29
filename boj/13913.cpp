@@ -1,6 +1,6 @@
 #include <iostream>
 #include <queue>
-#include <algorithm>
+#include <stack>
 
 using namespace std;
 
@@ -43,15 +43,15 @@ int main() {
         }
     }
     cout << dist[k] << '\n';
-    vector<int> route;
-    route.push_back(k);
+    stack<int> route;
+    route.push(k);
     int r=k;
     while(r!=n) {
         r = pre[r];
-        route.push_back(r);
+        route.push(r);
     }
-    reverse(route.begin(), route.end());
-    for(int v : route) {
-        cout << v << ' ';
+    while(!route.empty()) {
+        cout << route.top() << ' ';
+        route.pop();
     }
 }
