@@ -5,8 +5,8 @@
 
 using namespace std;
 
-vector<int> v[150000]; //정점 그래프
-int visit[150000]{0}; //visit[x] : x노드의 깊이 + 1 (0은 방문하지 않음으로 처리하기 위해 +1 추가)
+vector<int> v[150000];
+int visit[150000]{0};
 int input[150000]{0};
 int order[150000]{0};
 
@@ -32,7 +32,7 @@ int main() {
         order[input[i]] = i;
     }
 
-    for(int i=0; i<n; i++) {
+    for(int i=1; i<=n; i++) {
         sort(v[i].begin(), v[i].end(), func);
     }
 
