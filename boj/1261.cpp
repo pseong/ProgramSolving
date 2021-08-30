@@ -9,26 +9,9 @@ int dx[4]{-1, 0, 0, 1};
 int dy[4]{0, -1, 1, 0};
 
 char miro[101][101]{0};
-int visit[101][101]{0};
-queue<pair<int, int>> bfs;
+int dist[101][101]{0};
+deque<pair<int, int>> bfs;
 int m, n;
-
-bool link(int x, int y) {
-    bfs.push({x, y});
-    if(x==n && y==m) {
-        return true;
-    }
-    for(int i=0; i<4; i++) {
-        int a=x+dx[i];
-        int b=y+dy[i];
-        if(a<1 || a>n || b<1 || b>m ||
-            miro[a][b]=='1' ||
-            visit[a][b]) continue;
-        visit[a][b] = 1;
-        if(link(a, b)) return true;
-    }
-    return false;
-}
 
 int main() {
     ios::sync_with_stdio(0); 
@@ -36,30 +19,31 @@ int main() {
     cout.tie(0);
 
     cin >> m >> n;
-
     for(int i=1; i<=n; i++) {
         for(int j=1; j<=m; j++) {
             cin >> miro[i][j];
         }
     }
 
-    memset(visit,0,sizeof(visit));
-    visit[1][1]=1;
-    int ans=0;
-    for(ans=0; !link(1, 1); ans++) {
-        memset(visit,0,sizeof(visit));
-        visit[1][1]=1;
-        while(!bfs.empty()) {
-            int x, y;
-            tie(x, y) = bfs.front();
-            bfs.pop();
-            for(int j=0; j<4; j++) {
-                int a=x+dx[j];
-                int b=y+dy[j];
-                if(a<1 || a>n || b<1 || b>m) continue;
-                miro[a][b]='0';
+    memset(dist,-1,sizeof(dist));
+    bfs.push_back({1,1});
+    dist[1][1]=0;
+    while(!bfs.empty()) {
+        int x, y;
+        tie(x, y) = bfs.front();
+        bfs.pop_front();
+        for(int j=0; j<4; j++) {
+            int a=x+dx[j];
+            int b=y+dy[j];
+            if(a<1 || a>n || b<1 || b>m || dist[a][b] != -1) continue;
+            if(miro[a][b]=='1') {
+                dist[a][b] = dist[x][y]+1;
+                bfs.push_back({a, b});
+            } else {
+                dist[a][b] = dist[x][y];
+                bfs.push_front({a, b});
             }
         }
     }
-    cout << ans;
+    cout << dist[n][m];
 }
