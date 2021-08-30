@@ -22,7 +22,7 @@ void func(int M) {
     }
     for(int i=1; i<=n; i++) {
         v.push_back(i);
-        func(i, M-1);
+        func(M-1);
         v.pop_back();
     }
 }
