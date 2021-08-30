@@ -15,7 +15,7 @@ void show() {
     cout << '\n';
 }
 
-void func(int start, int M) {
+void func(int M) {
     if(M < 1) {
         show();
         return;
@@ -37,5 +37,5 @@ int main() {
         cin >> a[i];
     }
     sort(a+1, a+n+1);
-    func(0, m);
+    func(m);
 }
