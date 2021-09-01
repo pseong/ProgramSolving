@@ -53,11 +53,6 @@ int main() {
         }
     }
     func(0);
-    cout << '\n';
-    cout << '\n';
-    cout << '\n';
-    cout << '\n';
-    cout << '\n';
     for(int i=0; i<9; i++) {
         for(int j=0; j<9; j++) {
             cout << map[i][j] << ' ';
