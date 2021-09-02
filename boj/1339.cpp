@@ -7,10 +7,9 @@ using namespace std;
 string inputs[10];
 int n;
 int check[30]{0};
-
 int key[10]{0};
-
 int ans=0;
+
 void calc() {
     int sol=0;
     for(int i=0; i<n; i++) {
@@ -49,9 +48,10 @@ int main() {
     }
 
     vector<int> v;
-    for(int i=0; i<10; i++) {
+    for(int i=9; i>9-cnt;i--) {
         v.push_back(i);
     }
+    sort(v.begin(), v.end());
     do {
         for(int i=0; i<cnt; i++) {
             key[i] = v[i];
