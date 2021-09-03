@@ -1,11 +1,14 @@
 #include <iostream>
+
 using namespace std;
+
 int n, m;
 char a[15][15]{0};
 bool visit[15][15][15][15]{0}; //red -> blue
 int dx[4]{-1, 1, 0, 0};
 int dy[4]{0, 0, -1, 1};
 int ans=-1;
+
 void func(int cnt, int red_x, int red_y, int blue_x, int blue_y) {
     if(cnt>10) return;
     for(int i=0; i<4; i++) {
@@ -13,6 +16,7 @@ void func(int cnt, int red_x, int red_y, int blue_x, int blue_y) {
         int red_b=red_y;
         int blue_a=blue_x;
         int blue_b=blue_y;
+
         bool fail=false;
         bool finish=false;
         while(true) {
@@ -64,6 +68,7 @@ void func(int cnt, int red_x, int red_y, int blue_x, int blue_y) {
         visit[red_a][red_b][blue_a][blue_b] = 0;
     }
 }
+
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); 
