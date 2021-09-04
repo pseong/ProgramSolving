@@ -26,6 +26,16 @@ int main() {
         }
     }
 
+    for(int i=1; i<=n-1; i++) {
+        int go=i+1;
+        int back=i;
+        while(go<=n && back>=1 && an[go]==an[back]) {
+            pal[back][go] = 1;
+            go++;
+            back--;
+        }
+    }
+
     int m;
     cin >> m;
     for(int i=0; i<m; i++) {
