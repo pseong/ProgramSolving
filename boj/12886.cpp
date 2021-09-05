@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int visit[1000][1000]{0};
+int visit[1500][1500]{0};
 
 int main() {
     ios::sync_with_stdio(0); 
