@@ -39,7 +39,7 @@ int main() {
             int cnt2=cnt;
             if(x<1||x>n||y<1||y>m) continue;
             if(visit[cnt2][(mv+1)%2][x][y]) continue;
-            if(an[x][y]=='1') {
+            if(d!=4&&an[x][y]=='1') {
                 if(cnt2>=k||mv%2==0) continue;
                 cnt2++;
             }
