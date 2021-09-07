@@ -50,10 +50,10 @@ int main() {
             int i=x+dx[d];
             int j=y+dy[d];
             if(i<1||i>8||j<1||j>8) continue;
-            if(visit[cnt][i][j]) continue;
+            if(d!=8 && visit[cnt][i][j]) continue;
             if(cnt<=8 && wall[cnt][i][j]=='#') continue;
             if(cnt<=7 && wall[cnt+1][i][j]=='#') continue;
-            if(d!=8) visit[cnt][i][j] = 1;
+            visit[cnt][i][j] = 1;
             bfs.push({i, j, cnt+1});
         }
     }
