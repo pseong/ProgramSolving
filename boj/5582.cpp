@@ -3,7 +3,7 @@
 #include <stack>
 
 using namespace std;
-int dp[1001][1001]{0};
+int dp[4001][4001]{0};
 
 int main() {
     ios::sync_with_stdio(0); 
