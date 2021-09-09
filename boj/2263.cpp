@@ -1,9 +1,9 @@
 #include <iostream>
 
 int n;
-int inorder[100000]{0};
-int postorder[100000]{0};
-int index[100000]{0};
+int inorder[100001]{0};
+int postorder[100001]{0};
+int index[100001]{0};
 
 using namespace std;
 
