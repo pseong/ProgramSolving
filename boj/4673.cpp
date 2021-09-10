@@ -15,8 +15,8 @@ bool ans[10050]{0};
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
-    
-    for(int i=100; i<=10000; i++) {
+
+    for(int i=1; i<=10000; i++) {
         ans[d(i)] = true;
     }
     for(int i=1; i<=10000; i++) {
