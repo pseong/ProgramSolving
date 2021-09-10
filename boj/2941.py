@@ -1,10 +1,5 @@
+a = ["c=","c-","dz=", "d-","lj","nj","s=","z="]
 st = input()
-st = st.replace("c=", "1")
-st = st.replace("c-", "2")
-st = st.replace("dz=", "3")
-st = st.replace("d-", "4")
-st = st.replace("lj", "5")
-st = st.replace("nj", "6")
-st = st.replace("s=", "7")
-st = st.replace("z=", "8")
+for ch in a:
+    st = st.replace(ch,"1")
 print(len(st))
