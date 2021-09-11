@@ -13,7 +13,9 @@
         "vector": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "iosfwd": "cpp",
+        "*.tcc": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
