@@ -8,7 +8,7 @@ int main() {
 
     long long n;
     cin >> n;
-    long long k=1;
+    long long k=0;
     while(true) {
         if(n<3L*k*(k+1)+2L) {
             break;
