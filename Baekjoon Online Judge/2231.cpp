@@ -18,9 +18,6 @@ int main() {
     int n;
     cin >> n;
     for(int i=1;i<=696933;i++) {
-        if(i==696933) {
-            cout << "goood::::::" << d(i) << '\n';
-        }
         if(!ans[d(i)]) ans[d(i)] = i;
         else {
             if(ans[d(i)] > i) ans[d(i)] = i;
