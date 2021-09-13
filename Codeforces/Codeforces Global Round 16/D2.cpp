@@ -18,9 +18,9 @@ int main() {
 
     int t;
     cin >> t;
-    int s[301]{0};
+    int s[500]{0};
 
-    int seat[301]{0};
+    int seat[500]{0};
     vector<pair<int, int>> v;
     while(t--) {
         int n, m;
@@ -30,7 +30,7 @@ int main() {
             cin >> a;
             v.push_back({a, i});
         }
-        sort(v.begin(), v.end(), func);
+        sort(v.begin(), v.end());
         for(int i=0; i<n; i++) {
             sort(v.begin()+i*m, v.begin()+(i+1)*m, func);
         }
