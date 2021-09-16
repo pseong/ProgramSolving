@@ -19,7 +19,6 @@ int main() {
     int an[150]{0};
     int n;
     cin >> n;
-    int g=-1; //최대 공약수
     for(int i=0; i<n; i++) {
         cin >> an[i];
     }
