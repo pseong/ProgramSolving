@@ -1,22 +1,27 @@
-#include <bits/stdc++.h>
+#include <iostream>
 
 using namespace std;
 
-void Hanoi(int n, int from, int by, int to) {
-    if(n == 1) cout << from << ' ' << to << '\n';
+void f2(int n, int from, int to, int by) {
+    if(n==1) cout << from << ' ' << to << '\n';
     else {
-        Hanoi(n - 1, from, to, by);
+        f2(n-1, from, by, to);
         cout << from << ' ' << to << '\n';
-        Hanoi(n - 1, by, from, to);
+        f2(n-1, by, to, from);
     }
+}
+
+int f(int n, int from, int to, int by) {
+    if(n==1) return 1;
+    return f(n-1, from, by, to)+1+f(n-1, by, from, to);
 }
 
 int main() {
     ios::sync_with_stdio(0);
-    cin.tie(0);
+    cin.tie(0); cout.tie(0);
 
     int n;
     cin >> n;
-    cout << (1 << n) - 1 << '\n';
-    Hanoi(n, 1, 2, 3);
+    cout << f(n, 1, 3, 2) << '\n';
+    f2(n, 1, 3, 2);
 }
