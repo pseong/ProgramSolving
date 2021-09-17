@@ -18,8 +18,8 @@ void f(int x1, int y1, int x2,  int y2) {
     if(one) ans[a]++;
     else {
         int gap=(x2-x1+1)/3;
-        for(int i=x1; i<=x2-gap+1; i+=gap) {
-            for(int j=y1; j<=y2-gap+1; j+=gap) {
+        for(int i=x1; i<=x2; i+=gap) {
+            for(int j=y1; j<=y2; j+=gap) {
                 f(i,j,i+gap-1,j+gap-1);
             }
         }
