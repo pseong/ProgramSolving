@@ -14,33 +14,18 @@ int main() {
     while(n--) {
         int a;
         cin >> a;
-        if(mx.empty()) {
+        if(mx.size()<mn.size()+1) {
             mx.push(a);
-        } else if(mn.empty()) {
-            if(mx.top()<=a) mn.push(-a);
-            else {
-                mn.push(-mx.top());
-                mx.pop();
-                mx.push(a);
-            }
         } else {
-            int mx_t=mx.top();
-            int mn_t=-mn.top();
-            if(a<=mx_t) {
-                mx.push(a);
-            } 
-            else if(a>=mn_t) {
-                mn.push(-a);
-            } 
-            else mn.push(-a);
-            if(mn.size() > mx.size()) {
-                mx.push(-mn.top());
-                mn.pop();
-            }
-            else if(mn.size()+1 < mx.size()) {
-                mn.push(-mx.top());
-                mx.pop();
-            }
+            mn.push(-a);
+        }
+        if(!mn.empty() && mx.top() > -mn.top()) {
+            int c=mx.top();
+            int d=-mn.top();
+            mx.pop();
+            mn.pop();
+            mx.push(d);
+            mn.push(-c);
         }
         int aaa=mx.top();
         cout << mx.top() << '\n';
