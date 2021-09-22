@@ -1,40 +1,37 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
-int dp[50000]{0};
-int an[50000]{0};
+int dp[31][15001]{0};
 
 int main() {
-    ios::sync_with_stdio(0); 
+    ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
     int n;
     cin >> n;
+    dp[0][0] = 1;
     for(int i=1; i<=n; i++) {
         int a;
         cin >> a;
-        vector<int> add;
-        for(int j=1; j<=15000; j++) {
-            if(dp[j]) {
-                if(abs(j-a)>=1 && abs(j-a)<=15000) {
-                    add.push_back(abs(j-a));
-                }
+        for(int j=0; j<=15000; j++) {
+            if(dp[i-1][j]) {
+                dp[i][j] = dp[i-1][j];
                 if(j+a<=15000) {
-                    add.push_back(j+a);
+                    dp[i][j+a] = 1;
+                }
+                if(abs(j-a)>0 && abs(j-a)<=15000) {
+                    dp[i][abs(j-a)] = 1;
                 }
             }
         }
-        for(int d : add) dp[d] = 1;
-        dp[a] = 1;
     }
     int m;
     cin >> m;
     for(int i=0; i<m; i++) {
         int a;
         cin >> a;
-
-        cout << ((dp[a]) ? 'Y' : 'N') << ' ';
+        if(a>15000) cout << "N ";
+        else cout << ((dp[n][a]) ? 'Y' : 'N') << ' ';
     }
 }
