@@ -22,7 +22,7 @@ int main() {
         vert[u].push_back({v, w});
     }
 
-    int ans[20000]{0};
+    int ans[20001]{0};
     memset(ans, -1, sizeof(ans));
     priority_queue<pair<int, int>> bfs;
     bfs.push({0, start});
