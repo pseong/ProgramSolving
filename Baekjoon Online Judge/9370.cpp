@@ -4,39 +4,37 @@
 #include <cstring>
 #include <tuple>
 #include <algorithm>
-#include <fstream>
 
 using namespace std;
 
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
-    ifstream fin("C:\\Users\\pkseo\\Downloads\\D.in");
     int T;
-    fin >> T;
+    cin >> T;
     while(T--) {
         int n, m, t;
-        fin >> n >> m >> t;
+        cin >> n >> m >> t;
         int s, g, h;
-        fin >> s >> g >> h;
+        cin >> s >> g >> h;
         vector<pair<int, int>> vert[2001];
         int r=0;
         for(int i=0; i<m; i++) {
             int u, v, w;
-            fin >> u >> v >> w;
+            cin >> u >> v >> w;
             if((u==g&&v==h) || (u==h&&v==g)) r=w;
             vert[u].push_back({v, w});
             vert[v].push_back({u, w});
         }
         int tn[101]{0};
         for(int i=0; i<t; i++) {
-            fin >> tn[i];
+            cin >> tn[i];
         }
         int start[3]{0};
         start[0] = s;
         start[1] = g;
         start[2] = h;
-        int ans[3][801]{0};
+        int ans[3][2001]{0};
         memset(ans[0], -1, sizeof(ans[0]));
         memset(ans[1], -1, sizeof(ans[1]));
         memset(ans[2], -1, sizeof(ans[2]));
