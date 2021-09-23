@@ -39,6 +39,10 @@ int main() {
             for(auto a : vert[v]) {
                 if(ans[v]+a.second<ans[a.first]) {
                     ans[a.first] = ans[v]+a.second;
+                    if(cnt==n-1) {
+                        cout << -1;
+                        return 0;
+                    }
                 }
                 if(!visit[a.first]) {
                     bfs.push(a.first);
@@ -47,24 +51,6 @@ int main() {
             }
         }
         memset(visit,0,sizeof(visit));
-    }
-
-    bfs.push(1);
-    visit[1] = 1;
-    while(!bfs.empty()) {
-        int v=bfs.front();
-        bfs.pop();
-        for(auto a : vert[v]) {
-            if(ans[v]+a.second<ans[a.first]) {
-                ans[a.first] = ans[v]+a.second;
-                cout << -1;
-                return 0;
-            }
-            if(!visit[a.first]) {
-                bfs.push(a.first);
-                visit[a.first] = 1;
-            }
-        }
     }
 
     for(int i=2; i<=n; i++) {
