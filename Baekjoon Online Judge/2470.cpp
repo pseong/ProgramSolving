@@ -17,7 +17,7 @@ int main() {
     int left=0;
     int right=n-1;
     long long ans[2]{0};
-    long long gap=1000000000;
+    long long gap=100000000000000;
     while(left<right) {
         if(abs(an[left]+an[right])<gap) {
             ans[0] = an[left];
