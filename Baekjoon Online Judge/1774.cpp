@@ -40,7 +40,7 @@ int main() {
     for(int i=1; i<=n; i++) {
         parent[i] = i;
     }
-    pair<double, double> an[110];
+    pair<double, double> an[1010];
     for(int i=1; i<=n; i++) {
         double a, b;
         cin >> a >> b;
