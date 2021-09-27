@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<int> v[10010];
+vector<int> v[1000010];
 int dp[1000010][2]{0};
 
 void dfs(int node, int pre) {
