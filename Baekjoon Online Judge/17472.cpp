@@ -48,10 +48,11 @@ int main() {
     }
     int dx[]{-1, 1, 0, 0};
     int dy[]{0, 0, -1, 1};
-    int mark=1;
+    int mark=0;
     for(int i=1; i<=n; i++) {
         for(int j=1; j<=m; j++) {
             if(an[i][j]==-1) {
+                mark++;
                 queue<pair<int, int>> bfs;
                 bfs.push({i, j});
                 an[i][j] = mark;
@@ -68,11 +69,9 @@ int main() {
                         bfs.push({u, v});
                     }
                 }
-                mark++;
             }
         }
     }
-    mark--;
     vector<tuple<int, int, int>> edges;
     for(int i=1; i<=n; i++) {
         int pre=-1;
@@ -116,9 +115,6 @@ int main() {
         ans += c;
         cnt++;
     }
-    if(cnt!=mark-1) {
-        cout << -1;
-    } else {
-        cout << ans;
-    }
+    if(cnt!=mark-1) cout << -1;
+    else cout << ans;
 }
