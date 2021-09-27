@@ -50,10 +50,10 @@ int main() {
     sort(an_y.begin(), an_y.end());
     sort(an_z.begin(), an_z.end());
     vector<tuple<int, int, int>> edges;
-    for(int i=0; i<an_x.size(); i++) {
-        edges.push_back({abs(an_x[i+1].first - an_x[i].first), an_x[i].second, an_x[i+1].second});
-        edges.push_back({abs(an_y[i+1].first - an_y[i].first), an_y[i].second, an_y[i+1].second});
-        edges.push_back({abs(an_z[i+1].first - an_z[i].first), an_z[i].second, an_z[i+1].second});
+    for(int i=1; i<an_x.size(); i++) {
+        edges.push_back({abs(an_x[i-1].first - an_x[i].first), an_x[i].second, an_x[i-1].second});
+        edges.push_back({abs(an_y[i-1].first - an_y[i].first), an_y[i].second, an_y[i-1].second});
+        edges.push_back({abs(an_z[i-1].first - an_z[i].first), an_z[i].second, an_z[i-1].second});
     }
     sort(edges.begin(), edges.end());
     int cnt=0;
