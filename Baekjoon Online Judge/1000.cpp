@@ -1,4 +1,11 @@
 #include <iostream>
+#include <iomanip>
+#include <algorithm>
+#include <cstring>
+#include <tuple>
+
+typedef long long ll;
+typedef long double ld;
 
 using namespace std;
 
