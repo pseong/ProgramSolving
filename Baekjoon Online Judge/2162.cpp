@@ -15,7 +15,7 @@ int getParent(int i) {
     return parent[i] = getParent(parent[i]);
 }
 
-int unionParent(int a, int b) {
+void unionParent(int a, int b) {
     a = getParent(a);
     b = getParent(b);
     if(a<b) {
