@@ -74,9 +74,9 @@ int main() {
                         cout << 0;
                     } else {
                         cout << 1 << '\n';
-                        if(p2.se==p3.se && p2.fi==p3.fi) {
+                        if(p2.se==p3.se) {
                             cout << p2.fi << ' ' << p2.se;
-                        } else if(p1.se==p4.se && p1.fi==p4.fi) {
+                        } else if(p1.se==p4.se) {
                             cout << p1.fi << ' ' << p1.se;
                         }
                     }
