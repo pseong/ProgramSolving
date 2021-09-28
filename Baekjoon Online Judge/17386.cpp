@@ -7,7 +7,9 @@ typedef long long ll;
 ll ccw(ll x1, ll y1, ll x2, ll y2, ll x3, ll y3) {
     ll a=x1*y2+x2*y3+x3*y1;
     ll b=x2*y1+x3*y2+x1*y3;
-    return a-b;
+    if(a-b>0) return 1;
+    else if(a-b<0) return -1;
+    else return 0;
 }
 
 int main() {
@@ -25,8 +27,8 @@ int main() {
     res2 = ccw(x1, y1, x2, y2, a2, b2);
     res3 = ccw(a1, b1, a2, b2, x1, y1);
     res4 = ccw(a1, b1, a2, b2, x2, y2);
-    if(res1>0&&res2<0||res1>0&&res2<0) {
-        if(res3>0&&res4<0||res3<0&&res4>0) {
+    if(res1*res2<=0) {
+        if(res3*res4<=0) {
             cout << 1;
         } else {
             cout << 0;
