@@ -17,7 +17,7 @@ using ld = long double;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
 
-int table[1010]{0};
+int table[1000010]{0};
 string parent="";
 int len;
 
