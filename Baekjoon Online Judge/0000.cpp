@@ -8,9 +8,11 @@
 #include <queue>
 #include <tuple>
 
-typedef long long ll;
-typedef long double ld;
 using namespace std;
+using ll = long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
 
 int main() {
     ios::sync_with_stdio(0); 
