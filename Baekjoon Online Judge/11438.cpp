@@ -17,11 +17,11 @@ using ld = long double;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
 
-int depth[1010]{0};
-int parent[1010][20]{0};
-int p_cost_min[1010][20]{0};
-int p_cost_max[1010][20]{0};
-vector<pii> v[1000];
+int depth[100010]{0};
+int parent[100010][20]{0};
+int p_cost_min[100010][20]{0};
+int p_cost_max[100010][20]{0};
+vector<pii> v[100010];
 void dfs(int node, int d, int pre) {
     depth[node] = d;
     for(auto i : v[node]) {
