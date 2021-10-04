@@ -25,8 +25,8 @@ int main() {
 
     int tc;
     cin >> tc;
-    vector<pii> v[600];
     while(tc--) {
+        vector<pii> v[600];
         int n, m, w;
         cin >> n >> m >> w;
         for(int i=0; i<m; i++) {
