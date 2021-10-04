@@ -43,7 +43,7 @@ int main() {
             }
             st.push(s[i]);
         } else if(s[i]=='*'||s[i]=='/') {
-            while(!st.empty() && (st.top()=='*'||st.top()=='/')) {
+            if(!st.empty() && (st.top()=='*'||st.top()=='/')) {
                 cout << st.top();
                 st.pop();
             }
