@@ -8,6 +8,7 @@
 #include <stack>
 #include <queue>
 #include <tuple>
+#include <list>
 #include <map>
 #include <set>
 
