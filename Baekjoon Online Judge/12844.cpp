@@ -20,7 +20,7 @@ using pll = pair<long long, long long>;
 using tiii = tuple<int, int, int>;
 using tlll = tuple<long long, long long, long long>;
 
-const int N = 1000;
+const int N = 1000000;
 int an[N+1]{0};
 ll st[4*N]{0};
 ll lz[4*N]{0};
