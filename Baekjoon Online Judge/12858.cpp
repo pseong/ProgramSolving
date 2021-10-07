@@ -27,8 +27,6 @@ ll st[4*N];
 ll st2[4*N];
 
 ll gcd(ll a, ll b) {
-    if(a==0) return abs(b);
-    if(b==0) return abs(a);
     return __gcd(abs(a), abs(b));
 }
 
