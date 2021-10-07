@@ -21,14 +21,14 @@ using tiii = tuple<int, int, int>;
 using tlll = tuple<long long, long long, long long>;
 
 const int N = 1000000;
-int an[N + 1];
-ll st[4 * N];
-ll lz[4 * N];
+int an[N+1];
+ll st[4*N];
+ll lz[4*N];
 
 ll init(int i, int l, int r) {
     if (l==r) return st[i] = an[l];
     int m=l+r>>1;
-    return st[i] = init(i*2, l, m) + init(i*2+1, m+1, r);
+    return st[i] = init(i*2, l, m)+init(i*2+1, m+1, r);
 }
 
 void propagation(int i, int l, int r) {
@@ -58,7 +58,7 @@ ll query(int i, int l, int r, int s, int e) {
     propagation(i, l, r);
     if (e<l || r<s) return 0;
     if (s<=l && r<=e) return st[i];
-    int m = l + r >> 1;
+    int m=l+r>>1;
     return query(i*2, l, m, s, e)+query(i*2+1, m+1, r, s, e);
 }
 
