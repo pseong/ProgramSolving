@@ -1,38 +1,61 @@
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
+#include <string>
+#include <cstring>
+#include <cmath>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <tuple>
+#include <list>
+#include <map>
+#include <set>
 
 using namespace std;
+using ll = long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
+using tiii = tuple<int, int, int>;
+using tlll = tuple<long long, long long, long long>;
 
-int an[100010]{0};
-int seg[300000]{0};
+const int N = 1000000;
+ll an[N+1];
+pll st[4*N];
 int n;
 
-int init(int node, int s, int e) {
-    if (s==e) return seg[node] = s;
-    int mid=(s+e)/2;
-    int a=init(2*node, s, mid);
-    int b=init(2*node+1, mid+1, e);
-    if(an[a]>=an[b]) swap(a, b);
-    return seg[node] = a;
+pll init(int i, int l, int r) {
+    if (l==r) {
+        st[i].first = an[l];
+        st[i].second = l;
+        return st[i];
+    }
+    int m=l+r>>1;
+    pll ret[2];
+    ret[0] = init(i*2, l, m);
+    ret[1] = init(i*2+1, m+1, r);
+    sort(ret, ret+2);
+    return st[i] = ret[0];
 }
 
-int query(int node, int  s, int e, int l, int r) {
-    if (e<l || r<s) return 0;
-    if (l<=s && e<=r) return seg[node];
-    int mid = (s + e) / 2;
-    int a=query(2*node, s, mid, l, r);
-    int b=query(2*node+1, mid+1, e, l, r);
-    if(an[a]>=an[b]) swap(a, b);
-    return a; 
+pll query(int i, int l, int r, int s, int e) {
+    if (e<l || r<s) return {2000000000, -1};
+    if (s<=l && r<=e) return st[i];
+    int m=l+r>>1;
+    pll ret[2];
+    ret[0] = query(i*2, l, m, s, e);
+    ret[1] = query(i*2+1, m+1, r, s, e);
+    sort(ret, ret+2);
+    return ret[0];
 }
 
-long long go(int l, int r) {
-    if(r-l<0) return 0;
-    if(r-l==0) return an[l];
-    int mid=query(1, 1, n, l, r);
-    long long res=(long long)an[mid]*(r-l+1);
-    if(l<=mid-1) res=max(res, go(l, mid-1));
-    if(r>=mid+1) res=max(res, go(mid+1, r));
+ll go(int l, int r) {
+    if(l>r) return 0;
+    int m=query(1, 1, n, l, r).second;
+    ll res=an[m]*(r-l+1);
+    res = max(res, go(l, m-1));
+    res = max(res, go(m+1, r));
     return res;
 }
 
@@ -40,14 +63,14 @@ int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
 
-    an[0] = 2000000000;
     while(true) {
         cin >> n;
         if(n==0) break;
         for(int i=1; i<=n; i++) {
             cin >> an[i];
         }
-        init(1,1,n);
+        init(1, 1, n);
+
         cout << go(1, n) << '\n';
     }
 }
