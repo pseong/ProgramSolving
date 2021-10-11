@@ -16,6 +16,7 @@ using namespace std;
 using ll = long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pdd = pair<double, double>;
 using pll = pair<long long, long long>;
 using tiii = tuple<int, int, int>;
 using tlll = tuple<long long, long long, long long>;
