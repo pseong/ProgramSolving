@@ -1,25 +1,10 @@
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <string>
-#include <cstring>
-#include <cmath>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <tuple>
-#include <list>
-#include <map>
-#include <set>
-
+#include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
-using ld = long double;
-using pii = pair<int, int>;
-using pdd = pair<double, double>;
-using pll = pair<long long, long long>;
-using tiii = tuple<int, int, int>;
-using tlll = tuple<long long, long long, long long>;
+typedef long long ll;
+typedef pair<ll,ll> pii;
+#define pb push_back
+#define F first
+#define S second
 
 int main() {
     ios::sync_with_stdio(0); 
