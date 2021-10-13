@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -22,49 +21,36 @@ using pll = pair<long long, long long>;
 using tiii = tuple<int, int, int>;
 using tlll = tuple<long long, long long, long long>;
  
-set<ll> v[400010];
+int gcd(int a, int b) {
+    a = abs(a);
+    b = abs(b);
+    return __gcd(a, b);
+}
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
  
-    ll t;
+    int t;
     cin >> t;
     while(t--) {
-        ll n, k;
-        cin >> n >> k;
-        for(ll i=0; i<n-1; i++) {
-            ll a, b;
-            cin >> a >> b;
-            v[a].insert(b);
-            v[b].insert(a);
+        int n;
+        cin >> n;
+        int an[50]{0};
+        for(int i=0; i<n; i++) {
+            cin >> an[i];
         }
  
-        vector<ll> leaf;
-        for(ll i=1; i<=n; i++) {
-            if(v[i].size()==1) {
-                leaf.push_back(i);
-            }
+        int an2[50]{0};
+        for(int i=1; i<n; i++) {
+            an2[i-1] = an[i]-an[i-1];
         }
  
-        ll ans=n;
-        vector<ll> leaf2;
-        for(ll i=0; i<k; i++) {
-            if(ans<=2) ans = 0;
-            else {
-                for(ll c : leaf) {
-                    ans--;
-                    ll opp=*v[c].begin();
-                    v[opp].erase(c);
-                    if(v[opp].size()==1) leaf2.push_back(opp);
-                }
-                leaf = leaf2;
-                leaf2.clear();
-            }
+        int ans=0;
+        for(int i=0; i<n-1; i++) {
+            ans = gcd(ans, an2[i]);
+            //cout << an2[i] << '\n';
         }
-        cout << ans << '\n';
- 
-        for(int i=1; i<=n; i++) {
-            v[i].clear();
-        }
+        if(ans==0) cout << -1 << '\n';
+        else cout << ans << '\n';
     }
 }
