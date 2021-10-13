@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-typedef pair<int,int> pii;
-typedef pair<ll,ll> pll;
+using ll=long long;
+using pii=pair<int,int>;
+using pll=pair<ll,ll>;
 #define pb push_back
 #define F first
 #define S second
