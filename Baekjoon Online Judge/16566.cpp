@@ -21,7 +21,7 @@ using pll = pair<long long, long long>;
 using tiii = tuple<int, int, int>;
 using tlll = tuple<long long, long long, long long>;
 
-int n, m, k, am[4010], ak[10010], parent[4010];
+int n, m, k, am[4000010], ak[10010], parent[4000010];
 
 int getParent(int a) {
     if(parent[a]==a) return a;
