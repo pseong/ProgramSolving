@@ -65,6 +65,7 @@ int main() {
                     }
                 }
                 if(nnew) ans++;
+                mark++;
             }
         }
     }
