@@ -58,23 +58,6 @@ int main() {
             else an[i][j] = b;
         }
     }
-    /*
-    for(int i=0; i<n*5; i++) {
-        for(int j=0; j<n*5; j++) {
-            cout << an[i][j] << ' ';
-        }
-        cout << '\n';
-    }
-    cout << '\n';
-    cout << '\n';
-    cout << '\n';*/
-
-    vector<vector<ll>> ab=pow(an, t);/*
-    for(int i=0; i<n*5; i++) {
-        for(int j=0; j<n*5; j++) {
-            cout << ab[i][j] << ' ';
-        }
-        cout << '\n';
-    }*/
+    vector<vector<ll>> ab=pow(an, t);
     cout << ab[s*5-1][e*5-1];
 }
