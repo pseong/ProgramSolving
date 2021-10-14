@@ -7,8 +7,8 @@ using pll=pair<ll,ll>;
 #define F first
 #define S second
 
-int n, depth[510], parent[510][20];
-vector<int> v[510];
+int n, depth[510000], parent[510000][20];
+vector<int> v[510000];
 
 void dfs(int node, int par, int d) {
     for(int i : v[node]) {
