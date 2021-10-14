@@ -41,7 +41,7 @@ vector<vector<ll>> pow(vector<vector<ll>>& arr, int r) {
         for(int i=0; i<8; i++) {
             for(int j=0; j<8; j++) {
                 for(int k=0; k<8; k++) {
-                    ret[i][j] += an[i][k]*b[j][k];
+                    ret[i][j] += an[i][k]*b[k][j];
                     ret[i][j] %= 1000000007;
                 }
             }
@@ -53,7 +53,7 @@ vector<vector<ll>> pow(vector<vector<ll>>& arr, int r) {
         for(int i=0; i<8; i++) {
             for(int j=0; j<8; j++) {
                 for(int k=0; k<8; k++) {
-                    ret[i][j] += a[i][k]*a[j][k];
+                    ret[i][j] += a[i][k]*a[k][j];
                     ret[i][j] %= 1000000007;
                 }
             }
