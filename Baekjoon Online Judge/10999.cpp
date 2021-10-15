@@ -1,24 +1,11 @@
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <string>
-#include <cstring>
-#include <cmath>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <tuple>
-#include <list>
-#include <map>
-#include <set>
-
+#include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
-using ld = long double;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
-using tiii = tuple<int, int, int>;
-using tlll = tuple<long long, long long, long long>;
+using ll=long long;
+using pii=pair<int,int>;
+using pll=pair<ll,ll>;
+#define pb push_back
+#define F first
+#define S second
 
 const int N = 1000000;
 int an[N+1];
