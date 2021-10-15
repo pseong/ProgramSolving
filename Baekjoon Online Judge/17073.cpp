@@ -8,7 +8,7 @@ using pll=pair<ll,ll>;
 
 vector<int> v[500010];
 int leaf=0;
-int dfs(int node, int par) {
+void dfs(int node, int par) {
     bool is_leaf=true;
     for(int i : v[node]) {
         if(i==par) continue;
