@@ -10,8 +10,9 @@ int n, r;
 vector<pii> v[200010];
 int ans1=-1;
 int ans2=-1;
+int ans3=-1;
 
-int dfs2(int node, int par, int dist) {
+void dfs2(int node, int par, int dist) {
     for(auto a : v[node]) {
         if(a.first==par) continue;
         ans2 = max(ans2, dist+a.second);
@@ -19,7 +20,7 @@ int dfs2(int node, int par, int dist) {
     }
 }
 
-int dfs(int node, int par, int dist) {
+void dfs(int node, int par, int dist) {
     int cnt=0;
     for(auto a : v[node]) {
         if(a.first==par) continue;
@@ -32,6 +33,7 @@ int dfs(int node, int par, int dist) {
     else {
         for(auto a : v[node]) {
             if(a.first==par) continue;
+            ans3 = max(ans3, dist+a.second);
             dfs(a.first, node, dist+a.second);
         }
     }
@@ -49,5 +51,6 @@ int main() {
         v[b].push_back({a, c});
     }
     dfs(r, 0, 0);
-    cout << ans1 << ' ' << ans2;
+    if(ans1==-1) ans1 = ans3;
+    cout << ans1 << ' ' << max(ans2, 0);
 }
