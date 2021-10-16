@@ -18,7 +18,7 @@ ll init(int node, int s, int e) {
     return st[node] = init(node*2, s, m)+init(node*2+1, m+1, e);
 }
 
-ll propagation(int node, int l, int r) {
+void propagation(int node, int l, int r) {
     if(lz[node]) {
         st[node] += (r-l+1)*lz[node];
         if(l!=r) {
@@ -33,12 +33,13 @@ ll query(int node, int l, int r, int s, int e) {
     propagation(node, l, r);
     if(e<l||s>r) return 0;
     if(s<=l&&e>=r) return st[node];
-    int m=r+l>>1;
+    int m=l+r>>1;
     return query(node*2, l, m, s, e)+query(node*2+1, m+1, r, s, e);
 }
 
 ll update(int node, int l, int r, int s, int e, int x) {
     propagation(node, l, r);
+    if(e<l||r<s) return st[node];
     if(s<=l&&e>=r) {
         lz[node] += x;
         propagation(node, l, r);
