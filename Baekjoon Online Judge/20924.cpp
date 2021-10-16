@@ -52,5 +52,5 @@ int main() {
     }
     dfs(r, 0, 0);
     if(ans1==-1) ans1 = ans3;
-    cout << ans1 << ' ' << max(ans2, 0);
+    cout << max(ans1, 0) << ' ' << max(ans2, 0);
 }
