@@ -6,7 +6,7 @@ using pll=pair<ll,ll>;
 #define F first
 #define S second
 
-const int N=500;
+const int N=500000;
 ll an[N+1];
 ll st[N*4];
 ll lz[N*4];
