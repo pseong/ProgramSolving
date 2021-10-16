@@ -8,7 +8,7 @@ using pll=pair<ll,ll>;
 
 vector<int> v[500010];
 int sum=0;
-int dfs(int node, int par, int depth) {
+void dfs(int node, int par, int depth) {
     int cnt=v[node].size()-1;
     if(node==1) cnt++;
     if(cnt==0) sum += depth;
