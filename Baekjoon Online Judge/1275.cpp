@@ -44,6 +44,7 @@ int main() {
     for(int i=0; i<m; i++) {
         int a, b, c, d;
         cin >> a >> b >> c >> d;
+        if(a>b) swap(a, b);
         cout << query(1, 1, n, a, b) << '\n';
         update(1, 1, n, c, d);
     }
