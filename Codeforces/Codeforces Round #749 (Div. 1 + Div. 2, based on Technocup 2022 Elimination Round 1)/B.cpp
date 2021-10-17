@@ -17,12 +17,12 @@ int main() {
     while(T--) {
         int n, m;
         cin >> n >> m;
+        memset(node, 0, sizeof(node));
         for(int i=0; i<m; i++) {
             int a, b, c;
             cin >> a >> b >> c;
             node[b] = 1;
         }
-        memset(node, 0, sizeof(node));
         int ans=0;
         for(int i=1; i<=n; i++) {
             if(node[i]==0) {
