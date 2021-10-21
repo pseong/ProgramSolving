@@ -8,14 +8,10 @@ using pll=pair<ll,ll>;
 
 int n;
 string s;
-map<char, int> x;
-char x2[]{'B', 'R'};
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
 
-    x['B'] = 0;
-    x['R'] = 1;
     int T;
     cin >> T;
     while(T--) {
@@ -25,26 +21,23 @@ int main() {
             if(s[i]!='?') {
                 int go=i;
                 fin = true;
-                int base=x[s[go]];
                 while(go-1>=0 && s[go-1]=='?') {
-                    base ^= 1;
-                    s[go-1] = x2[base];
+                    s[go-1] = s[go]^('B'^'R');
                     go--;
                 }
                 go = i;
-                base=x[s[go]];
                 while(go+1<n && s[go+1]=='?') {
-                    base ^= 1;
-                    s[go+1] = x2[base];
+                    s[go+1] = s[go]^('B'^'R');
                     go++;
                 }
             }
         }
         if(!fin) {
-            int base=0;
-            for(int i=0; i<n; i++) {
-                cout << x2[base];
-                base ^= 1;
+            s[0] = 'B';
+            cout << 'B';
+            for(int i=1; i<n; i++) {
+                s[i] = s[i-1]^('B'^'R');
+                cout << s[i];
             }
         }
         else cout << s;
