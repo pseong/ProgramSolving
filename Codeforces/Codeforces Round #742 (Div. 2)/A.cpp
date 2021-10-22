@@ -21,9 +21,6 @@ int main() {
             if(s[i]=='U') {
                 ans.push_back('D');
             }
-            else if(s[i]=='D') {
-                ans.push_back('U');
-            }
             else {
                 ans.push_back(s[i]);
             }
