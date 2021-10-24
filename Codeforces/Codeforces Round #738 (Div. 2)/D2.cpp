@@ -67,17 +67,14 @@ int main() {
     }
 
     vector<pii> ans;
+    vector<int> one;
+    vector<int> two;
     for(int i=2; i<=n; i++) {
         if((!findParent(i, 1)) && (!findParent2(i, 1))) {
             unionParent(i, 1);
             unionParent2(i, 1);
             ans.push_back({i, 1});
         }
-    }
-
-    vector<int> one;
-    vector<int> two;
-    for(int i=1; i<=n; i++) {
         if(getParent(i)!=1) {
             one.push_back(i);
         }
@@ -85,12 +82,13 @@ int main() {
             two.push_back(i);
         }
     }
+    
     while(!one.empty() && !two.empty()) {
-        if(getParent(one.back())==1 && getParent2(one.back())==1) {
+        if(getParent(one.back())==1) {
             one.pop_back();
             continue;
         }
-        if(getParent(two.back())==1 && getParent2(two.back())==1) {
+        if(getParent2(two.back())==1) {
             two.pop_back();
             continue;
         }
