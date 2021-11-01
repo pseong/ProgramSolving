@@ -8,8 +8,8 @@ using pll=pair<ll,ll>;
 
 const int N=1000*2;
 int n, m, a, b, not_a, not_b, id, d[N+10], scc_id=1, sd[N+10], ans[N/2+5];
+bool res;
 vector<int> v[N+10];
-vector<pii> order;
 stack<int> st;
 
 int dfs(int x) {
@@ -40,7 +40,6 @@ int main() {
         memset(d, 0, sizeof(d));
         memset(sd, 0, sizeof(sd));
         id=0; scc_id=1;
-        order.clear();
         for(int i=1; i<n*2+5; i++) {
             v[i].clear();
         }
@@ -77,27 +76,11 @@ int main() {
             }
         }
         if(bk) continue;
-        for(int i=2; i<=n*2+1; i++) {
-            order.push_back({sd[i], i});
-        }
-        sort(order.begin(), order.end(), greater<pii>());
-        memset(ans, -1, sizeof(ans));
-        for(auto at : order) {
-            int x=at.S/2;
-            if(ans[x]!=-1) {
-                if(at.F%2==0) {
-                    ans[x] = 0;
-                }
-                else {
-                    ans[x] = 1;
-                }
-            }
-        }
-        if(ans[1]) {
-            cout << "yes\n";
+        if(sd[2]>sd[3]) {
+            cout << "no\n";
         }
         else {
-            cout << "no\n";
+            cout << "yes\n";
         }
     }
 }
