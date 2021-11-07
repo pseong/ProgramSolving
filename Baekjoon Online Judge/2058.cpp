@@ -8,14 +8,14 @@ using pll=pair<ll,ll>;
 
 const int N=1000000;
 ll n, m, a, visitt[N+10], proton[N+10];
-vector<int> poss, start;
+vector<int> poss;
 vector<int> v[N+10];
 
 pll dfs(int x) {
+    if(visitt[x]) return {0, 0};
+    visitt[x] = 1;
     pll sum{0, x};
     for(int y : v[x]) {
-        if(visitt[y]) continue;
-        visitt[x] = 1;
         pll ret = dfs(y);
         sum.F += max(ret.S, ret.F);
         sum.S += ret.F;
@@ -44,14 +44,12 @@ int main() {
             }
         }
     }
-    for(int i=0; i<poss.size(); i++) {
-        if(proton[poss[i]]) {
-            v[0].push_back(poss[i]);
-            v[poss[i]].push_back(0);
+    ll ans=0;
+    for(int i=0; i<n; i++) {
+        if(!visitt[poss[i]]) {
+            pll ret=dfs(poss[i]);
+            ans += max(ret.F, ret.S);
         }
     }
-
-    visitt[0] = 1;
-    pll ans=dfs(0);
-    cout << ans.F;
+    cout << ans;
 }
