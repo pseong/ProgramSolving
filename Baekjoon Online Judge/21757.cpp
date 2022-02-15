@@ -28,14 +28,14 @@ int main() {
     ll sum = prefix_sum[n] / 4;
     ans[0] = 1;
     for (int a=1; a<n; a++) {
-        if (prefix_sum[a] == sum) {
-            ans[1] += ans[0];
+        if (prefix_sum[a] == sum*3) {
+            ans[3] += ans[2];
         }
-        else if (prefix_sum[a] == sum * 2) {
+        if (prefix_sum[a] == sum*2) {
             ans[2] += ans[1];
         }
-        else if (prefix_sum[a] == sum * 3) {
-            ans[3] += ans[2];
+        if (prefix_sum[a] == sum) {
+            ans[1] += ans[0];
         }
     }
     cout << ans[3];
