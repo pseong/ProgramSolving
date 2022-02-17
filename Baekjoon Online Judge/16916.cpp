@@ -44,8 +44,14 @@ int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
 
-    cin >> s >> p;
-    table.resize(p.size(), 0);
+    string str;
+    cin >> str >> p;
+    table.resize(p.size());
+    for (char c : str) {
+        if (c>='a' && c<='z' || c>='A' && c<='Z') {
+            s.push_back(c);
+        }
+    }
     makeTable();
     cout << (KMP() ? 1 : 0);
 }
