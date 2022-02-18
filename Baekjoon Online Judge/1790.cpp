@@ -30,7 +30,7 @@ int main() {
     }
     int lo = 1;
     int hi = n;
-    int mid = (lo + hi) / 2;
+    int ans = 0;
     while (lo < hi) {
         int mid = (lo + hi) / 2;
         ll cal = calc(mid);
@@ -38,11 +38,12 @@ int main() {
             lo = mid + 1;
         }
         else {
-            hi = mid;
+            ans = mid;
+            hi = mid-1;
         }
     }
-    ll cal = calc(lo);
-    string s = to_string(lo);
+    ll cal = calc(ans);
+    string s = to_string(ans);
     cout << s[s.length()-(cal-k)-1];
     return 0;
 }
