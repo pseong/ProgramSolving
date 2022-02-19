@@ -31,7 +31,7 @@ int main() {
     int lo = 1;
     int hi = n;
     int ans = 0;
-    while (lo < hi) {
+    while (lo <= hi) {
         int mid = (lo + hi) / 2;
         ll cal = calc(mid);
         if (cal < k) {
