@@ -25,7 +25,7 @@ int main() {
         int a, b;
         cin >> a >> b;
         int idx1 = lower_bound(ns.begin(), ns.end(), a) - ns.begin();
-        int idx2 = upper_bound(ns.begin(), ns.end(), b) - ns.begin() - 1;
-        cout << idx2 - idx1 + 1 << '\n';
+        int idx2 = upper_bound(ns.begin(), ns.end(), b) - ns.begin();
+        cout << idx2 - idx1 << '\n';
     }
 }
