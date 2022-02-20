@@ -1,60 +1,50 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <cstring>
-#include <tuple>
-#include <algorithm>
-
-typedef long long ll;
+#include <bits/stdc++.h>
 using namespace std;
+using ll=long long;
+using pii=pair<int,int>;
+using pll=pair<ll,ll>;
+#define F first
+#define S second
 
-vector<pair<int, int>> vert[501];
-queue<int> bfs;
+vector<tuple<int, int, int>> edge;
+int n, m;
+ll dist[510];
+const int inf = 1000000000;
 
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
 
-    int n, m;
     cin >> n >> m;
-    for(int i=1; i<=m; i++) {
+    for (int i=0; i<m; i++) {
         int a, b, c;
         cin >> a >> b >> c;
-        vert[a].push_back({b, c});
+        edge.push_back({a, b, c});
     }
 
-    ll ans[501]{0};
-    for(int i=1; i<=n; i++) {
-        ans[i] = 1000000000;
-    }
-    ans[1] = 0;
+    fill(dist, dist+n+1, inf);
 
-    int visit[501]{0};
-    for(int cnt=0; cnt<n; cnt++) {
-        bfs.push(1);
-        visit[1] = 1;
-        while(!bfs.empty()) {
-            int v=bfs.front();
-            bfs.pop();
-            for(auto a : vert[v]) {
-                if(ans[v]+a.second<ans[a.first]) {
-                    ans[a.first] = ans[v]+a.second;
-                    if(cnt==n-1) {
-                        cout << -1;
-                        return 0;
-                    }
-                }
-                if(!visit[a.first]) {
-                    bfs.push(a.first);
-                    visit[a.first] = 1;
-                }
+    bool cycle = false;
+    dist[1] = 0;
+    for (int i=1; i<=n; i++) {
+        for (int j=0; j<edge.size(); j++) {
+            int from, to, cost;
+            tie(from, to, cost) = edge[j];
+            if (dist[from] != inf && dist[to] > dist[from] + cost) {
+                dist[to] = dist[from] + cost;
+                if (i==n) cycle = true;
             }
         }
-        memset(visit,0,sizeof(visit));
     }
 
-    for(int i=2; i<=n; i++) {
-        if(ans[i]==1000000000) cout << -1 << '\n';
-        else cout << ans[i] << '\n';
+    if (cycle) {
+        cout << -1 << '\n';
     }
+    else {
+        for (int i=2; i<=n; i++) {
+            if (dist[i] == inf) dist[i] = -1;
+            cout << dist[i] << '\n';
+        }
+    }
+    return 0;
 }

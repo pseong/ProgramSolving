@@ -16,10 +16,7 @@ int main() {
 
     cin >> n;
     for (int i=0; i<n; i++) {
-        cin >> a[i];
-        cin >> b[i];
-        cin >> c[i];
-        cin >> d[i];
+        cin >> a[i] >> b[i] >> c[i] >> d[i];
     }
 
     v.resize(n*n);
