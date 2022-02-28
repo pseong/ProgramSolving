@@ -8,9 +8,9 @@ using pll=pair<ll,ll>;
 
 const ll inf = 500000000000000LL;
 
-int r, n, score[210];
-vector<int> v[210];
-ll a[210], b[210], c[210];
+int r, n, score[200010];
+vector<int> v[200010];
+ll a[200010], b[200010], c[200010];
 
 void dfs(int x) {
 
