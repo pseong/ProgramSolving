@@ -1,66 +1,62 @@
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <string>
-#include <cstring>
-#include <cmath>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <tuple>
-#include <list>
-#include <map>
-#include <set>
+#include <bits/stdc++.h>
+using namespace std;
+using ll=long long;
+using pii=pair<int,int>;
+using pll=pair<ll,ll>;
+#define F first
+#define S second
 
 using namespace std;
-using ll = long long;
-using ld = long double;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
-using tiii = tuple<int, int, int>;
-using tlll = tuple<long long, long long, long long>;
 
-int an[1000010]{0};
-ll st[4000000]{0};
+ll seg[4000010], an[1000010];
 
-ll init(int i, int l, int r) {
-    if (l==r) return st[i] = an[l];
-    int m=l+r>>1;
-    return st[i] = init(i*2, l, m) + init(i*2+1, m+1, r);
+ll init(int node, int s, int e) {
+    if (s==e) {
+        seg[node] = an[s];
+        return seg[node];
+    }
+    int mid = (s + e) / 2;
+    seg[node] = init(node*2, s, mid) + init(node*2+1, mid+1, e);
+    return seg[node];
 }
 
-ll update(int i, int l, int r, int p, ll x) {
-    if (p<l || p>r) return st[i];
-    if (l==r) return st[i] = x;
-    int m=l+r>>1;
-    return st[i] = update(i*2, l, m, p, x)+update(i*2+1, m+1, r, p, x);
+ll query(int node, int s, int e, int l, int r) {
+    if (r < s || e < l) return 0;
+    if (l <= s && e <= r) return seg[node];
+    int mid = (s + e) / 2;
+    return query(node*2, s, mid, l, r) + query(node*2+1, mid+1, e, l, r);
 }
 
-ll query(int i, int l, int r, int s, int e) {
-    if(e<l || r<s) return 0;
-    if(s<=l && r<=e) return st[i];
-    int m=l+r>>1;
-    return query(i*2, l, m, s, e)+query(i*2+1, m+1, r, s, e);
+ll update(int node, int s, int e, int x, ll y) {
+    if (x < s || e < x) return seg[node];
+    if (s == e) return seg[node] = y;
+    int mid = (s + e) / 2;
+    return seg[node] = update(node*2, s, mid, x, y) + update(node*2+1, mid+1, e, x, y);
 }
 
 int main() {
-    ios::sync_with_stdio(0); 
+    ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
-    ll n, m, k;
+    int n, m, k;
     cin >> n >> m >> k;
-    for(int i=1; i<=n; i++) {
+
+    for (int i=1; i<=n; i++) {
         cin >> an[i];
     }
+
     init(1, 1, n);
 
-    for(int i=0; i<m+k; i++) {
-        ll a, b, c;
+    for (int i=0; i<m+k; i++) {
+        int a, b;
+        ll c;
         cin >> a >> b >> c;
-        if(a==1) {
+        if (a==1) {
             update(1, 1, n, b, c);
-        } else {
+        }
+        else if (a==2) {
             cout << query(1, 1, n, b, c) << '\n';
         }
     }
+    return 0;
 }
