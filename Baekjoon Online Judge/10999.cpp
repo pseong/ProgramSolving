@@ -1,12 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll=long long;
-using pii=pair<int,int>;
-using pll=pair<ll,ll>;
-#define F first
-#define S second
-
-using namespace std;
 
 ll seg[4000010], lazy[4000010], an[1000010];
 
