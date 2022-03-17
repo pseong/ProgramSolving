@@ -15,7 +15,7 @@ struct Q {
 
 vector<Q> query;
 int a[101010];
-int cnt[101010];
+int cnt[1010101];
 int ans[101010];
 int res;
 
