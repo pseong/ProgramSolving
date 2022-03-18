@@ -70,5 +70,6 @@
         "typeinfo": "cpp",
         "queue": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }
