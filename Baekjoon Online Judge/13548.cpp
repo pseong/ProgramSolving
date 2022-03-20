@@ -4,30 +4,30 @@ using ll=long long;
 
 int sqrtN;
 struct Q {
-    int idx, i, j;
+    int idx, s, e;
     bool operator < (Q& x) {
-        if (i/sqrtN != x.i/sqrtN) {
-            return i/sqrtN < x.i/sqrtN;
+        if (s/sqrtN != x.s/sqrtN) {
+            return s/sqrtN < x.s/sqrtN;
         }
-        else return j < x.j;
+        else return e < x.e;
     }
 };
 
-vector<Q> query;
+vector<Q> qry;
 int a[101010];
 int cnt[101010];
 int table[101010];
 int ans[101010];
 int res;
 
-void Add(int x) {
+void add(int x) {
     if (cnt[x] != 0) table[cnt[x]]--;
     cnt[x]++;
     table[cnt[x]]++;
     res = max(res, cnt[x]);
 }
 
-void Sub(int x) {
+void sub(int x) {
     table[cnt[x]]--;
     if (cnt[x] == res && !table[cnt[x]]) res--;
     cnt[x]--;
@@ -51,24 +51,27 @@ int main() {
     for (int x=0; x<m; x++) {
         int i, j;
         cin >> i >> j;
-        query.push_back({x, i, j});
+        qry.push_back({x, i, j});
     }
 
-    sort(query.begin(), query.end());
+    sort(qry.begin(), qry.end());
 
-    int s = 0;
-    int e = 0;
-    for (auto q : query) {
-        int idx, i, j;
-        idx = q.idx; i = q.i; j = q.j;
-        while (s < i) Sub(a[s++]);
-        while (s > i) Add(a[--s]);
-        while (e < j) Add(a[++e]);
-        while (e > j) Sub(a[e--]);
-        ans[idx] = res;
+    int s = qry[0].s;
+    int e = qry[0].e;
+    for (int i=s; i<=e; i++) {
+        add(a[i]);
+    }
+    ans[qry[0].idx] = res;
+
+    for (int i=1; i<m; i++) {
+        while (s > qry[i].s) add(a[--s]);
+        while (e < qry[i].e) add(a[++e]);
+        while (s < qry[i].s) sub(a[s++]);
+        while (e > qry[i].e) sub(a[e--]);
+        ans[qry[i].idx] = res;
     }
 
     for (int i=0; i<m; i++) {
         cout << ans[i] << '\n';
     }
-}
+} 
