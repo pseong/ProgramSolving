@@ -14,39 +14,40 @@ struct Q {
 };
 
 vector<Q> qry;
-int a[101010];
-int cnt[101010];
-int table[101010];
-int ans[101010];
-int res;
+int a[303030];
+int cnt[10101];
+pair<int, int> ans[303030];
+int s, e, n, m, c;
 
 void add(int x) {
-    if (cnt[x] != 0) table[cnt[x]]--;
     cnt[x]++;
-    table[cnt[x]]++;
-    res = max(res, cnt[x]);
 }
 
 void sub(int x) {
-    table[cnt[x]]--;
-    if (cnt[x] == res && !table[cnt[x]]) res--;
     cnt[x]--;
-    table[cnt[x]]++;
+}
+
+pair<int, int> cal() {
+    int len = (e-s+1)/2;
+    for (int i=1; i<=10000; i++) {
+        if (cnt[i] > len) {
+            return {1, i};
+        }
+    }
+    return {0, 0};
 }
 
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
 
-    int n;
-    cin >> n;
+    cin >> n >> c;
     sqrtN = sqrt(n);
 
     for (int i=1; i<=n; i++) {
         cin >> a[i];
     }
 
-    int m;
     cin >> m;
     for (int x=0; x<m; x++) {
         int i, j;
@@ -56,22 +57,27 @@ int main() {
 
     sort(qry.begin(), qry.end());
 
-    int s = qry[0].s;
-    int e = qry[0].e;
+    s = qry[0].s;
+    e = qry[0].e;
     for (int i=s; i<=e; i++) {
         add(a[i]);
     }
-    ans[qry[0].idx] = res;
+    ans[qry[0].idx] = cal();
 
     for (int i=1; i<m; i++) {
         while (s > qry[i].s) add(a[--s]);
         while (e < qry[i].e) add(a[++e]);
         while (s < qry[i].s) sub(a[s++]);
         while (e > qry[i].e) sub(a[e--]);
-        ans[qry[i].idx] = res;
+        ans[qry[i].idx] = cal();
     }
 
     for (int i=0; i<m; i++) {
-        cout << ans[i] << '\n';
+        if (ans[i].first == 1) {
+            cout << "yes " << ans[i].second << '\n';
+        }
+        else {
+            cout << "no" << '\n';
+        }
     }
 }
