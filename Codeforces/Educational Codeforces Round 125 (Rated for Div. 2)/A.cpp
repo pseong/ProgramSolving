@@ -14,10 +14,17 @@ int main() {
     while(T--) {
         int a, b;
         cin >> a >> b;
-        if (a==0 && b==0) cout << 0 << '\n';
-        else if ((int)sqrt(a*a+b*b) == sqrt(a*a+b*b)) {
-            cout << 1 << '\n';
+        if (a==0 && b==0) {
+            cout << 0 << '\n';
+            continue;
         }
+        
+        int d = a*a + b*b;
+        bool chk = false;
+        for (int i=1; i<=100; i++) {
+            if (i*i == d) chk = true;
+        }
+        if (chk) cout << 1 << '\n';
         else cout << 2 << '\n';
     }
 }
