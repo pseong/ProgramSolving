@@ -14,21 +14,11 @@ int main() {
     while(T--) {
         int n;
         cin >> n;
-        ll first = 0;
-        ll second = 0;
-        cin >> first >> second;
-        if (second > first) swap(first, second);
-        for (int i=3; i<=n; i++) {
-            int a;
-            cin >> a;
-            if (a > first) {
-                second = first;
-                first = a;
-            }
-            else if (a > second) {
-                second = a;
-            }
+        int an[1010]{ 0 };
+        for (int i=0; i<n; i++) {
+            cin >> an[i];
         }
-        cout << first + second << '\n';
+        sort(an, an+n);
+        cout << an[n-1] + an[n-2] << '\n';
     }
 }

@@ -12,24 +12,17 @@ int main() {
     int T;
     cin >> T;
     while(T--) {
-        int cnt[500];
-        memset(cnt, 0, sizeof cnt);
         string s;
         cin >> s;
-        for (int i=0; i<s.size(); i++) {
-            cnt[s[i]]++;
-        }
-        int cur = 0;
-        while (true) {
-            if (cur<s.size() && cnt[s[cur]] > 1) {
-                cnt[s[cur]]--;
-                cur++;
+        int n = s.size();
+        bool ex[26]{ 0 };
+        int ans = 0;
+        for (int i=n-1; i>=0; i--) {
+            if (!ex[s[i]-'a']) {
+                ans = i;
+                ex[s[i]-'a'] = true;
             }
-            else break;
         }
-        for (int i=cur; i<s.size(); i++) {
-            cout << s[i];
-        }
-        cout << '\n';
+        cout << s.substr(ans) << '\n';
     }
 }

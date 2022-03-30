@@ -35,14 +35,8 @@ int main() {
             }
             ll t = pq.top(); pq.pop();
             if (an[cur] < t) {
-                if (t&1) {
-                    pq.push(t/2);
-                    pq.push(t/2+1);
-                }
-                else {
-                    pq.push(t/2);
-                    pq.push(t/2);
-                }
+                pq.push(t/2);
+                pq.push((t+1)/2);
             }
             else if(an[cur] == t) cur--;
             else {
