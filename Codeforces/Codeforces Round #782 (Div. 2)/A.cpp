@@ -18,22 +18,15 @@ int main() {
         int rest = r % (b+1);
         string ans;
         int cnt = 0;
-        for (int i=0; i<r; i++) {
-            ans.push_back('R');
-            cnt++;
-            if (cnt == get) {
-                cnt = 0;
-                if (rest) {
-                    rest--;
-                    i++;
-                    ans.push_back('R');
-                }
-                if (b) {
-                    ans.push_back('B');
-                    b--;
-                }
+        for (int i=0; i<b; i++) {
+            cout << string(get, 'R');
+            if (rest) {
+                rest--;
+                cout << 'R';
             }
+            cout << 'B';
         }
+        cout << string(get, 'R');
         cout << ans << '\n';
     }
 }

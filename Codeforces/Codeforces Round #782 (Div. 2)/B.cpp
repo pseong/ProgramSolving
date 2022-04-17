@@ -18,84 +18,20 @@ int main() {
         cin >> s;
         vector<int> ans(n, 0);
         string out;
-        int rest = k;
-        int one = 0;
-        int zero = 0;
+        bool b = k&1;
         for (int i=0; i<n; i++) {
-            if (s[i] == '1') {
-                one++;
-            }
-            else {
-                zero++;
-            }
-        }
-        if (k&1) {
-            if (rest >= one) {
-                for (int i=0; i<n; i++) {
-                    if (s[i] == '1') {
-                        rest--;
-                        ans[i]++;
-                    }
-                    out.push_back('1');
-                }
-                ans[n-1] += rest;
-                if (rest % 2) {
-                    out.pop_back();
-                    out.push_back('0');
-                }
-            }
-            else {
-                for (int i=0; i<n; i++) {
-                    if (s[i] == '1') {
-                        if (rest) {
-                            out.push_back('1');
-                            ans[i]++;
-                            rest--;
-                        }
-                        else {
-                            out.push_back('0');
-                        }
-                    }
-                    else {
-                        out.push_back('1');
-                    }
-                }
+            bool a = s[i]-'0';
+            a ^= b;
+            s[i] = a+'0';
+            if (a == 0 && k) {
+                ans[i]++;
+                k--;
+                s[i] = '1';
             }
         }
-        else {
-            if (rest >= zero) {
-                for (int i=0; i<n; i++) {
-                    if (s[i] == '0') {
-                        rest--;
-                        ans[i]++;
-                    }
-                    out.push_back('1');
-                }
-                ans[n-1] += rest;
-                if (rest % 2) {
-                    out.pop_back();
-                    out.push_back('0');
-                }
-            }
-            else {
-                for (int i=0; i<n; i++) {
-                    if (s[i] == '0') {
-                        if (rest) {
-                            out.push_back('1');
-                            ans[i]++;
-                            rest--;
-                        }
-                        else {
-                            out.push_back('0');
-                        }
-                    }
-                    else {
-                        out.push_back('1');
-                    }
-                }
-            }
-        }
-        cout << out << '\n';
+        ans[n-1] += k;
+        if (k&1) s[n-1] = '0'; 
+        cout << s << '\n';
         for (int i=0; i<n; i++) {
             cout << ans[i] << ' ';
         }
