@@ -2,48 +2,68 @@
 using namespace std;
 using ll=long long;
 
-ll seg[4000010], lazy[4000010], an[1000010];
-
-void propagation(int node, int s, int e) {
-    if(lazy[node]) {
-        seg[node] += (e-s+1)*lazy[node];
+struct Lazyseg {
+	//EDIT TYPE
+	typedef long long _T;
+	typedef long long _L;
+    //
+	int n;
+	vector<_T> S;
+	vector<_L> lazy;
+	_T(*op)(_T, _T);
+	_T t;
+	Lazyseg(const vector<_T>& A, _T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
+		S.resize(4*n+10, 0);
+		lazy.resize(4*n+10, 0);
+		init(A, 1, 1, n);
+	}
+	_T init(const vector<_T>& A, int node, int s, int e) {
+		if (s == e) return S[node] = A[s];
+		int mid = (s+e)/2;
+		return S[node] = op(init(A, node*2, s, mid), init(A, node*2+1, mid+1, e));
+	}
+	void propagate(int node, int s, int e) {
+		if (lazy[node] == 0) return;
+        // EDIT HERE
+        S[node] += ((_T)e-s+1)*lazy[node];
         if (s!=e) {
             lazy[node*2] += lazy[node];
             lazy[node*2+1] += lazy[node];
         }
-        lazy[node] = 0;
-    }
-}
+        //
+		lazy[node] = 0;
+	}
+	_T query(int node, int s, int e, int l, int r) {
+        propagate(node, s, e);
+		if (e < l || r < s) return t;
+		if (l <= s && e <= r) return S[node];
+		int mid = (s+e)/2;
+		return op(query(node*2, s, mid, l, r), query(node*2+1, mid+1, e, l, r));
+	}
+	_T query(int l, int r) {
+		return query(1, 1, n, l, r);
+	}
+	void update_range(int node, int s, int e, int l, int r, _L x) {
+        propagate(node, s, e);
+		if (e < l || r < s) return;
+		if (l <= s && e <= r) {
+			// EDIT HERE
+			lazy[node] += x;
+            //
+			propagate(node, s, e);
+			return;
+		}
+		int mid = (s + e) / 2;
+		update_range(node*2, s, mid, l, r, x);
+		update_range(node*2+1, mid+1, e, l, r, x);
+		S[node] = op(S[node*2], S[node*2+1]);
+	}
+	void update_range(int l, int r, _L x) {
+		update_range(1, 1, n, l, r, x);
+	}
+};
 
-ll init(int node, int s, int e) {
-    if (s==e) {
-        seg[node] = an[s];
-        return seg[node];
-    }
-    int mid = (s + e) / 2;
-    seg[node] = init(node*2, s, mid) + init(node*2+1, mid+1, e);
-    return seg[node];
-}
-
-ll query(int node, int s, int e, int l, int r) {
-    propagation(node, s, e);
-    if (r < s || e < l) return 0;
-    if (l <= s && e <= r) return seg[node];
-    int mid = (s + e) / 2;
-    return query(node*2, s, mid, l, r) + query(node*2+1, mid+1, e, l, r);
-}
-
-ll update(int node, int s, int e, int l, int r, ll diff) {
-    propagation(node, s, e);
-    if (r < s || e < l) return seg[node];
-    if (l <= s && e <= r) {
-        lazy[node] += diff;
-        propagation(node, s, e);
-        return seg[node];
-    }
-    int mid = (s + e) / 2;
-    return seg[node] = update(node*2, s, mid, l, r, diff) + update(node*2+1, mid+1, e, l, r, diff);
-}
+ll add(ll a, ll b) { return a+b; };
 
 int main() {
     ios::sync_with_stdio(0);
@@ -52,11 +72,12 @@ int main() {
     int n, m, k;
     cin >> n >> m >> k;
 
+    vector<ll> an(n+1, 0);
     for (int i=1; i<=n; i++) {
         cin >> an[i];
     }
 
-    init(1, 1, n);
+    Lazyseg seg(an, add, n, 0);
 
     for (int i=0; i<m+k; i++) {
         int a;
@@ -65,12 +86,12 @@ int main() {
             int b, c;
             ll d;
             cin >> b >> c >> d;
-            update(1, 1, n, b, c, d);
+            seg.update_range(b, c, d);
         }
         else if (a==2) {
             int b, c;
             cin >> b >> c;
-            cout << query(1, 1, n, b, c) << '\n';
+            cout << seg.query(b, c) << '\n';
         }
     }
     return 0;
