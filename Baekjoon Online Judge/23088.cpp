@@ -45,7 +45,7 @@ int main() {
                 end = max(end, pq.top().start) + pq.top().time;
                 pq.pop();
             }
-            end = v[i].start;
+            if (v[i].start > end) end = v[i].start;
         }
     }
 
