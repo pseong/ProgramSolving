@@ -29,7 +29,7 @@ int main() {
             ll H, T;
             tie(H, T) = q.front(); q.pop();
             for (ll i=0; i<=k; i++) {
-                if (H-i < 0 || T-(k-i) < 0 || H-i+k-i < 0 || T+i-k+i < 0) continue;
+                if (H-i < 0 || T-(k-i) < 0) continue;
                 if (dist.find({H-i+k-i, T+i-k+i}) != dist.end()) continue;
                 dist[{H-i+k-i, T+i-k+i}] = cnt;
                 q.push({H-i+k-i, T+i-k+i});
