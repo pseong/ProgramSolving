@@ -21,11 +21,9 @@ int main() {
     for (int i=1; i<=n; i++) {
         v[i] = v[i+n] = in[i]-in[i-1]-2*r;
     }
-
-    int sum = 0;
-    for (int i=1; i<=n; i++) {
-        sum += v[i];
-        if (sum < 0) sum = 0;
+    
+    for (int i=1; i<=n*2; i++) {
+        if (v[i-1] > 0) v[i] += v[i-1];
         ans = max(ans, v[i]);
     }
     cout << (ans+1)/2;
