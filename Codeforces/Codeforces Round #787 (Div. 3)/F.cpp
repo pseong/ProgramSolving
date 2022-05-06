@@ -34,11 +34,6 @@ int main() {
     int T; cin >> T;
     while (T--) {
         cin >> n >> k >> x >> y;
-        for (int i=1; i<=n; i++) {
-            adj[i].clear();
-            must[i] = 0;
-        }
-
         for (int i=0; i<k; i++) {
             int a;
             cin >> a;
@@ -52,5 +47,10 @@ int main() {
         }
 
         cout << dfs(x, 0).first-1 << '\n';
+        
+        for (int i=1; i<=n; i++) {
+            adj[i].clear();
+            must[i] = 0;
+        }
     }
 }
