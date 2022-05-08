@@ -11,6 +11,10 @@ struct Lazyseg {
 	vector<_L> lazy;
 	_T(*op)(_T, _T);
 	_T t;
+	Lazyseg(_T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
+		S.resize(4*n+10, 0);
+		lazy.resize(4*n+10, 0);
+	}
 	Lazyseg(const vector<_T>& A, _T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
 		S.resize(4*n+10, 0);
 		lazy.resize(4*n+10, 0);
