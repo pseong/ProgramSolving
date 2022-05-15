@@ -1,9 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct dsu {
+struct Dsu {
     vector<int> parent;
-    dsu(int n) {
+    Dsu() {};
+    Dsu(int n) {
+        init(n);
+    }
+    void init(int n) {
         parent.resize(n+1);
         for (int i=1; i<=n; i++) {
             parent[i] = i;
