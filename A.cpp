@@ -4,6 +4,7 @@ using ll=long long;
 using pi=pair<int, int>;
 using pll=pair<ll, ll>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+ll exgcd(ll a, ll b, ll &s, ll &t) { if (b == 0) { s = 1; t = 0; return a; } ll gcd = exEuclid(b, a%b, s, t); ll tmp = t; t = s - (a / b)*t; s = tmp; if (s <= 0) { s += b; t -= a; } return gcd; }
 
 int main() {
     ios::sync_with_stdio(false);
