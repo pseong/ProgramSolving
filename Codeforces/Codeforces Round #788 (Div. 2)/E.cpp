@@ -13,7 +13,9 @@ vector<pi> adj[202020];
 int v[202020], e[202020];
 
 void dfs(int x, int p, int d) {
-    for (auto [y, i] : adj[x]) {
+    for (auto at : adj[x]) {
+        int y, i;
+        tie(y, i) = at;
         if (y == p) continue;
         if (d == 1) {
             v[y] = cnt;
