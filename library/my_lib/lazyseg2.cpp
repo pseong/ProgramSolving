@@ -12,7 +12,6 @@ struct Lazyseg {
 	_T op(_T a, _T b) {
 		return { a.sum + b.sum };
 	}
-
     //
 	int n;
 	vector<_T> S;
