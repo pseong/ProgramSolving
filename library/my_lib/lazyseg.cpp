@@ -2,33 +2,40 @@
 using namespace std;
 
 struct Lazyseg {
-	//EDIT TYPE
-	typedef long long _T;
+	// EDIT TYPE
+	typedef struct {
+		long long sum;
+	} _T;
 	typedef long long _L;
+	_T op(_T a, _T b) {
+		return { a.sum + b.sum };
+	}
     //
 	int n;
 	vector<_T> S;
 	vector<_L> lazy;
-	_T(*op)(_T, _T);
 	_T t;
-	Lazyseg(_T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
-		S.resize(4*n+10, 0);
-		lazy.resize(4*n+10, 0);
+	Lazyseg(int n, _T t) : n(n), t(t) {
+		S.resize(4*n+10, {0});
+		lazy.resize(4*n+10, {0});
 	}
-	Lazyseg(const vector<_T>& A, _T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
-		S.resize(4*n+10, 0);
-		lazy.resize(4*n+10, 0);
+	Lazyseg(const vector<long long>& A, int n, _T t) : n(n), t(t) {
+		S.resize(4*n+10, {0});
+		lazy.resize(4*n+10, {0});
 		init(A, 1, 1, n);
 	}
-	_T init(const vector<_T>& A, int node, int s, int e) {
-		if (s == e) return S[node] = A[s];
+	_T init(const vector<long long>& A, int node, int s, int e) {
+		if (s == e) {
+			S[node].sum = A[s];
+			return S[node];
+		}
 		int mid = (s+e)/2;
 		return S[node] = op(init(A, node*2, s, mid), init(A, node*2+1, mid+1, e));
 	}
 	void propagate(int node, int s, int e) {
 		if (lazy[node] == 0) return;
         // EDIT HERE
-        S[node] += ((_T)e-s+1)*lazy[node];
+        S[node].sum += ((long long)e-s+1)*lazy[node];
         if (s!=e) {
             lazy[node*2] += lazy[node];
             lazy[node*2+1] += lazy[node];
