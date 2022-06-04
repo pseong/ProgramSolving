@@ -11,36 +11,24 @@ int main() {
 
     int T; cin >> T;
     while (T--) {
-        int n, k; cin >> n >> k;
-        vector<ll> v(n);
-        ll sum = 0;
-        for (int i=0; i<n; i++) {
+        ll n, k; cin >> n >> k;
+        vector<ll> v(n+1), sum(n+1);
+        for (int i=1; i<=n; i++) {
             cin >> v[i];
-            sum += v[i];
+            sum[i] = sum[i-1] + v[i];
         }
-        if (n == 1) {
-            cout << sum + k - 1 << '\n';
-            continue;
-        }
-        if (k < n) {
+        if (k <= n) {
             ll mx = 0;
-            ll res = 0;
-            int i=0;
-            for (;i<k; i++) res += v[i];
-            mx = max(mx, res);
-            for (int i=k; i<n; i++) {
-                res += v[i];
-                res -= v[i-k];
-                mx = max(mx, res);
+            for (int i=k; i<=n; i++) {
+                mx = max(mx, sum[i] - sum[i-k]);
             }
             cout << mx + (k-1)*k/2 << '\n';
         }
         else {
-            sum += (n-1)*n/2;
-            k -= (n-1);
-            k--;
-            sum += k * n;
-            cout << sum << '\n';
+            ll ans = sum[n];
+            ans += n*(n+1)/2;
+            ans += (k-n-1)*n;
+            cout << ans << '\n';
         }
     }
 }
