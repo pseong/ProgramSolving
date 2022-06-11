@@ -1,9 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll=long long;
-using i128 = __int128_t
+using i128 = __int128_t;
 using pi=pair<int, int>;
 using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
 using vi = vector<int>;
 using vll = vector<ll>;
 using vpi = vector<pi>;
