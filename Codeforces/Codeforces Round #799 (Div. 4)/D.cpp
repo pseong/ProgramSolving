@@ -15,18 +15,9 @@ template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 
 bool is_pal(int min) {
-
-    string HH = to_string(min / 60);
-    string MM = to_string(min % 60);
-
-    if (HH.size() == 1) HH.insert(HH.begin(), '0');
-    if (MM.size() == 1) MM.insert(MM.begin(), '0');
-
-    string one = HH+MM;
-    string two = one;
-    reverse(two.begin(), two.end());
-    
-    if (one == two) return true;
+    int HH = min / 60;
+    int MM = min % 60;
+    if (HH/10 == MM%10 && HH%10 == MM/10) return true;
     else return false;
 }
 

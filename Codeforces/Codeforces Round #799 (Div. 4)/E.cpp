@@ -22,27 +22,26 @@ int main() {
     while (T--) {
         int n, k; cin >> n >> k;
         vi v(n);
-        deque<int> idx;
+        int sum = 0;
         for (int i=0; i<n; i++) {
             cin >> v[i];
-            if (v[i] == 1) idx.push_back(i);
+            sum += v[i];
         }
-        if (idx.size() < k) {
+        if (sum < k) {
             cout << -1 << '\n';
             continue;
         }
-        int l = 0;
-        int r = k-1;
-        int ans = 0;
-        if (r+1 < idx.size()) ans += n-idx[r+1];
-        if (l-1 >= 0) ans += idx[l-1]+1;
-        while (r < idx.size()) {
-            int res = 0;
-            l++;
-            r++;
-            if (r+1 < idx.size()) res += n-idx[r+1];
-            if (l-1 >= 0) res += idx[l-1]+1;
-            ans = min(ans, res);
+        int cnt = 0;
+        int ans = n;
+        for (int l=0, r=-1; l<n; l++) {
+            while (r < n-1 && cnt+v[r+1] <= k) {
+                r++;
+                cnt += v[r];
+            }
+            if (cnt == k) {
+                ans = min(ans, n - (r - l + 1));
+            }
+            cnt -= v[l];
         }
         cout << ans << '\n';
     }

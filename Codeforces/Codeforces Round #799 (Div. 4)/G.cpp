@@ -21,23 +21,21 @@ int main() {
     ll T; cin >> T;
     while (T--) {
         ll n, k; cin >> n >> k;
-        vector<ll> v(n), chk(n-1);
+        vector<ll> v(n);
         for (int i=0; i<n; i++) {
             cin >> v[i];
-        }
-        for (int i=0; i<n-1; i++) {
-            if (v[i] < v[i+1]*2) chk[i] = 1;
         }
         int cnt = 0;
         int ans = 0;
         for (int i=0; i<n-1; i++) {
-            if (chk[i] == 1) cnt++;
+            if (v[i] < v[i+1]*2) {
+                cnt++;
+                ans += (cnt >= k);
+            }
             else {
-                ans += max(0LL, cnt-k+1);
                 cnt = 0;
             }
         }
-        ans += max(0LL, cnt-k+1);
         cout << ans << '\n';
     }
 }
