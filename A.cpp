@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
 using ll=long long;
 using i128 = __int128_t;
@@ -20,7 +21,7 @@ void solve() {
     
 }
 
-int main() {
+signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
