@@ -13,8 +13,8 @@ using vpll = vector<pll>;
 template <class T> using pq = priority_queue<T>;
 template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
-void no() { cout << "NO\n" << '\n'; }
-void yes() { cout << "YES\n" << '\n'; }
+void no() { cout << "NO" << '\n'; }
+void yes() { cout << "YES" << '\n'; }
 
 void solve() {
     
