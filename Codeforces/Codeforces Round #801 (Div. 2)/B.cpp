@@ -21,34 +21,15 @@ void solve() {
         cout << "Mike\n";
         return;
     }
-    int mike_idx = -1;
-    int mike_mn = 1e9+1;
-    for (int i=0; i<n; i+=2) {
-        if (mike_mn > v[i]) {
-            mike_mn = v[i];
-            mike_idx = i;
-        }
+    int pos = 0;
+    for (int i=1; i<n; i++) {
+        if (v[i] < v[pos]) pos = i;
     }
-    int joe_idx = -1;
-    int joe_mn = 1e9+1;
-    for (int i=1; i<n; i+=2) {
-        if (joe_mn > v[i]) {
-            joe_mn = v[i];
-            joe_idx = i;
-        }
-    }
-
-    if (mike_mn < joe_mn) {
+    if (pos%2 == 0) {
         cout << "Joe\n";
     }
-    else if (mike_mn > joe_mn) {
-        cout << "Mike\n";
-    }
     else {
-        if (mike_idx < joe_idx) {
-            cout << "Joe\n";
-        }
-        else cout << "Mike\n";
+        cout << "Mike\n";
     }
 }
 
