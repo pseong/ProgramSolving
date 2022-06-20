@@ -17,19 +17,11 @@ void solve() {
     int n; cin >> n;
     vector<int> v(n);
     for (int i=0; i<n; i++) cin >> v[i];
-    vector<int> val(10);
     int ans = 0;
     for (int i=0; i<n; i++) {
-        val[0] = 1;
-        for (int j=3; j>=0; j--) {
-            val[j+v[i]] = val[j];
-            val[j] = 0;
-        }
-        for (int j=4; j<10; j++) {
-            if (val[j]) {
-                ans++;
-                val[j] = 0;
-            }
+        int x = accumulate(v.begin()+i, v.end(), 0);
+        if (x >= 4) {
+            ans++;
         }
     }
     cout << ans;

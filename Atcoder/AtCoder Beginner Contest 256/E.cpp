@@ -24,11 +24,10 @@ void solve() {
     for (int i=1; i<=n; i++) {
         cin >> c[i];
     }
-
     for (int i=1; i<=n; i++) {
         in[v[i]]++;
     }
-
+    
     queue<int> q;
     for (int i=1; i<=n; i++) {
         if (in[i] == 0) q.push(i);
@@ -39,8 +38,7 @@ void solve() {
         q.pop();
         chk[x] = 1;
         int y = v[x];
-        in[y]--;
-        if (in[y] == 0) {
+        if (--in[y] == 0) {
             q.push(y);
         }
     }
@@ -48,11 +46,10 @@ void solve() {
     for (int i=1; i<=n; i++) {
         if (!chk[i]) {
             int go = i;
-            int mn = -1;
+            int mn = c[go];
             while (!chk[go]) {
                 chk[go] = 1;
-                if (mn == -1) mn = c[go];
-                else mn = min(mn, c[go]);
+                mn = min(mn, c[go]);
                 go = v[go];
             }
             ans += mn;

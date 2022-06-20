@@ -18,21 +18,18 @@ void solve() {
     int h[3], w[3];
     cin >> h[0] >> h[1] >> h[2];
     cin >> w[0] >> w[1] >> w[2];
-    for (int i=1; i<=h[0]; i++) {
-        for (int j=1; j<=h[0]; j++) {
-            if (i+j >= h[0]) continue;
-            int k = h[0] - i - j;
-
-            for (int x=1; x<=h[1]; x++) {
-                for (int y=1; y<=h[1]; y++) {
-                    if (x+y >= h[1]) continue;
-                    int z = h[1] - x - y;
-
-                    int u = w[0]-i-x;
-                    int v = w[1]-j-y;
-                    int m = w[2]-k-z;
-                    if (u < 1 || v < 1 || m < 1 || u + v + m != h[2]) continue;
-                    ans++;
+    for (int a=1; a<30; a++) {
+        for (int b=1; b<30; b++) {
+            for (int d=1; d<30; d++) {
+                for (int e=1; e<30; e++) {
+                    int c = h[0] - a - b;
+                    int f = h[1] - d - e;
+                    int g = w[0] - a - d;
+                    int H = w[1] - b - e;
+                    int i = h[2] - g - H;
+                    if (i == w[2] - c - f) {
+                        ans += (c > 0 && f > 0 && g > 0 && H > 0 && i > 0);
+                    }
                 }
             }
         }
