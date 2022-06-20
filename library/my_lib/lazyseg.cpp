@@ -7,19 +7,17 @@ struct Lazyseg {
 		long long sum;
 	} _T;
 	typedef long long _L;
-	_T op(_T a, _T b) {
-		return { a.sum + b.sum };
-	}
     //
+    _T(*op)(_T, _T);
 	int n;
 	vector<_T> S;
 	vector<_L> lazy;
 	_T t;
-	Lazyseg(int n, _T t) : n(n), t(t) {
+	Lazyseg(_T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
 		S.resize(4*n+10, {0});
 		lazy.resize(4*n+10, {0});
 	}
-	Lazyseg(const vector<long long>& A, int n, _T t) : n(n), t(t) {
+	Lazyseg(_T(*op)(_T, _T), const vector<long long>& A, int n, _T t) : op(op), n(n), t(t) {
 		S.resize(4*n+10, {0});
 		lazy.resize(4*n+10, {0});
 		init(A, 1, 1, n);
@@ -72,3 +70,7 @@ struct Lazyseg {
 		update_range(1, 1, n, l, r, x);
 	}
 };
+
+Lazyseg::_T op(Lazyseg::_T a, Lazyseg::_T b) {
+    return { a.sum + b.sum };
+}
