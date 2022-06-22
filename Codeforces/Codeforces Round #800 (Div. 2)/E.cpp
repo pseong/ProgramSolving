@@ -20,7 +20,7 @@ const int inf = 1000000000;
 void solve() {
     int n, m;
     cin >> n >> m;
-    for (int i=1; i<=m; i++) {
+    for (int i=1; i<=n; i++) {
         dist[i] = m;
     }
     for (int i=1; i<=m; i++) {
