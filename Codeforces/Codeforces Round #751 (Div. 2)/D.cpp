@@ -1,63 +1,75 @@
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
 using ll=long long;
-using pii=pair<int,int>;
-using pll=pair<ll,ll>;
-#define F first
-#define S second
- 
-const int N=300000;
-int n, an[N+10], bn[N+10], visit[N+10], visit2[N+10], trace[N+10];
-int main() {
-    ios::sync_with_stdio(0); 
-    cin.tie(0); cout.tie(0);
- 
-    cin >> n;
-    for(int i=1; i<=n; i++) {
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
+
+void solve() {
+    int n; cin >> n;
+    vector<int> an(n+1), bn(n+1);
+    for (int i=1; i<=n; i++) {
         cin >> an[i];
     }
-    for(int i=1; i<=n; i++) {
+    for (int i=1; i<=n; i++) {
         cin >> bn[i];
     }
-        
-    deque<pii> bfs;
-    bfs.push_back({n, n});
-    visit[n] = 1;
-    trace[n] = n;
-    int finish=false;
-    while(!bfs.empty() && !finish) {
-        int d_x, x;
-        tie (d_x, x) = bfs.front();
-        bfs.pop_front();
-        for(int i=0; i<=an[d_x]; i++) {
-            if(visit2[d_x]) break;
-            int jmp=d_x-i;
-            if(jmp<=0) {
-                trace[0] = x;
-                finish = true;
-                break;
+    
+    vector<int> dchk(n+1);
+    vector<int> uhist(n+1), dhist(n+1);
+    queue<int> q;
+    q.push(n);
+    dchk[n] = 1;
+    uhist[n] = n;
+    dhist[n] = n;
+    int ans = 0;
+    int up = n;
+    while (q.size()) {
+        ans++;
+        for (int i=0; i<q.size(); i++) {
+            int x = q.front(); q.pop();
+            if (x - an[x] <= 0) {
+                uhist[0] = x;
+                goto g;
             }
-            int d_jmp = min(jmp + bn[jmp], n);
-            if(visit[d_jmp]) continue;
-            visit[d_jmp] = true;
-            trace[jmp] = x;
-            bfs.push_back({d_jmp, jmp});
+            for (int j=x-up; j<=an[x]; j++) {
+                if (dchk[x-j+bn[x-j]]) continue;
+                up = min(up, x-j);
+                dchk[x-j+bn[x-j]] = 1;
+                uhist[x-j] = x;
+                dhist[x-j+bn[x-j]] = x-j;
+                q.push(x-j+bn[x-j]);
+            }
         }
-        visit2[d_x] = 1;
     }
-    if(trace[0]==0) {
-        cout << -1;
-        return 0;
-    }
-    int go=0;
+    cout << -1 << '\n';
+    return;
+    g:
     stack<int> st;
-    while(go!=n) {
+    st.push(0);
+    int go = dhist[uhist[0]];
+    while (go != n) {
         st.push(go);
-        go = trace[go];
+        go = dhist[uhist[go]];
     }
     cout << st.size() << '\n';
-    while(!st.empty()) {
+    while (st.size()) {
         cout << st.top() << ' ';
         st.pop();
     }
+}
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    solve();
 }
