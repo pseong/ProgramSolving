@@ -18,26 +18,19 @@ const int inf = 1000000000;
 void solve() {
     int n; cin >> n;
     string s; cin >> s;
-    vector<int> v;
-    for (int i=0; i<n; i++) {
-        if (s[i] == 'a') v.push_back(i);
+    if (s.find("aa") != string::npos) {
+        cout << 2 << '\n';
     }
-    int ans = inf;
-    for (int i=1; i<(int) v.size(); i++) {
-        if (v[i] - v[i-1] == 1) ans = 2LL;
-        else if (v[i] - v[i-1] == 2) ans = min(ans, 3LL);
-        else if (v[i] - v[i-1] == 3) {
-            if (s[v[i-1]+1] != s[v[i]-1]) ans = min(ans, 4LL);
-        }
+    else if (s.find("aba") != string::npos || s.find("aca") != string::npos) {
+        cout << 3 << '\n';
     }
-    for (int i=0; i<n-6; i++) {
-        string str = s.substr(i, 7);
-        if (str == "abbacca" || str == "accabba") {
-            ans = min(ans, 7LL);
-        }
+    else if (s.find("abca") != string::npos || s.find("acba") != string::npos) {
+        cout << 4 << '\n';
     }
-    if (ans == inf) cout << -1 << '\n';
-    else cout << ans << '\n';
+    else if (s.find("abbacca") != string::npos || s.find("accabba") != string::npos) {
+        cout << 7 << '\n';
+    }
+    else cout << -1 << '\n';
 }
 
 signed main() {

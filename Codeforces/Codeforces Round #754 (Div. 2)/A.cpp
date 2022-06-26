@@ -16,10 +16,7 @@ void yes() { cout << "Yes" << '\n'; }
 void solve() {
     int a, b, c;
     cin >> a >> b >> c;
-    int one = a + c;
-    int two = 2 * b;
-    int diff = abs(one - two);
-    cout << min(diff % 3, 1LL) << '\n';
+    cout << min(abs(a+c - 2*b)%3, 1LL) << '\n';
 }
 
 signed main() {
