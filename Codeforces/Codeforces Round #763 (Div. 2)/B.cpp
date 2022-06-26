@@ -22,19 +22,13 @@ void solve() {
         v[i] = { r-l, l, r };
     }
     sort(v.begin(), v.end());
-    vector<int> chk(n+1, 0);
+    vector<int> last(n+1, 0);
     vector<tuple<int, int, int>> ans;
     for (int i=0; i<n; i++) {
         auto [x, l, r] = v[i];
-        for (int j=l; j<=r; j++) {
-            if (chk[j] == 0) {
-                chk[j] = 1;
-                ans.push_back({l, r, j});
-            }
-        }
-    }
-    for (auto [l, r, x] : ans) {
-        cout << l << ' ' << r << ' ' << x << '\n';
+        if (last[l] == 0) cout << l << ' ' << r << ' ' << l << '\n';
+        else cout << l << ' ' << r << ' ' << last[l] + 1 << '\n';
+        last[l] = r;
     }
     cout << '\n';
 }
