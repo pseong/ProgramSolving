@@ -16,22 +16,7 @@ void yes() { cout << "Yes" << '\n'; }
 void solve() {
     int n, m;
     cin >> n >> m;
-    int ans = n/3 * m;
-    for (int i=0; i<n%3; i++) {
-        ans += m/3;
-    }
-    if (n%3 == 1 && m%3 == 1) {
-        cout << ans+1 << '\n';
-    }
-    else if (n%3 == 2 && m%3 == 1 || n%3 == 1 && m%3 == 2) {
-        cout << ans+1 << '\n';
-    }
-    else if (n%3 == 0 || m%3 == 0) {
-        cout << ans << '\n';
-    }
-    else {
-        cout << ans+2 << '\n';
-    }
+    cout << (n*m)/3 + ((n*m)%3 != 0) << '\n';
 }
 
 signed main() {

@@ -22,14 +22,10 @@ void solve() {
     for (int i=0; i<n; i++) {
         cin >> b[i];
     }
-    vector<pi> v;
-    for (int i=0; i<n; i++) {
-        v.push_back({b[i]-1, b[i]});
-    }
     sort(a.begin(), a.end());
-    sort(v.begin(), v.end());
+    sort(b.begin(), b.end());
     for (int i=0; i<n; i++) {
-        if (a[i] < v[i].first || a[i] > v[i].second) {
+        if (a[i] < b[i]-1 || a[i] > b[i]) {
             no();
             return;
         }
