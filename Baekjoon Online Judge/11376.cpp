@@ -16,8 +16,8 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-vector<int> adj[2020];
-int c[2020], d[1010];
+vector<int> adj[1010];
+int c[1010], d[1010];
 
 bool dfs(int x) {
     for (int y : adj[x]) {
@@ -38,11 +38,12 @@ void solve() {
         while (c--) {
             int x; cin >> x;
             adj[i].push_back(x);
-            adj[i+n].push_back(x);
         }
     }
     int ans = 0;
-    for (int i=1; i<=2*n; i++) {
+    for (int i=1; i<=n; i++) {
+        fill(c, c + 1010, 0);
+        if (dfs(i)) ans++;
         fill(c, c + 1010, 0);
         if (dfs(i)) ans++;
     }
