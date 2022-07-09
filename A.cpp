@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#define int long long
 #define all(c) (c).begin(),(c).end()
 #define srt(c) sort(all(c))
 #define srtrev(c) sort(all(c)); reverse(all(c))
