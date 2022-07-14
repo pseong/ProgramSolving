@@ -45,6 +45,7 @@ void solve() {
     }
     memset(chk, 0, sizeof chk);
     dfs(A[n].second);
+    dfs(B[n].second);
     for (int i=1; i<=n; i++) {
         cout << chk[i];
     }
