@@ -15,69 +15,20 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-
-
-
-struct Seg {
-    vector<int> an;
-    vector<vector<int>> seg;
-
-    void ii(int n) {
-        an.resize(2*n+1000);
-        seg.resize(8*n+1000);
-    }
-
-    void init(int node, int s, int e) {
-        if (s==e) {
-            seg[node].push_back(an[s]);
-            return;
-        }
-        int mid = (s + e) / 2;
-        init(node*2, s, mid);
-        init(node*2+1, mid+1, e);
-        seg[node] = seg[node*2];
-        seg[node].insert(seg[node].end(), seg[node*2+1].begin(), seg[node*2+1].end());
-        sort(seg[node].begin(), seg[node].end());
-    }
-
-    int query(int node, int s, int e, int l, int r, int k) {
-        if (e<l || r<s) return 0;
-        if (l<=s && e<=r) {
-            return seg[node].end() - upper_bound(seg[node].begin(), seg[node].end(), k);
-        }
-        int mid = (s + e) / 2;
-        return query(node*2, s, mid, l, r, k) + query(node*2+1, mid+1, e, l, r, k);
-    }
-};
-
-
-
 void solve() {
     int n; cin >> n;
-    vector<int> v(n+1);
-    vector<pi> vv;
+    vector<int> val, idx;
     for (int i=1; i<=n; i++) {
-        cin >> v[i];
-        if (v[i] < i) vv.push_back({i, v[i]});
+        int a; cin >> a;
+        if (a < i) {
+            val.push_back(a);
+            idx.push_back(i);
+        }
     }
-    int z = vv.size();
-    Seg seg;
-    seg.ii(z);
-    for (int i=1; i<=z; i++) {
-        seg.an[i] = vv[i-1].second;
-    }
-    if (z == 0) {
-        cout << 0 << '\n';
-        return;
-    }
-
-    seg.init(1, 1, z);
-    
-    multiset<int> st;
+    srt(val);
     ll ans = 0;
-    for (int i=0; i<z; i++) {
-        int idx = i+1;
-        ans += seg.query(1, 1, z, idx+1, z, vv[i].first);
+    for (int i : idx) {
+        ans += val.end() - upper_bound(val.begin(), val.end(), i);
     }
     cout << ans << '\n';
 }
