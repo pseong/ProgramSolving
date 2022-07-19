@@ -1,97 +1,108 @@
 #include <bits/stdc++.h>
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
 using ll=long long;
-using pii=pair<int,int>;
-using pll=pair<ll,ll>;
-#define F first
-#define S second
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
-const int N=10000*2;
-int n, m, id, scc_id=1, d[N+10], sd[N+10], an[N+10];
-vector<int> v[N+10];
+vector<int> adj[20202];
+int d[20202], sd[20202], finished[20202];
+int id, sccId;
 stack<int> st;
 
 int dfs(int x) {
     d[x] = ++id;
     st.push(x);
     int parent = d[x];
-
-    for(int y : v[x]) {
-        if(!d[y]) parent = min(parent, dfs(y));
-        else if(!sd[y]) parent = min(parent, d[y]);
+    for (int y : adj[x]) {
+        if (d[y] == 0) parent = min(parent, dfs(y));
+        else if (!finished[y]) parent = min(parent, d[y]); 
     }
-    if(parent==d[x]) {
-        while(true) {
-            int y=st.top();
+    if (parent == d[x]) {
+        sccId++;
+        while (true) {
+            int t = st.top();
             st.pop();
-            sd[y] = scc_id;
-            if(x==y) break;
+            sd[t] = sccId;
+            finished[t] = true;
+            if (t == x) break;
         }
-        scc_id++;
     }
     return parent;
 }
 
-int main() {
-    ios::sync_with_stdio(0); 
-    cin.tie(0); cout.tie(0);
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
 
+    int n, m;
     cin >> n >> m;
-    for(int i=0; i<m; i++) {
-        int a, b, not_a, not_b;
+    for (int i=0; i<m; i++) {
+        int a, b;
         cin >> a >> b;
-        if(a<0) {
-            a = (-a)*2+1;
-            not_a = a-1;
+        int not_a;
+        int not_b;
+        if (a < 0) {
+            not_a = (-a)*2;
+            a = (-a)*2 + 1;
         }
         else {
+            not_a = a*2 + 1;
             a = a*2;
-            not_a = a+1;
         }
-        if(b<0) {
-            b = (-b)*2+1;
-            not_b = b-1;
+        if (b < 0) {
+            not_b = (-b)*2;
+            b = (-b)*2 + 1;
         }
         else {
+            not_b = b*2 + 1;
             b = b*2;
-            not_b = b+1;
         }
-        v[not_a].push_back(b);
-        v[not_b].push_back(a);
+        adj[not_a].push_back(b);
+        adj[not_b].push_back(a);
     }
-
-    for(int i=2; i<=n*2+1; i++) {
-        if(!d[i]) dfs(i);
+    for (int i=2; i<=n*2+1; i++) {
+        if (d[i] == 0) dfs(i);
     }
-    for(int i=2; i<=n*2; i+=2) {
-        if(sd[i]==sd[i+1]) {
-            cout << 0;
+    for (int i=2; i<=n+1; i+=2) {
+        if (sd[i] == sd[i+1]) {
+            cout << 0 << '\n';
             return 0;
         }
     }
-
     cout << 1 << '\n';
-    vector<pii> order;
-    for(int i=2; i<=n*2+1; i++) {
-        order.push_back({sd[i], i});
+
+    vector<pi> vec;
+    for (int i=2; i<=n*2+1; i++) {
+        vec.push_back({sd[i], i});
     }
-    sort(order.begin(), order.end(), greater<pii>());
-    for(int i=1; i<=n; i++) {
-        an[i] = -1;
-    }
-    for(auto at : order) {
-        int k=at.S/2;
-        if(an[k]==-1) {
-            if(at.S%2==1) {
-                an[k] = 1;
+    sort(vec.begin(), vec.end(), greater<pi>());
+
+    vector<int> ans(n+1, -1);
+    for (int i=0; i<(int)vec.size(); i++) {
+        int x = vec[i].second;
+        if (ans[x/2] == -1) {
+            if (x%2 == 0) {
+                ans[x/2] = 0;
             }
             else {
-                an[k] = 0;
+                ans[x/2] = 1;
             }
         }
     }
-    for(int i=1; i<=n; i++) {
-        if(an[i]==-1) cout << 1 << ' ';
-        else cout << an[i] << ' ';
+
+    for (int i=1; i<=n; i++) {
+        if (ans[i] == -1) cout << 0 << ' ';
+        else cout << ans[i] << ' ';
     }
 }
