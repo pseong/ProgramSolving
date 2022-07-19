@@ -1,72 +1,76 @@
 #include <bits/stdc++.h>
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
 using ll=long long;
+using i128 = __int128_t;
 using pi=pair<int, int>;
 using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
-ll exgcd(ll a, ll b, ll &s, ll &t) { ll r1 = a, r2 = b, s1 = 1, s2 = 0, t1 = 0, t2 = 1; ll r, q; while (r2) { q = r1 / r2; r = r1 % r2; r1 = r2, r2 = r; s = s1 - q * s2; s1 = s2, s2 = s; t = t1 - q * t2; t1 = t2, t2 = t; } s = s1; t = t1; if (s <= 0) { s += b; t -= a; } return r1; }
-ll inverse(ll A, ll B) { ll u, tmp; exgcd(A, B, u, tmp); return u; }
-ll china(ll a, ll b, ll A, ll B, ll MOD) { ll s = 0; s = (s + MOD / A * inverse(MOD / A, A) * a) % MOD; s = (s + MOD / B * inverse(MOD / B, B) * b) % MOD; return s; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
 vector<int> adj[10101];
-vector<int> adjinv[10101];
-bool chk[10101];
+vector<vector<int>> SCC;
+int id, d[10101], finished[10101];
 stack<int> st;
-vector<vector<int>> scc;
-vector<int> now;
 
-void dfs(int x) {
-    chk[x] = 1;
-    for (int y : adj[x]) {
-        if (chk[y]) continue;
-        dfs(y);
-    }
+int dfs(int x) {
+    d[x] = ++id;
     st.push(x);
-}
 
-void dfs2(int x) {
-    chk[x] = 1;
-    now.push_back(x);
-    for (int y : adjinv[x]) {
-        if (chk[y]) continue;
-        dfs2(y);
+    int parent = d[x];
+    for (int y : adj[x]) {
+        if (d[y] == 0) parent = min(parent, dfs(y));
+        else if (!finished[y]) parent = min(parent, d[y]);
     }
+
+    if (parent == d[x]) {
+        vector<int> scc;
+        while (true) {
+            int t = st.top();
+            st.pop();
+            scc.push_back(t);
+            finished[t] = true;
+            if (t == x) break;
+        }
+        SCC.push_back(scc);
+    }
+
+    return parent;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int n, e; cin >> n >> e;
+    int n, e;
+    cin >> n >> e;
     for (int i=0; i<e; i++) {
-        int a, b; cin >> a >> b;
+        int a, b;
+        cin >> a >> b;
         adj[a].push_back(b);
-        adjinv[b].push_back(a);
     }
+
     for (int i=1; i<=n; i++) {
-        sort(adj[i].begin(), adj[i].end());
-        sort(adjinv[i].begin(), adjinv[i].end());
+        if (d[i] == 0) dfs(i);
     }
-    for (int i=1; i<=n; i++) {
-        if (!chk[i]) dfs(i);
+
+    for (int i=0; i<(int) SCC.size(); i++) {
+        srt(SCC[i]);
     }
-    for (int i=1; i<=n; i++) chk[i] = 0;
-    while (st.size()) {
-        int x = st.top(); st.pop();
-        if (chk[x]) continue;
-        dfs2(x);
-        scc.push_back(now);
-        now.clear();
-    }
-    for (int i=0; i<scc.size(); i++) {
-        sort(scc[i].begin(), scc[i].end());
-    }
-    sort(scc.begin(), scc.end());
-    cout << scc.size() << '\n';
-    for (vector<int>& v : scc) {
-        for (int i=0; i<(int) v.size(); i++) {
-            cout << v[i] << ' ';
+    srt(SCC);
+    
+    cout << SCC.size() << '\n';
+    for (int i=0; i<(int) SCC.size(); i++) {
+        for (int x : SCC[i]) {
+            cout << x << ' ';
         }
-        cout << -1 << '\n';
+        cout << "-1\n";
     }
 }
