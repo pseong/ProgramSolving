@@ -6,83 +6,73 @@ using pll=pair<ll,ll>;
 #define F first
 #define S second
 
-const int N=100000;
-int d[N+10], hit[N+10], SCCId[N+10], SCCIdx, id;
-vector<int> vert[100010];
+int id, sccId;
+int d[101010], sd[101010], finished[101010];
 stack<int> st;
+
+vector<int> adj[101010];
 
 int dfs(int x) {
     d[x] = ++id;
     st.push(x);
-    int parent=d[x];
-    for(int y : vert[x]) {
-        if(d[y]==0) parent = min(parent, dfs(y));
-        else if(!SCCId[y]) parent = min(parent, d[y]);
+    int parent = d[x];
+    for (int y : adj[x]) {
+        if (d[y] == 0) parent = min(parent, dfs(y));
+        else if (finished[y] == 0) parent = min(parent, d[y]);
     }
-    if(parent==d[x]) {
-        vector<int> scc;
-        while(true) {
-            int y=st.top();
+    if (parent == d[x]) {
+        ++sccId;
+        while (true) {
+            int t = st.top();
             st.pop();
-            SCCId[y] = SCCIdx;
-            if(y==x) break;
+            finished[t] = true;
+            sd[t] = sccId;
+            if (t == x) break;
         }
-        SCCIdx++;
     }
     return parent;
+}
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    id = 0;
+    sccId = 0;
+    for (int i=0; i<=n; i++) {
+        adj[i].clear();
+        d[i] = 0;
+        sd[i] = 0;
+        finished[i] = 0;
+    }
+    for (int i=0; i<m; i++) {
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+    }
+    for (int i=1; i<=n; i++) {
+        if (d[i] == 0) dfs(i);
+    }
+    vector<int> in(sccId + 1);
+    for (int x=1; x<=n; x++) {
+        for (int y : adj[x]) {
+            if (sd[y] == sd[x]) continue;
+            in[sd[y]]++;
+        }
+    }
+    int ans = 0;
+    for (int i=1; i<=sccId; i++) {
+        if (in[i] == 0) ans++;
+    }
+    cout << ans << '\n';
 }
 
 int main() {
     ios::sync_with_stdio(0); 
     cin.tie(0); cout.tie(0);
 
-    int T;
-    cin >> T;
-    while(T--) {
-        int v, e;
-        cin >> v >> e;
-        id = 0;
-        SCCIdx = 1;
-        for(int i=1; i<=v; i++) {
-            SCCId[i] = 0;
-            hit[i] = 0;
-            d[i] = 0;
-            vert[i].clear();
-        }
-
-        for(int i=0; i<e; i++) {
-            int a, b;
-            cin >> a >> b;
-            a++; b++;
-            vert[a].push_back(b);
-        }
-        for(int i=1; i<=v; i++) {
-            if(d[i]==0) dfs(i);
-        }
-        for(int i=1; i<=v; i++) {
-            for(int j : vert[i]) {
-                if(SCCId[i]==SCCId[j]) continue;
-                hit[SCCId[j]]++;
-            }
-        }
-        int ans=0;
-        int idx=0;
-        for(int i=1; i<SCCIdx; i++) {
-            if(!hit[i]) {
-                ans++;
-                idx = i;
-            }
-        }
-        if(ans>1) {
-            cout << "Confused\n";
-        }
-        else {
-            for(int i=1; i<=v; i++) {
-                if(SCCId[i]==idx) {
-                    cout << i-1 << '\n';
-                }
-            }
-        }
-        cout << '\n';
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
     }
 }
