@@ -19,10 +19,9 @@ signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int T; cin >> T;
+    int T;
+    cin >> T;
     for (int TT=1; TT<=T; TT++) {
-        
-        g:
-        continue;
+
     }
 }
