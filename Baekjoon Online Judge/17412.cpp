@@ -15,6 +15,7 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
+/*
 vector<int> adj[440];
 int c[440][440], f[440][440], d[440];
 
@@ -64,4 +65,73 @@ signed main() {
     cin.tie(0);
 
     solve();
+}
+
+*/
+
+vector<int> adj[440];
+int c[440][440], f[440][440], level[440], work[440];
+const int S = 1;
+const int T = 2;
+const int inf = 100000;
+
+bool bfs() {
+    memset(level, -1, sizeof level);
+    level[S] = 0;
+    queue<int> q;
+    q.push(S);
+    while (q.size()) {
+        int x = q.front();
+        q.pop();
+        for (int y : adj[x]) {
+            if (level[y] == -1 && c[x][y] - f[x][y] > 0) {
+                level[y] = level[x] + 1;
+                q.push(y);
+            }
+        }
+    }
+    return level[T] != -1;
+}
+
+int dfs(int x, int flow) {
+    if (x == T) return flow;
+    for (int& i=work[x]; i<adj[x].size(); i++) {
+        int y = adj[x][i];
+        if (level[y] == level[x] + 1 && c[x][y] - f[x][y] > 0) {
+            int ret = dfs(y, min(c[x][y] - f[x][y], flow));
+            if (ret > 0) {
+                f[x][y] += ret;
+                f[y][x] -= ret;
+                return ret;
+            }
+        }
+    }
+    return 0;
+}
+
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int n, p;
+    cin >> n >> p;
+    for (int i=0; i<p; i++) {
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+        c[a][b] = 1;
+    }
+
+    int ans = 0;
+    while (bfs()) {
+        memset(work, 0, sizeof work);
+        while (true) {
+            int flow = dfs(S, inf);
+            if (flow == 0) break;
+            ans += flow;
+        }
+    }
+    cout << ans;
 }
