@@ -15,13 +15,17 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
+void solve(int CASE) {
+
+}
+
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
     int T;
     cin >> T;
-    for (int TT=1; TT<=T; TT++) {
-
+    for (int t=0; t<T; t++) {
+        solve(t);
     }
 }
