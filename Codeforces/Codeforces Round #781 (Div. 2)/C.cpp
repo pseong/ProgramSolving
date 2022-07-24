@@ -33,7 +33,7 @@ void solve(int CASE) {
     ll ans = sz;
     multiset<ll> ms;
     for (ll i=0; i<sz; i++) {
-        if (vec[i] - sz - i - 2 > 0) ms.insert(vec[i] - 1 - (sz - i - 1));
+        if (vec[i] - 1 - (sz - i - 1) > 0) ms.insert(vec[i] - 1 - (sz - i - 1));
     }
     ll tm = 0;
     while (ms.size()) {
@@ -41,12 +41,11 @@ void solve(int CASE) {
         while (ms.size() && *ms.begin() <= tm) {
             ms.erase(ms.begin());
         }
-        if (ms.size()) {
-            auto it = ms.lower_bound(*ms.rbegin());
-            ll a = *it;
-            ms.erase(it);
-            if (--a > tm) ms.insert(a);
-        }
+        if (ms.empty()) break;
+        ll a = *ms.rbegin();
+        auto it = ms.lower_bound(a);
+        ms.erase(it);
+        if (a-1 > tm) ms.insert(a-1);
     }
     cout << ans + tm << '\n';
 }
