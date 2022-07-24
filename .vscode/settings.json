@@ -68,7 +68,8 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "string_view": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
