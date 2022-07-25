@@ -16,10 +16,16 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 /*
+// 애드몬드 카프 알고리즘
 vector<int> adj[440];
 int c[440][440], f[440][440], d[440];
+const int s = 1;
+const int t = 2;
 
-void solve() {
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
     int n, p;
     cin >> n >> p;
     for (int i=0; i<p; i++) {
@@ -34,74 +40,66 @@ void solve() {
     while (true) {
         memset(d, -1, sizeof d);
         queue<int> q;
-        q.push(1);
+        q.push(s);
         while (q.size()) {
             int x = q.front();
             q.pop();
             for (int y : adj[x]) {
-                if (c[x][y] - f[x][y] > 0 && d[y] == -1) {
+                if (d[y] == -1 && c[x][y] - f[x][y] > 0) {
                     d[y] = x;
                     q.push(y);
-                    if (y == 2) break;
                 }
             }
         }
-        if (d[2] == -1) break;
-        int flow = 10;
-        for (int i=2; i!=1; i=d[i]) {
-            flow = min(flow, c[d[i]][i] - f[d[i]][i]);
+        if (d[t] == -1) break;
+        int flow = INT_MAX;
+        for (int x=t; x!=s; x=d[x]) {
+            flow = min(flow, c[d[x]][x] - f[d[x]][x]);
         }
-        for (int i=2; i!=1; i=d[i]) {
-            f[d[i]][i] += flow;
-            f[i][d[i]] -= flow;
+        for (int x=t; x!=s; x=d[x]) {
+            f[d[x]][x] += flow;
+            f[x][d[x]] -= flow;
         }
         ans += flow;
     }
     cout << ans << '\n';
 }
-
-signed main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-
-    solve();
-}
-
 */
 
+/*
+// 디닉 알고리즘
 vector<int> adj[440];
-int c[440][440], f[440][440], level[440], work[440];
-const int S = 1;
-const int T = 2;
-const int inf = 100000;
+int c[440][440], f[440][440], lv[440], work[440];
+const int s = 1;
+const int t = 2;
 
 bool bfs() {
-    memset(level, -1, sizeof level);
-    level[S] = 0;
+    memset(lv, -1, sizeof lv);
+    lv[s] = 0;
     queue<int> q;
-    q.push(S);
+    q.push(s);
     while (q.size()) {
         int x = q.front();
-        q.pop();
+        q.pop();s
         for (int y : adj[x]) {
-            if (level[y] == -1 && c[x][y] - f[x][y] > 0) {
-                level[y] = level[x] + 1;
+            if (lv[y] == -1 && c[x][y] - f[x][y] > 0) {
+                lv[y] = lv[x] + 1;
                 q.push(y);
             }
         }
     }
-    return level[T] != -1;
+    return lv[t] != -1;
 }
 
 int dfs(int x, int flow) {
-    if (x == T) return flow;
-    for (int& i=work[x]; i<adj[x].size(); i++) {
+    if (x == t) return flow;
+    for (int& i=work[x]; i<(int)adj[x].size(); i++) {
         int y = adj[x][i];
-        if (level[y] == level[x] + 1 && c[x][y] - f[x][y] > 0) {
-            int ret = dfs(y, min(c[x][y] - f[x][y], flow));
+        if (lv[y] == lv[x] + 1 && c[x][y] - f[x][y] > 0) {
+            int ret = dfs(y, min(flow, c[x][y] - f[x][y]));
             if (ret > 0) {
-                f[x][y] += ret;
-                f[y][x] -= ret;
+                f[x][y] += flow;
+                f[y][x] -= flow;
                 return ret;
             }
         }
@@ -109,8 +107,7 @@ int dfs(int x, int flow) {
     return 0;
 }
 
-
-signed main() {
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
@@ -128,10 +125,11 @@ signed main() {
     while (bfs()) {
         memset(work, 0, sizeof work);
         while (true) {
-            int flow = dfs(S, inf);
+            int flow = dfs(s, INT_MAX);
             if (flow == 0) break;
             ans += flow;
         }
     }
-    cout << ans;
+    cout << ans << '\n';
 }
+*/
