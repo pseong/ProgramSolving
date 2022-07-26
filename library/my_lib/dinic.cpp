@@ -13,7 +13,7 @@ bool bfs() {
     q.push(s);
     while (q.size()) {
         int x = q.front();
-        q.pop();s
+        q.pop();
         for (int y : adj[x]) {
             if (lv[y] == -1 && c[x][y] - f[x][y] > 0) {
                 lv[y] = lv[x] + 1;
