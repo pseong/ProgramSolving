@@ -33,4 +33,5 @@ int maxFlow() {
         }
         ans += flow;
     }
+    return ans;
 }
