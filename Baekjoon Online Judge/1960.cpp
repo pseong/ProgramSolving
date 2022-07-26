@@ -16,7 +16,7 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 vector<int> adj[1010];
-int c[1010][1010], f[1010][1010], lv[1010], work[1010], ans[1010][1010];
+int c[1010][1010], f[1010][1010], lv[1010], work[1010];
 const int s = 1001;
 const int t = 1002;
 
@@ -96,15 +96,10 @@ void solve(int CASE) {
         cout << -1 << '\n';
         return;
     }
-    for (int i=1; i<=n; i++) {
-        for (int j=1; j<=n; j++) {
-            if (f[i][j+500]) ans[i][j] = 1;
-        }
-    }
     cout << 1 << '\n';
     for (int i=1; i<=n; i++) {
         for (int j=1; j<=n; j++) {
-            cout << ans[i][j];
+            cout << f[i][j+500];
         }
         cout << '\n';
     }
