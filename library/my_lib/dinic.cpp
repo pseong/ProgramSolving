@@ -31,8 +31,8 @@ int dfs(int x, int flow) {
         if (lv[y] == lv[x] + 1 && c[x][y] - f[x][y] > 0) {
             int ret = dfs(y, min(flow, c[x][y] - f[x][y]));
             if (ret > 0) {
-                f[x][y] += flow;
-                f[y][x] -= flow;
+                f[x][y] += ret;
+                f[y][x] -= ret;
                 return ret;
             }
         }
