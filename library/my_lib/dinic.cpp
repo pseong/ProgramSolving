@@ -3,8 +3,8 @@ using namespace std;
 
 vector<int> adj[2020];
 int c[2020][2020], f[2020][2020], lv[2020], work[2020];
-const int s = 2001;
-const int t = 2002;
+int s = 2001;
+int t = 2002;
 
 bool bfs() {
     memset(lv, -1, sizeof lv);
