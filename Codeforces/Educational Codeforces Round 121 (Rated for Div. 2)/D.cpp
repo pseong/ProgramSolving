@@ -29,8 +29,9 @@ void solve(int CASE) {
         pref[i] = pref[i-1] + v[i];
     }
     int ans = INT_MAX;
-    for (int i=0; i<=n; i++) {
-        int x = *(lower_bound(p.begin(), p.end(), pref[i])) - pref[i];
+    for (int l=0; l<(int)p.size(); l++) {
+        int i = upper_bound(pref.begin(), pref.end(), p[l]) - pref.begin() - 1;
+        int x = p[l] - pref[i];
         for (int k=0; k<(int)p.size(); k++) {
             int j = upper_bound(pref.begin()+i+1, pref.end(), p[k]+pref[i]) - pref.begin() - 1;
             int y = p[k] - pref[j] + pref[i];
