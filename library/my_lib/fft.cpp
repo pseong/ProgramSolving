@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 const double PI = acos(-1);
 typedef complex<double> cpx;
 
@@ -42,18 +39,19 @@ void FFT(vector<cpx>& v, bool inv) {
     }
 }
 
-vector<cpx> mul(vector<cpx> a, vector<cpx> b) {
+vector<cpx> mul(vector<cpx>& a, vector<cpx>& b) {
+    vector<cpx> pa = a, pb = b;
     int s = 1;
-    while (s < a.size() || s < b.size()) s *= 2;
+    while (s < pa.size()*2 || s < pb.size()*2) s *= 2;
 
-    a.resize(s);
-    FFT(a, 0);
-    b.resize(s);
-    FFT(b, 0);
+    pa.resize(s);
+    FFT(pa, 0);
+    pb.resize(s);
+    FFT(pb, 0);
 
     vector<cpx> w(s);
     for (int i=0; i<s; i++) {
-        w[i] = a[i] * b[i];
+        w[i] = pa[i] * pb[i];
     }
     FFT(w, 1);
     for (int i=0; i<(int)w.size(); i++) {
