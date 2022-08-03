@@ -1,94 +1,102 @@
-#include <iostream>
-#include <iomanip>
-#define fi first
-#define se second
-
-typedef long double ld;
+#include <bits/stdc++.h>
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
+using ll=long long;
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
-pair<ld, ld> p1, p2, p3, p4;
+struct Point {
+    ll x, y;
+};
 
-ld ccw(ld x1, ld y1, ld x2, ld y2, ld x3, ld y3) {
-    ld a=x1*y2+x2*y3+x3*y1;
-    ld b=x2*y1+x3*y2+x1*y3;
-    if(a-b>0) return 1;
-    else if(a-b<0) return -1;
-    else return 0;
-}
+struct Line {
+    Point p1, p2;
+};
 
-void calCross() {
-    ld a, b, c, d, x, y;
-    if(p2.fi==p1.fi) {
-        x = p2.fi;
-        c = (p4.se-p3.se)/(p4.fi-p3.fi);
-        d = p3.se-(p4.se-p3.se)*p3.fi/(p4.fi-p3.fi);
-        y = c*x+d;
-        cout << fixed << setprecision(11) << x << ' ' << y;
-        return;
+struct Geo {
+    static ll ccw(Point p1, Point p2, Point p3) {
+        ll a = p1.x*p2.y + p2.x*p3.y + p3.x*p1.y;
+        ll b = p1.y*p2.x + p2.y*p3.x + p3.y*p1.x;
+        if (a-b > 0) return 1;
+        else if (a-b < 0) return -1;
+        else return 0;
     }
 
-    a = (p2.se-p1.se)/(p2.fi-p1.fi);
-    b = p1.se-(p2.se-p1.se)*p1.fi/(p2.fi-p1.fi);
-
-    if(p3.fi==p4.fi) {
-        x = p3.fi;
-        y = a*x+b;
-        cout << fixed << setprecision(11) << x << ' ' << y;
-        return;
+    static bool cross(Line l1, Line l2) {
+        ll res1 = ccw(l1.p1, l1.p2, l2.p1) * ccw(l1.p1, l1.p2, l2.p2);
+        ll res2 = ccw(l2.p1, l2.p2, l1.p1) * ccw(l2.p1, l2.p2, l1.p2);
+        if (res1 == 0 && res2 == 0) {
+            if (l1.p1.x == l1.p2.x) {
+                if (l1.p1.y > l1.p2.y) swap(l1.p1, l1.p2);
+                if (l2.p1.y > l2.p2.y) swap(l2.p1, l2.p2);
+                if (l1.p1.y <= l2.p2.y && l1.p2.y >= l2.p1.y) return 1;
+                else return 0;
+            }
+            else {
+                if (l1.p1.x > l1.p2.x) swap(l1.p1, l1.p2);
+                if (l2.p1.x > l2.p2.x) swap(l2.p1, l2.p2);
+                if (l1.p1.x <= l2.p2.x && l1.p2.x >= l2.p1.x) return 1;
+                else return 0;
+            }
+        }
+        else if (res1 <= 0 && res2 <= 0) return 1;
+        else return 0;
     }
-    c = (p4.se-p3.se)/(p4.fi-p3.fi);
-    d = p3.se-(p4.se-p3.se)*p3.fi/(p4.fi-p3.fi);
 
-    x = (d-b)/(a-c);
-    y = (d-b)/(a-c)*a+b;
-    cout << fixed << setprecision(11) << x << ' ' << y;
-}
+    static tuple<bool, double, double> intersect(Line l1, Line l2) {
+        if (cross(l1, l2) == 0) return {0, INFINITY, INFINITY};
+        if (l1.p2.x - l1.p1.x == 0 && l2.p2.x - l2.p1.x == 0) {
+            if (l1.p1.y > l1.p2.y) swap(l1.p1, l1.p2);
+            if (l2.p1.y > l2.p2.y) swap(l2.p1, l2.p2);
+            if (l1.p2.y == l2.p1.y) return {1, l1.p2.x, l1.p2.y};
+            if (l1.p1.y == l2.p2.y) return {1, l1.p1.x, l1.p1.y};
+            return {1, INFINITY, INFINITY};
+        }
+        else if (l1.p2.x - l1.p1.x == 0) {
+            double c = (double)(l2.p2.y - l2.p1.y) / (l2.p2.x - l2.p1.x);
+            double d = l2.p1.y - c*l2.p1.x;
+            return {1, l1.p1.x, c*l1.p1.x + d};
+        }
+        else if (l2.p2.x - l2.p1.x == 0) {
+            double a = (double)(l1.p2.y - l1.p1.y) / (l1.p2.x - l1.p1.x);
+            double b = l1.p1.y - a*l1.p1.x;
+            return {1, l2.p1.x , a*l2.p1.x + b};
+        }
+        if (l1.p1.x > l1.p2.x) swap(l1.p1, l1.p2);
+        if (l2.p1.x > l2.p2.x) swap(l2.p1, l2.p2);
+        if (l1.p1.x == l2.p2.x) return {1, l1.p1.x, l1.p1.y};
+        else if (l1.p2.x == l2.p1.x) return {1, l1.p2.x, l1.p2.y};
+        double a = (double)(l1.p2.y - l1.p1.y) / (l1.p2.x - l1.p1.x);
+        double b = l1.p1.y - a*l1.p1.x;
+        double c = (double)(l2.p2.y - l2.p1.y) / (l2.p2.x - l2.p1.x);
+        double d = l2.p1.y - c*l2.p1.x;
+        if (a == c) return {1, INFINITY, INFINITY};
+        double x = (double)(d - b) / (a - c);
+        double y = a*x + b;
+        return {1, x, y};
+    }
+};
 
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
-    ld a, b, c, d, e, f, g, h;
-    cin >> a >> b >> c >> d >> e >> f >> g >> h;
-    p1={a, b};
-    p2={c, d};
-    p3={e, f};
-    p4={g, h};
-    
-    ld res1, res2, res3, res4;
-    res1 = ccw(p1.fi, p1.se, p2.fi, p2.se, p3.fi, p3.se);
-    res2 = ccw(p1.fi, p1.se, p2.fi, p2.se, p4.fi, p4.se);
-    res3 = ccw(p3.fi, p3.se, p4.fi, p4.se, p1.fi, p1.se);
-    res4 = ccw(p3.fi, p3.se, p4.fi, p4.se, p2.fi, p2.se);
-    if(res1*res2<=0) {
-        if(res3*res4<=0) {
-            if(!res1&&!res2&&!res3&&!res4) {
-                if(p1.fi>p2.fi) swap(p1, p2);
-                if(p3.fi>p4.fi) swap(p3, p4);
-                if(p2.fi<p3.fi || p1.fi>p4.fi) {
-                    cout << 0;
-                } else {
-                    if(p1.se>p2.se) swap(p1, p2);
-                    if(p3.se>p4.se) swap(p3, p4);
-                    if(p2.se<p3.se || p1.se>p4.se) {
-                        cout << 0;
-                    } else {
-                        cout << 1 << '\n';
-                        if(p2.se==p3.se) {
-                            cout << p2.fi << ' ' << p2.se;
-                        } else if(p1.se==p4.se) {
-                            cout << p1.fi << ' ' << p1.se;
-                        }
-                    }
-                }
-            } else {
-                cout << 1 << '\n';
-                calCross();
-            }
-        } else {
-            cout << 0;
-        }
-    } else {
-        cout << 0;
+    Point a, b, c, d;
+    cin >> a.x >> a.y >> b.x >> b.y >> c.x >> c.y >> d.x >> d.y;
+    Line l1 {a, b}, l2 {c, d};
+    auto [ok, x, y] = Geo::intersect(l1, l2);
+    cout << ok << '\n';
+    if (x != INFINITY) {
+        cout << fixed << setprecision(9) << x << ' ' << y << '\n';
     }
 }
