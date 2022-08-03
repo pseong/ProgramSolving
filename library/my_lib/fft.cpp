@@ -39,8 +39,8 @@ void FFT(vector<cpx>& v, bool inv) {
     }
 }
 
-vector<cpx> mul(vector<cpx>& a, vector<cpx>& b) {
-    vector<cpx> pa = a, pb = b;
+vector<ll> mul(vector<ll>& a, vector<ll>& b) {
+    vector<cpx> pa(a.begin(), a.end()), pb(b.begin(), b.end());
     int s = 1;
     while (s < pa.size()*2 || s < pb.size()*2) s *= 2;
 
@@ -54,8 +54,10 @@ vector<cpx> mul(vector<cpx>& a, vector<cpx>& b) {
         w[i] = pa[i] * pb[i];
     }
     FFT(w, 1);
-    for (int i=0; i<(int)w.size(); i++) {
-        w[i] = cpx(round(w[i].real()), round(w[i].imag()));
+    
+    vector<ll> ret(s);
+    for (int i=0; i<s; i++) {
+        ret[i] = (ll)round(w[i].real());
     }
-    return w;
+    return ret; // real() 로 출력할땐 (ll) 형변환 해야함.
 }
