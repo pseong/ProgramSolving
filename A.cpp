@@ -19,11 +19,11 @@ void solve(int CASE) {
 
 }
 
-int T = 1;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
+    int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
         solve(t);
