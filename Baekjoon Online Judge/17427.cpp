@@ -15,8 +15,15 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-void solve(int CASE) {
 
+void solve(int CASE) {
+    int n;
+    cin >> n;
+    ll ans = 0;
+    for (int i=1; i<=n; i++) {
+        ans += (n / i) * i;
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
@@ -24,7 +31,6 @@ signed main() {
     cin.tie(0);
 
     int T = 1;
-    cin >> T;
     for (int t=1; t<=T; t++) {
         solve(t);
     }

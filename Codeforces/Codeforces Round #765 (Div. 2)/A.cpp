@@ -15,17 +15,35 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-void solve(int CASE) {
+void solve() {
+    int n, l;
+    cin >> n >> l;
+    vector<int> cnt(l);
+    
+    for (int i=0; i<n; i++) {
+        int x;
+        cin >> x;
+        for (int j=0; j<l; j++) {
+            cnt[j] += x>>j&1;
+        }
+    }
 
+    int ans = 0;
+    for (int i=0; i<l; i++) {
+        if (cnt[i] > n-cnt[i]) {
+            ans |= 1<<i;
+        }
+    }
+
+    cout << ans << "\n";
 }
 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int T = 1;
-    cin >> T;
-    for (int t=1; t<=T; t++) {
-        solve(t);
+    int T; cin >> T;
+    while (T--) {
+        solve();
     }
 }

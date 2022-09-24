@@ -16,14 +16,26 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-
+    int n;
+    cin >> n;
+    vector<int> a(n), b(n);
+    for (int i=0; i<n; i++) {
+        cin >> a[i];
+    }
+    for (int i=0; i<n; i++) {
+        cin >> b[i];
+    }
+    for (int i=0; i<n; i++) {
+        if (a[i] < b[i]) swap(a[i], b[i]);
+    }
+    cout << *max_element(all(a)) * (*max_element(all(b))) << '\n';
 }
 
+int T = 1;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
         solve(t);

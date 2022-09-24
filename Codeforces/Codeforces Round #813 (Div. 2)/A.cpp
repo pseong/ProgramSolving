@@ -16,14 +16,26 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-
+    int n, k;
+    cin >> n >> k;
+    vector<int> chk(110);
+    for (int i=0; i<n; i++) {
+        int a;
+        cin >> a;
+        if (i < k) chk[a] = 1;
+    }
+    int ans = 0;
+    for (int i=1; i<=k; i++) {
+        if (chk[i] == 0) ans++;
+    }
+    cout << ans << '\n';
 }
 
+int T = 1;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
         solve(t);

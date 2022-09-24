@@ -15,13 +15,27 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-void solve(int CASE) {
+ll ans[1010101];
 
+void solve(int CASE) {
+    int n;
+    cin >> n;
+    cout << ans[n] << '\n';
 }
 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+
+    for (int i=1; i<=1000000; i++) {
+        for (int j=i; j<=1000000; j+=i) {
+            ans[j] += i;
+        }
+    }
+
+    for (int i=2; i<=1000000; i++) {
+        ans[i] += ans[i-1];
+    }
 
     int T = 1;
     cin >> T;
