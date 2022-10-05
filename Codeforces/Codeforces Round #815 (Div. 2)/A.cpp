@@ -16,27 +16,16 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-    int a, b, c, d;
+    ll a, b, c, d;
     cin >> a >> b >> c >> d;
-    if (a == 0 && c == 0) {
+    ll x = a * d;
+    ll y = b * c;
+    if (x == y) {
         cout << 0 << '\n';
-        return;
     }
-    if (a == 0 || c == 0) {
+    else if (x != 0 && y % x == 0 || y != 0 && x % y == 0) {
         cout << 1 << '\n';
-        return;
     }
-    int ab = gcd(a, b);
-    int cd = gcd(c, d);
-    a /= ab;
-    b /= ab;
-    c /= cd;
-    d /= cd;
-    cout << a << ' ' << b << ' ' << c << ' ' << d << '\n';
-    if (a == c && b == d) {
-        cout << 0 << '\n';
-    }
-    else if (a % c == 0 && )
     else {
         cout << 2 << '\n';
     }
