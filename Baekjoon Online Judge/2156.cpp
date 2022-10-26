@@ -7,25 +7,22 @@ int main() {
     cin.tie(NULL); 
     cout.tie(NULL);
 
-    int p[10010]{ 0 };
+    vector<int> p(10010);
 
     int n;
     cin >> n;
     for(int i = 1; i <= n; i++)
         cin >> p[i];
 
-    int smx[10010]{ 0 };
-    int result[10010]{ 0 };
+    vector<int> smx(10010);
 
     smx[1] = p[1];
     smx[2] = p[1] + p[2];
-    result[1] = smx[1];
-    result[2] = smx[2];
+    smx[3] = max({p[1] + p[2], p[1] + p[3], p[2] + p[3]});
 
-    for(int i = 3; i <= n; i++) {
-        smx[i] = max(smx[i - 2] + p[i], result[i - 3] + p[i - 1] + p[i]);
-        result[i] = max(smx[i], smx[i - 1]);
+    for(int i = 4; i <= n; i++) {
+        smx[i] = max({smx[i - 2] + p[i], smx[i - 3] + p[i - 1] + p[i], smx[i - 4] + p[i - 1] + p[i]});
     }
 
-    cout << result[n];
+    cout << max(smx[n], smx[n-1]);
 }
