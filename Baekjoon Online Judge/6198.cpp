@@ -15,39 +15,20 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-void solve(int CASE) {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int i=0; i<n; i++) {
-        cin >> v[i];
-    }
-    vector<int> left(n);
-    stack<int> st;
-    for (int i=0; i<n; i++) {
-        while (st.size() && v[st.top()] <= v[i]) {
-            left[st.top()] = i;
-            st.pop();
-        }
-        st.push(i);
-    }
-    while (st.size()) {
-        left[st.top()] = n;
-        st.pop();
-    }
-    ll ans = 0;
-    for (int i=0; i<n; i++) {
-        ans += left[i] - i - 1;
-    }
-    cout << ans << '\n';
-}
-
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int T = 1;
-    for (int t=1; t<=T; t++) {
-        solve(t);
+    int n;
+    cin >> n;
+    ll ans = 0;
+    stack<int> st;
+    for (int i=0; i<n; i++) {
+        int a;
+        cin >> a;
+        while (st.size() && st.top() <= a) st.pop();
+        ans += st.size();
+        st.push(a);
     }
+    cout << ans << '\n';
 }
