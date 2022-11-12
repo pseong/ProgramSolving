@@ -25,8 +25,8 @@ signed main() {
 
     int cnt = 0;
     while(a != b){
-        a = a-a/2;
-        b = b-b/2;
+        a = (a + 1) / 2;
+        b = (b + 1) / 2;
         cnt++;
     }
     
