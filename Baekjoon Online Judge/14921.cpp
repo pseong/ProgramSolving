@@ -25,13 +25,14 @@ signed main() {
     for (int i=0; i<n; i++) {
         cin >> v[i];
     }
-    int l = 0;
-    int r = n-1;
-    int ans = v[0] + v[1];
-    while (l < r) {
-        if (abs(ans) > abs(v[l] + v[r])) ans = v[l] + v[r];
-        if (v[l] + v[r] >= 0) r--;
-        else l++;
+    sort(v.begin(), v.end());
+    ll ans = v[0] + v[1];
+    for (int i=0; i<n; i++) {
+        int idx = lower_bound(v.begin() + i + 1, v.end(), -v[i]) - v.begin();
+        for (int j=idx-1; j<=idx; j++) {
+            if (j < 0 || j >= n || i == j) continue;
+            if (abs(ans) > abs(v[i] + v[j])) ans = v[i] + v[j];
+        }
     }
     cout << ans << '\n';
 }
