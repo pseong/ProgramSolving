@@ -25,23 +25,15 @@ signed main() {
     for (int i=0; i<n; i++) {
         cin >> v[i];
     }
-    int l = 0;
-    int r = -1;
     ll ans = 0;
-    while (r < n - 1) {
-        r++;
-        cnt[v[r]]++;
-        if (r == n || cnt[v[r]] == 2) {
-            ans += (ll)(r - l) * (r - l + 1) / 2;
-            while (l < n && cnt[v[l]] != 2) {
-                cnt[v[l]]--;
-                l++;
-            }
-            if (l < n) cnt[v[l]]--;
-            l++;
-            ans -= (ll)(r - l) * (r - l + 1) / 2;
+    int r = -1;
+    for (int l=0; l<n; l++) {
+        while (r < n - 1 && cnt[v[r+1]] == 0) {
+            r++;    
+            cnt[v[r]] = 1;
         }
+        ans += r - l + 1;
+        cnt[v[l]] = 0;
     }
-    ans += (ll)(r - l + 1) * (r - l + 2) / 2;
     cout << ans << '\n';
 }
