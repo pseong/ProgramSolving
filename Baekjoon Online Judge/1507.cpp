@@ -23,45 +23,28 @@ signed main() {
 
     int n;
     cin >> n;
-    vector<ti> edges;
+    vector<vector<int>> v(n + 1, vector<int>(n + 1));
     for (int i=1; i<=n; i++) {
         for (int j=1; j<=n; j++) {
-            int a;
-            cin >> a;
-            if (i < j) {
-                edges.push_back({a, i, j});
-            }
-        }
-    }
-    sort(edges.begin(), edges.end());
-    const int inf = 10000000;
-    vector<vector<int>> vv(n + 1, vector<int>(n + 1, inf));
-    for (int i=1; i<=n; i++) {
-        vv[i][i] = 0;
-    }
-    for (auto& [w, u, v] : edges) {
-        auto go = vv;
-        for (int k=1; k<=n; k++) {
-            for (int i=1; i<=n; i++) {
-                for (int j=1; j<=n; j++) {
-                    go[i][j] = min(go[i][j], go[i][k] + go[k][j]);
-                }
-            }
-        }
-        if (go[u][v] > w) {
-            vv[u][v] = w;
-            vv[v][u] = w;
-        }
-        else if (go[u][v] < w) {
-            cout << -1 << '\n';
-            return 0;
+            cin >> v[i][j];
         }
     }
     int ans = 0;
     for (int i=1; i<=n; i++) {
-        for (int j=1; j<=n; j++) {
-            if (vv[i][j] != inf) ans += vv[i][j];
+        for (int j=i+1; j<=n; j++) {
+            bool ok = true;
+            for (int k=1; k<=n; k++) {
+                if (i == k || j == k) continue;
+                if (v[i][j] > v[i][k] + v[k][j]) {
+                    cout << -1 << '\n';
+                    return 0;
+                }
+                else if (v[i][j] == v[i][k] + v[k][j]) {
+                    ok = false;
+                }
+            }
+            if (ok) ans += v[i][j];
         }
     }
-    cout << ans / 2 << '\n';
+    cout << ans << '\n';
 }
