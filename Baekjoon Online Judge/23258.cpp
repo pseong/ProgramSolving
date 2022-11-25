@@ -15,36 +15,37 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-int cost[30][30];
+ll w[310][310][310];
 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int n;
-    cin >> n;
-    vector<vector<int>> v(n + 1, vector<int>(n + 1));
+    int n, q;
+    cin >> n >> q;
+    const ll inf = 1000000000000;
     for (int i=1; i<=n; i++) {
         for (int j=1; j<=n; j++) {
-            cin >> v[i][j];
+            cin >> w[0][i][j];
+            if (w[0][i][j] == 0 && i != j) w[0][i][j] = inf;
         }
     }
-    int ans = 0;
-    for (int i=1; i<=n; i++) {
-        for (int j=i+1; j<=n; j++) {
-            bool ok = true;
-            for (int k=1; k<=n; k++) {
-                if (i == k || j == k) continue;
-                if (v[i][j] > v[i][k] + v[k][j]) {
-                    cout << -1 << '\n';
-                    return 0;
-                }
-                else if (v[i][j] == v[i][k] + v[k][j]) {
-                    ok = false;
-                }
+    for (int k=1; k<=n; k++) {
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=n; j++) {
+                w[k][i][j] = w[k-1][i][j];
             }
-            if (ok) ans += v[i][j];
+        }
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=n; j++) {
+                w[k][i][j] = min(w[k][i][j], w[k][i][k] + w[k][k][j]);
+            }
         }
     }
-    cout << ans << '\n';
+    for (int i=0; i<q; i++) {
+        int c, s, e;
+        cin >> c >> s >> e;
+        if (w[c-1][s][e] == inf) cout << -1 << '\n';
+        else cout << w[c-1][s][e] << '\n';
+    }
 }

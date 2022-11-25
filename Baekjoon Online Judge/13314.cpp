@@ -15,36 +15,18 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-int cost[30][30];
-
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int n;
-    cin >> n;
-    vector<vector<int>> v(n + 1, vector<int>(n + 1));
+    int n = 100;
+    cout << n << '\n';
     for (int i=1; i<=n; i++) {
         for (int j=1; j<=n; j++) {
-            cin >> v[i][j];
+            if (i == j) cout << 0 << ' ';
+            else if (i == n || j == n) cout << 1 << ' ';
+            else cout << 10000 << ' ';
         }
+        cout << '\n';
     }
-    int ans = 0;
-    for (int i=1; i<=n; i++) {
-        for (int j=i+1; j<=n; j++) {
-            bool ok = true;
-            for (int k=1; k<=n; k++) {
-                if (i == k || j == k) continue;
-                if (v[i][j] > v[i][k] + v[k][j]) {
-                    cout << -1 << '\n';
-                    return 0;
-                }
-                else if (v[i][j] == v[i][k] + v[k][j]) {
-                    ok = false;
-                }
-            }
-            if (ok) ans += v[i][j];
-        }
-    }
-    cout << ans << '\n';
 }
