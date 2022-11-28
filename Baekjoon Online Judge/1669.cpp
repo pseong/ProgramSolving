@@ -21,15 +21,12 @@ signed main() {
     
     int a, b;
     cin >> a >> b;
-    vector<ll> v(150001);
-    v[1] = 1;
-    for (int i=2; i<=150000; i++) {
-        v[i] = v[i-2] + i;
-    }
-    for (int i=0; i<=150000; i++) {
-        if (v[i] >= abs(a-b)) {
-            cout << i << '\n';
-            return 0;
-        }
+    int g = b - a;
+    if (g == 0) cout << 0 << '\n';
+    else {
+        int k = sqrt(g);
+        if (g <= k * k) cout << k * 2 - 1 << '\n';
+        else if (g <= k * k + k) cout << k * 2 << '\n';
+        else cout << k * 2 + 1 << '\n';
     }
 }
