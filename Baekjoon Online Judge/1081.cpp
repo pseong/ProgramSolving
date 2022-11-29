@@ -15,55 +15,24 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-ll _cal(ll x) {
-    if (x == 0) return 0;
-    int cnt = 0;
-    ll go = x;
-    ll f = 1;
-    while (go) {
-        cnt++;
-        f = go % 10;
-        go /= 10;
-    }
-    ll res = 0;
-    for (int i=0; i<cnt-1; i++) {
-        res += 45 * (x / 10);
-    }
-    ll mul = x / f;
-    for (int i=1; i<f; i++) {
-        res += (ll)i * mul;
-    }
-    res += f;
-    return res;
+vector<ll> p(11, 1);
+ll cnt(ll n, ll i, ll j) {
+   if (p[1] & 1) for (int k = 1; k <= 10; k++) p[k] = p[k - 1] * 10;
+   ll ret = n / p[i + 1] * p[i];
+   ll t = n / p[i] % 10;
+   if (!j && !ret) return 0; // if leading zero
+   if (t > j) ret += p[i];
+   else if (t == j) ret += n % p[i] + 1;
+   if (j == 0) ret -= p[i];
+   return ret;
 }
 
 ll cal(ll x) {
-    int cnt = 0;
-    vector<ll> v;
-    ll go = x;
-    ll f = 1;
-    while (go) {
-        cnt++;
-        f = go % 10;
-        v.push_back(go % 10);
-        go /= 10;
-    }
-    ll now = 0;
     ll res = 0;
-    reverse(v.begin(), v.end());
-    ll z = 1;
-    for (int j=0; j<cnt-1; j++) {
-        z *= 10;
-    }
-    for (int i=0; i<cnt; i++) {
-        res += _cal(v[i] * z);
-        z /= 10;
-    }
-    string s = to_string(x);
-    for (int i=0; i<(int)s.size()-1; i++) {
-        ll a = s[i] - '0';
-        ll b = stoll(s.substr(i + 1));
-        res += a * b;
+    for (int i=1; i<10; i++) {
+        for (int j=0; j<10; j++) {
+            res += cnt(x, j, i) * i;
+        }
     }
     return res;
 }
