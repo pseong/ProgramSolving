@@ -1,53 +1,43 @@
 #include <bits/stdc++.h>
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
 using ll=long long;
-using pii=pair<int,int>;
-using pll=pair<ll,ll>;
-#define pb push_back
-#define F first
-#define S second
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
-ll ans[10];
-ll n;
+vector<ll> p(11, 1);
+ll cnt(ll n, ll i, ll j) {
+   if (p[1] & 1) for (int k = 1; k <= 10; k++) p[k] = p[k - 1] * 10;
+   ll ret = n / p[i + 1] * p[i];
+   ll t = n / p[i] % 10;
+   if (!j && !ret) return 0; // if leading zero
+   if (t > j) ret += p[i];
+   else if (t == j) ret += n % p[i] + 1;
+   if (j == 0) ret -= p[i];
+   return ret;
+}
 
-int main() {
-    ios::sync_with_stdio(0); 
-    cin.tie(0); cout.tie(0);
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
 
-    cin >> n;
-    for(ll i=10; i<=10000000000; i*=10) {
-        ll div=n/i;
-        for(ll k=0; k<10; k++) {
-            ans[k] += div*i/10;
+    ll x;
+    cin >> x;
+    for (int i=0; i<10; i++) {
+        ll res = 0;
+        for (int j=0; j<10; j++) {
+            res += cnt(x, j, i);
         }
-        if(div>=1) ans[0] -= (i/10-1);
-        ll left=n%i;
-        if(div>=1) {
-            ll div2=left/(i/10);
-            for(ll k=1; k<div2; k++) {
-                ans[k] += i/10;
-            }
-            if(div2>=1) ans[0] += (i/10-1);
-            if(div2==0) {
-                ll left2=left%(i/10);
-                ans[div2] += left2;
-            }
-            else {
-                ll left2=left%(i/10)+1;
-                ans[div2] += left2;
-            }
-        }
-        else {
-            ll div2=left/(i/10);
-            if(div2==0) continue;
-            for(ll k=1; k<div2; k++) {
-                ans[k] += i/10;
-            }
-            ll left2=left%(i/10)+1;
-            ans[div2] += left2;
-        }
-    }
-    for(ll i=0; i<10; i++) {
-        cout << ans[i] << ' ';
+        cout << res << ' ';
     }
 }
