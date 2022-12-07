@@ -22,8 +22,7 @@ signed main() {
     ll x, y;
     cin >> x >> y;
     ll g = gcd(x, y);
-    x /= g;
-    y /= g;
+    x /= g, y /= g;
     ll ans = x + y - 1;
     cout << ans * g << '\n';
 }
