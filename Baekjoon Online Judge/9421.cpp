@@ -15,59 +15,40 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-int chk[1010101], prime[1010101], sgs[1010101];
+int prime[1010101];
 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    prime[0] = 1;
-    prime[1] = 1;
-    for (int i=2; i<1010101; i++) {
+    int n;
+    cin >> n;
+    for (int i=2; i<=n; i++) {
         if (prime[i] == 0) {
-            for (int j=i+i; j<1010101; j+=i) {
+            for (int j=i+i; j<=n; j+=i) {
                 prime[j] = 1;
             }
         }
     }
-    memset(sgs, -1, sizeof sgs);
-    sgs[0] = 0;
-    sgs[1] = 1;
-    for (int i=1; i<1010101; i++) {
-        if (sgs[i] != -1) continue;
-        vector<int> hist;
+    for (int i=2; i<=n; i++) {
+        if (prime[i] == 1) continue;
+        map<int, bool> chk;
         int go = i;
         chk[go] = 1;
-        hist.push_back(go);
         while (true) {
-            int nxt = 0;
             int g = go;
+            int nxt = 0;
             while (g) {
                 nxt += (g % 10) * (g % 10);
                 g /= 10;
             }
-            if (sgs[nxt] == 1) {
-                for (int i : hist) {
-                    chk[i] = 0;
-                    sgs[i] = 1;
-                }
+            if (nxt == 1) {
+                cout << i << '\n';
                 break;
             }
-            else if (sgs[nxt] == 0 || chk[nxt] == 1) {
-                for (int i : hist) {
-                    chk[i] = 0;
-                    sgs[i] = 0;
-                }
-                break;
-            }
-            chk[nxt] = 1;
-            hist.push_back(nxt);
+            else if (!chk[nxt]) chk[nxt] = 1;
+            else break;
             go = nxt;
         }
-    }
-    int n;
-    cin >> n;
-    for (int i=1; i<=n; i++) {
-        if (prime[i] == 0 && sgs[i] == 1) cout << i << '\n';
     }
 }
