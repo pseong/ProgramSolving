@@ -32,7 +32,7 @@ signed main() {
         d[i-1] = v[i] - v[i-1];
     }
     sort(d.rbegin(), d.rend());
-    for (int i=0; i<k-1; i++) {
+    for (int i=0; i<min(k-1,n-1); i++) {
         ans -= d[i];
     }
     cout << ans << '\n';
