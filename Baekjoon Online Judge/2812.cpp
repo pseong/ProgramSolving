@@ -15,86 +15,6 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-struct Lazyseg {
-	// EDIT TYPE
-	typedef struct {
-		long long mx, idx;
-	} _T;
-	typedef long long _L;
-    //
-    _T(*op)(_T, _T);
-	int n;
-	vector<_T> S;
-	vector<_L> lazy;
-	_T t;
-	Lazyseg(_T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
-		S.resize(4*n+10, {0});
-		lazy.resize(4*n+10, {0});
-	}
-	Lazyseg(_T(*op)(_T, _T), const vector<long long>& A, int n, _T t) : op(op), n(n), t(t) {
-		S.resize(4*n+10, {0});
-		lazy.resize(4*n+10, {0});
-		init(A, 1, 1, n);
-	}
-	_T init(const vector<long long>& A, int node, int s, int e) {
-		if (s == e) {
-			S[node].mx = A[s];
-            S[node].idx = s;
-			return S[node];
-		}
-		int mid = (s+e)/2;
-		return S[node] = op(init(A, node*2, s, mid), init(A, node*2+1, mid+1, e));
-	}
-	void propagate(int node, int s, int e) {
-		if (lazy[node] == 0) return;
-        // EDIT HERE
-        S[node].mx += lazy[node];
-        if (s!=e) {
-            lazy[node*2] += lazy[node];
-            lazy[node*2+1] += lazy[node];
-        }
-        //
-		lazy[node] = 0;
-	}
-	_T query(int node, int s, int e, int l, int r) {
-        propagate(node, s, e);
-		if (e < l || r < s) return t;
-		if (l <= s && e <= r) return S[node];
-		int mid = (s+e)/2;
-		return op(query(node*2, s, mid, l, r), query(node*2+1, mid+1, e, l, r));
-	}
-	_T query(int l, int r) {
-		return query(1, 1, n, l, r);
-	}
-	void update_range(int node, int s, int e, int l, int r, _L x) {
-        propagate(node, s, e);
-		if (e < l || r < s) return;
-		if (l <= s && e <= r) {
-			// EDIT HERE
-			lazy[node] += x;
-            //
-			propagate(node, s, e);
-			return;
-		}
-		int mid = (s + e) / 2;
-		update_range(node*2, s, mid, l, r, x);
-		update_range(node*2+1, mid+1, e, l, r, x);
-		S[node] = op(S[node*2], S[node*2+1]);
-	}
-	void update_range(int l, int r, _L x) {
-		update_range(1, 1, n, l, r, x);
-	}
-};
-
-Lazyseg::_T op(Lazyseg::_T a, Lazyseg::_T b) {
-    auto ret = a;
-    if (a.mx < b.mx) ret = b;
-    else if (a.mx == b.mx) {
-        if (a.idx > b.idx) ret = b;
-    }
-    return ret;
-}
-
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
@@ -102,18 +22,14 @@ signed main() {
     int n, k;
     string s;
     cin >> n >> k >> s;
-    k = n - k;
-    vector<ll> v(n + 1);
-    for (int i=0; i<n; i++){ 
-        v[i+1] = s[i] - '0';
+    string st;
+    for (int i=0; i<n; i++) {
+        while (k && st.size() && st.back() < s[i]) {
+            st.pop_back();
+            k--;
+        }
+        st.push_back(s[i]);
     }
-    Lazyseg seg(op, v, n, { -1, -1 });
-    int now = 1;
-    string ans;
-    for (int i=1; i<=k; i++) {
-        auto at = seg.query(now, n - k + i);
-        now = at.idx + 1;
-        ans += at.mx + '0';
-    }
-    cout << ans << '\n';
+    while (k--) st.pop_back();
+    cout << st << '\n';
 }
