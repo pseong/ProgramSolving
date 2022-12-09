@@ -22,21 +22,17 @@ signed main() {
     int n;
     cin >> n;
     vector<pll> v(n);
-    ll sum = 0;
+    ll l = 0;
+    ll r = 0;
     for (int i=0; i<n; i++) {
         cin >> v[i].first >> v[i].second;
-        sum += v[i].second;
-    }
-    sort(v.begin(), v.end());
-    ll l = 0;
-    ll r = sum;
-    for (int i=0; i<n; i++) {
         r += v[i].second;
     }
+    sort(v.begin(), v.end());
     for (int i=0; i<n; i++) {
         r -= v[i].second;
         l += v[i].second;
-        if (l * 2 >= sum) {
+        if (l >= r) {
             cout << v[i].first << '\n';
             return 0;
         }
