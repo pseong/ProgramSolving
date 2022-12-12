@@ -32,8 +32,6 @@ signed main() {
     for (int i=1; i<=n; i++) {
         for (int j=0; j<=99; j++) {
             dp[i][j] = dp[i-1][j];
-        }
-        for (int j=0; j<=99; j++) {
             if (j-a[i] >= 0) dp[i][j] = max(dp[i][j], dp[i-1][j-a[i]] + b[i]);
         }
     }
