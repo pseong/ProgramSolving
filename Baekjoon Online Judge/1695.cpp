@@ -16,14 +16,7 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 int v[5050], dp[5050][5050];
-const int inf = 1e18;
-
-int f(int l, int r) {
-    if (l >= r) return 0;
-    if (dp[l][r] != -1) return dp[l][r];
-    if (v[l] == v[r]) return dp[l][r] = f(l + 1, r - 1);
-    return dp[l][r] = min(f(l, r - 1), f(l + 1, r)) + 1;
-}
+const int inf = 1e9;
 
 signed main() {
     ios::sync_with_stdio(false);
@@ -42,16 +35,13 @@ signed main() {
     for (int i=1; i<=n; i++) {
         dp[i][i] = 0;
     }
-    for (int i=1; i<=n; i++) {
-        for (int j=1; j<i; j++) {
-            dp[i][j] = 0;
-        }
-    }
-    for (int len=1; len<=n; len++) {
-        for (int l=1; l<=n; l++) {
+    for (int len=1; len<n; len++) {
+        for (int l=1; l<=n-len+1; l++) {
             int r = l + len;
-            if (l > n) continue;
-            if (v[l] == v[r]) dp[l][r] = dp[l+1][r-1];
+            if (v[l] == v[r]) {
+                if (len == 1) dp[l][r] = 0;
+                else dp[l][r] = dp[l+1][r-1];
+            }
             else dp[l][r] = min(dp[l][r-1], dp[l+1][r]) + 1;
         }
     }
