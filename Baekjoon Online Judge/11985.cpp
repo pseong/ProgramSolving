@@ -33,7 +33,7 @@ signed main() {
     for (int i=1; i<=n; i++) {
         ll mn = v[i];
         ll mx = v[i];
-        for (int cnt=1; cnt<=m; cnt++) {
+        for (int cnt=1; cnt<=min(m, (ll)i); cnt++) {
             int j = i - cnt + 1;
             mn = min(mn, v[j]);
             mx = max(mx, v[j]);
