@@ -18,34 +18,12 @@ void yes() { cout << "Yes" << '\n'; }
 char mp[10][10];
 int dp[10][10], dp2[10][10];
 const int inf = 1e5;
-int n;
-
-// 0 : +, 1 : -, 2 : *
-void go(int x, int y, int now, int op) {
-    if (mp[x][y] >= '0' && mp[x][y] <= '5') {
-        int z = mp[x][y] - '0';
-        if (op == 0) z = now + z;
-        else if (op == 1) z = now - z;
-        else z = now * z;
-        dp[x][y] = max(dp[x][y], z);
-        dp2[x][y] = min(dp2[x][y], z);
-        if (x + 1 <= n) go(x + 1, y, z, 0);
-        if (y + 1 <= n) go(x, y + 1, z, 0);
-    }
-    else {
-        int p = 0;
-        if (mp[x][y] == '+') p = 0;
-        else if (mp[x][y] == '-') p = 1;
-        else p = 2;
-        if (x + 1 <= n) go(x + 1, y, now, p);
-        if (y + 1 <= n) go(x, y + 1, now, p);
-    }
-}
 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     
+    int n;
     cin >> n;
     for (int i=1; i<=n; i++) {
         for (int j=1; j<=n; j++) {
@@ -55,13 +33,57 @@ signed main() {
     for (int i=0; i<10; i++) {
         for (int j=0; j<10; j++) {
             dp[i][j] = -inf;
-        }
-    }
-    for (int i=0; i<10; i++) {
-        for (int j=0; j<10; j++) {
             dp2[i][j] = inf;
         }
     }
-    go(1, 1, 0, 0);
+    dp[1][1] = mp[1][1] - '0';
+    dp2[1][1] = mp[1][1] - '0';
+    for (int i=1; i<=n; i++) {
+        for (int j=1; j<=n; j++) {
+            if (mp[i-1][j] == '+') {
+                if (i > 2) dp[i][j] = max(dp[i][j], dp[i-2][j] + (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp[i][j] = max(dp[i][j], dp[i-1][j-1] + (mp[i][j] - '0'));
+
+                if (i > 2) dp2[i][j] = min(dp2[i][j], dp2[i-2][j] + (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp2[i][j] = min(dp2[i][j], dp2[i-1][j-1] + (mp[i][j] - '0'));
+            }
+            else if (mp[i-1][j] == '-') {
+                if (i > 2) dp[i][j] = max(dp[i][j], dp[i-2][j] - (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp[i][j] = max(dp[i][j], dp[i-1][j-1] - (mp[i][j] - '0'));
+                
+                if (i > 2) dp2[i][j] = min(dp2[i][j], dp2[i-2][j] - (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp2[i][j] = min(dp2[i][j], dp2[i-1][j-1] - (mp[i][j] - '0'));
+            }
+            else if (mp[i-1][j] == '*') {
+                if (i > 2) dp[i][j] = max(dp[i][j], dp[i-2][j] * (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp[i][j] = max(dp[i][j], dp[i-1][j-1] * (mp[i][j] - '0'));
+
+                if (i > 2) dp2[i][j] = min(dp2[i][j], dp2[i-2][j] * (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp2[i][j] = min(dp2[i][j], dp2[i-1][j-1] * (mp[i][j] - '0'));
+            }
+
+            if (mp[i][j-1] == '+') {
+                if (j > 2) dp[i][j] = max(dp[i][j], dp[i][j-2] + (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp[i][j] = max(dp[i][j], dp[i-1][j-1] + (mp[i][j] - '0'));
+
+                if (j > 2) dp2[i][j] = min(dp2[i][j], dp2[i][j-2] + (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp2[i][j] = min(dp2[i][j], dp2[i-1][j-1] + (mp[i][j] - '0'));
+            }
+            else if (mp[i][j-1] == '-') {
+                if (j > 2) dp[i][j] = max(dp[i][j], dp[i][j-2] - (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp[i][j] = max(dp[i][j], dp[i-1][j-1] - (mp[i][j] - '0'));
+
+                if (j > 2) dp2[i][j] = min(dp2[i][j], dp2[i][j-2] - (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp2[i][j] = min(dp2[i][j], dp2[i-1][j-1] - (mp[i][j] - '0'));
+            }
+            else if (mp[i][j-1] == '*') {
+                if (j > 2) dp[i][j] = max(dp[i][j], dp[i][j-2] * (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp[i][j] = max(dp[i][j], dp[i-1][j-1] * (mp[i][j] - '0'));
+
+                if (j > 2) dp2[i][j] = min(dp2[i][j], dp2[i][j-2] * (mp[i][j] - '0'));
+                if (i > 1 && j > 1) dp2[i][j] = min(dp2[i][j], dp2[i-1][j-1] * (mp[i][j] - '0'));
+            }
+        }
+    }
     cout << dp[n][n] << ' ' << dp2[n][n] << '\n';
 }
