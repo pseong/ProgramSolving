@@ -17,6 +17,7 @@ void yes() { cout << "Yes" << '\n'; }
 
 int v[6060606], chk[3030], cnt;
 
+
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
