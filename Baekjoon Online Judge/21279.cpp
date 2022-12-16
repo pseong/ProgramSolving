@@ -28,10 +28,6 @@ signed main() {
         cin >> x >> y >> t;
         v[y].push_back({x, t});
     }
-    /*
-    for (int i=0; i<=100000; i++) {
-        sort(v[i].begin(), v[i].end());
-    }*/
     ll ans = 0;
     int nowx = 100000;
     ll noww = 0;
