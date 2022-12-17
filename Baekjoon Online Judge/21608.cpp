@@ -20,17 +20,6 @@ int dx[] {-1, 1, 0, 0};
 int dy[] {0, 0, -1, 1};
 tuple<int, int, int, int> in[500];
 
-int cnt(int x, int y) {
-    int ret = 0;
-    for (int d=0; d<4; d++) {
-        int r = x + dx[d];
-        int c = y + dy[d];
-        if (r < 1 || r > n || c < 1 || c > n) continue;
-        if (v[r][c] == 0) ret++;
-    }
-    return ret;
-}
-
 bool comp(tuple<int, int, int, int>& l, tuple<int, int, int, int>& r) {
     if (get<0>(l) != get<0>(r)) return get<0>(l) > get<0>(r);
     else if (get<1>(l) != get<1>(r)) return get<1>(l) > get<1>(r);
