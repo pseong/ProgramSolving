@@ -15,7 +15,7 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-int v[330][330][2], chk[2020][2020];
+int v[330][330][2];
 int dx[] {-1, -2, -2, -1, 1, 2, 2, 1};
 int dy[] {-2, -1, 1, 2, 2, 1, -1, -2};
 
