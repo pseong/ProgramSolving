@@ -25,7 +25,7 @@ void solve(int CASE) {
     b.resize(n + 1, '0');
     string ans(n + 1, '0');
     int u = 0;
-    for (int i=0; i<n+1; i++) {
+    for (int i=0; i<=n; i++) {
         int x = a[i] - '0' + b[i] - '0' + u;
         if (x == 0) {
             ans[i] = '0';
