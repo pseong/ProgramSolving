@@ -49,11 +49,11 @@ signed main() {
                 int b = y + dy[d];
                 if (a < 0 || a >= n || b < 0 || b >= m) continue;
                 if (chk[a][b] || v[a][b] == '1') continue;
-                chk[a][b] = 1;
                 else if (v[a][b] != '0') {
                      cout << "TAK\n" << cnt << '\n';
                     return 0;
                 }
+                chk[a][b] = 1;
                 q.push({a, b});
             }
         }
