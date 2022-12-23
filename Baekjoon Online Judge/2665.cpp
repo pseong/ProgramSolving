@@ -15,8 +15,6 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-int chk[60][60][2600];
-
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
@@ -24,6 +22,7 @@ signed main() {
     int n;
     cin >> n;
     vector<vector<int>> v(n + 1, vector<int>(n + 1));
+    vector<vector<int>> chk(n + 1, vector<int>(n + 1, 1e9));
     for (int i=1; i<=n; i++) {
         string s;
         cin >> s;
@@ -31,11 +30,11 @@ signed main() {
             v[i][j] = s[j-1] - '0';
         }
     }
-    chk[1][1][0] = 1;
-    queue<ti> q;
-    q.push({1, 1, 0});
+    chk[1][1] = 0;
+    queue<pi> q;
+    q.push({1, 1});
     while (q.size()) {
-        auto [x, y, c] = q.front();
+        auto [x, y] = q.front();
         q.pop();
         int dx[] {-1, 1, 0, 0};
         int dy[] {0, 0, -1, 1};
@@ -43,20 +42,10 @@ signed main() {
             int a = x + dx[d];
             int b = y + dy[d];
             if (a < 1 || a > n || b < 1 || b > n) continue;
-            int w = ((v[a][b] == 0) ? c + 1 : c);
-            if (chk[a][b][w] || w >= n * n) continue;
-            chk[a][b][w] = 1;
-            if (a == 8 && b == 8) {
-                int f = 3;
-                f += f;
-            }
-            q.push({a, b, w});
+            if (chk[a][b] <= chk[x][y] + (v[a][b] == 0 ? 1 : 0)) continue;
+            chk[a][b] = chk[x][y] + (v[a][b] == 0 ? 1 : 0);
+            q.push({a, b});
         }
     }
-    for (int i=0; i<2600; i++) {
-        if (chk[n][n][i]) {
-            cout << i << '\n';
-            return 0;
-        }
-    }
+    cout << chk[n][n] << '\n';
 }
