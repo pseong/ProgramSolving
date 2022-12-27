@@ -31,6 +31,7 @@ signed main() {
         string s;
         cin >> s;
         bool ok = true;
+        if ((int)s.size() < (int)t.size() - 1) ok = false;
         for (int i=0; i<idx; i++) {
             if (i >= s.size() || s[i] != t[i]) {
                 ok = false;
