@@ -25,6 +25,7 @@ signed main() {
     for (int i=0; i<n; i++) {
         cin >> v[i].first >> v[i].second;
     }
+    sort(v.begin(), v.end());
     vector<int> ans{0, 0};
     for (int i=0; i<n; i++) {
         int g = v[i].first;
