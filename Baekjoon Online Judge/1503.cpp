@@ -29,18 +29,18 @@ signed main() {
         vis[a] = 1;
     }
     int ans = 1e9;
-    for (int i=1; i<=1500; i++) {
+    for (int i=1; i<=1001; i++) {
         if (vis[i]) continue;
-        for (int j=1; j<=1500; j++) {
+        for (int j=1; j<=1001; j++) {
             if (vis[j]) continue;
-            for (int k=1; k<=1500; k++) {
+            for (int k=1; k<=1001; k++) {
                 if (vis[k]) continue;
                 ans = min(ans, abs(n - i * j * k));
-                if (i * j * k > 1500) break;
+                if (i * j * k >= n) break;
             }
-            if (i * j > 1500) break;
+            if (i * j >= n) break;
         }
-        if (i > 1500) break;
+        if (i >= n) break;
     }
     cout << ans << '\n';
 }
