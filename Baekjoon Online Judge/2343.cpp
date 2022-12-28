@@ -18,7 +18,7 @@ void yes() { cout << "Yes" << '\n'; }
 int n, m, v[101010];
 
 bool f(int x) {
-    int cnt = 0;
+    int cnt = 1;
     int now = 0;
     for (int i=0; i<n; i++) {
         if (cnt > m) return false;
@@ -29,7 +29,6 @@ bool f(int x) {
             i--;
         }
     }
-    if (now) cnt++;
     return cnt <= m;
 }
 
