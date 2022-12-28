@@ -25,19 +25,35 @@ signed main() {
     
     int n;
     cin >> n;
-    vector<pll> v(n);
+    vector<pi> v(n);
     for (int i=0; i<n; i++) {
         cin >> v[i].first >> v[i].second;
     }
     int ans = 0;
-    for (int i=0; i<n; i++) {
-        for (int j=i+1; j<n; j++) {
-            for (int k=j+1; k<n; k++) {
-                ll a = dist(v[i], v[j]);
-                ll b = dist(v[i], v[k]);
-                ll c = dist(v[j], v[k]);
-                if (a == b + c || b == a + c || c == a + b) ans++;
-            }
+    for (int k=0; k<n; k++) {
+        map<pi, int> mp;
+        for (int i=0; i<n; i++) {
+            if (i == k) continue;
+            int g = gcd(v[i].first - v[k].first, v[i].second - v[k].second);
+            int x = (v[i].first - v[k].first) / g;
+            int y = (v[i].second - v[k].second) / g;
+            if (y < 0) x *= -1, y *= -1;
+            if (x < 0) x *= -1, y *= -1;
+            mp[{x, y}]++;
+        }
+        for (int i=0; i<n; i++) {
+            if (i == k) continue;
+            int g = gcd(v[i].first - v[k].first, v[i].second - v[k].second);
+            int x = (v[i].first - v[k].first) / g;
+            int y = (v[i].second - v[k].second) / g;
+            if (y < 0) x *= -1, y *= -1;
+            if (x < 0) x *= -1, y *= -1;
+            int a = y;
+            int b = -x;
+            if (b < 0) a *= -1, b *= -1;
+            if (a < 0) a *= -1, b *= -1;
+            ans += mp[{a, b}];
+            mp[{x, y}]--;
         }
     }
     cout << ans << '\n';
