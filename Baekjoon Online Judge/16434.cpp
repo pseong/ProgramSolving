@@ -30,14 +30,9 @@ bool cal(ll mxhp) {
             hp = min(mxhp, hp + e.h);
         }
         else {
-            ll mn = min(hp / e.a, e.h / atk);
+            ll mn = min((hp - 1) / e.a, (e.h - 1) / atk);
             e.h -= atk * mn;
             hp -= e.a * mn;
-            if (e.h <= 0) {
-                hp += e.a;
-                continue;
-            }
-            if (hp <= 0) return false;
             if (e.h - atk <= 0) continue;
             return false;
         }
