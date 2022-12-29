@@ -34,7 +34,7 @@ signed main() {
         ll m = (lo + hi) / 2;
         ll cal = 0;
         for (int i=0; i<k; i++) {
-            if (min(m, s[i].b) >= s[i].a) cal += (min(m, s[i].b) - s[i].a) / s[i].c + 1;
+            if (m >= s[i].a) cal += (min(m, s[i].b) - s[i].a) / s[i].c + 1;
         }
         if (cal >= d) {
             ans = m;
