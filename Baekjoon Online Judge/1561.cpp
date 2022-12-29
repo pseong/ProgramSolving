@@ -27,7 +27,7 @@ signed main() {
     }
 
     ll lo = 0;
-    ll hi = 1e15;
+    ll hi = 6e10;
     ll ans = 0;
     while (lo <= hi) {
         ll mid = lo + (hi - lo) / 2;
