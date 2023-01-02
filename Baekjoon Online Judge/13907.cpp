@@ -68,6 +68,7 @@ signed main() {
     ans.push_back({dst[t], cnt[t]});
     int now = dst[t];
     for (int i=cnt[t]-1; i>=1; i--) {
+        if (dist[t][i] == inf) continue;
         if (dist[t][i] > now) {
             now = dist[t][i];
             ans.push_back({dist[t][i], i});
