@@ -15,84 +15,19 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-struct Lazyseg {
-	typedef struct {
-		ll mx, idx;
-	} _T;
-	typedef ll _L;
-    _T(*op)(_T, _T);
-	int n;
-	vector<_T> S;
-	vector<_L> lazy;
-	_T t;
-	void init(_T(*op)(_T, _T), const vector<ll>& A, int n, _T t) {
-        this->op = op;
-        this->n = n;
-        this->t = t;
-		S.assign(4*n+10, {0});
-		lazy.assign(4*n+10, {0});
-		init(A, 1, 1, n);
-	}
-	_T init(const vector<long long>& A, int node, int s, int e) {
-		if (s == e) {
-			S[node].mx = A[s];
-            S[node].idx = s;
-			return S[node];
-		}
-		int mid = (s+e)/2;
-		return S[node] = op(init(A, node*2, s, mid), init(A, node*2+1, mid+1, e));
-	}
-	_T query(int node, int s, int e, int l, int r) {
-		if (e < l || r < s) return t;
-		if (l <= s && e <= r) return S[node];
-		int mid = (s+e)/2;
-		return op(query(node*2, s, mid, l, r), query(node*2+1, mid+1, e, l, r));
-	}
-	_T query(int l, int r) {
-		return query(1, 1, n, l, r);
-	}
-};
-
-Lazyseg::_T op(Lazyseg::_T a, Lazyseg::_T b) {
-    if (a.mx < b.mx) return b;
-    else return a;
-}
-
-Lazyseg seg;
-multiset<ll> ms;
-vector<ll> a, b;
-
-bool chk(int l, int r, ll prev) {
-    if (l > r) return true;
-    auto at = seg.query(l, r);
-    bool b = false;
-    if (at.mx < min(prev, a[at.idx])) {
-        auto it = ms.lower_bound(at.mx);
-        if (it == ms.end() || *it != at.mx) return false;
-        ms.erase(it);
-        b = true;
-    }
-    ll x = prev;
-    if (b) x = at.mx;
-    if (chk(l, at.idx-1, x) && chk(at.idx+1, r, x)) return true;
-    else return false;
-}
-
 void solve(int CASE) {
     int n;
     cin >> n;
-    a.assign(n + 1, 0);
-    b.assign(n + 1, 0);
+    vector<int> a(n + 1), b(n + 1);
     for (int i=1; i<=n; i++) cin >> a[i];
     for (int i=1; i<=n; i++) cin >> b[i];
-    seg.init(op, b, n, { 0 });
-    int m;
-    cin >> m;
-    ms.clear();
-    for (int i=0; i<m; i++) {
-        ll x;
-        cin >> x;
-        ms.insert(x);
+    int k;
+    cin >> k;
+    multiset<int> ms;
+    for (int i=0; i<k; i++) {
+        int a;
+        cin >> a;
+        ms.insert(a);
     }
     for (int i=1; i<=n; i++) {
         if (a[i] < b[i]) {
@@ -100,8 +35,39 @@ void solve(int CASE) {
             return;
         }
     }
-    if (chk(1, n, 1e18)) yes();
-    else no();
+    stack<pi> st;
+    for (int i=1; i<=n; i++) {
+        while (st.size() && st.top().second < b[i]) {
+            if (st.top().first != st.top().second) {
+                auto it = ms.lower_bound(st.top().second);
+                if (it == ms.end() || *it != st.top().second) {
+                    no();
+                    return;
+                }
+                while (st.size() && st.top().second == *it) {
+                    st.pop();
+                }
+                ms.erase(it);
+            }
+            else st.pop();
+        }
+        st.push({a[i], b[i]});
+    }
+    while (st.size()) {
+        if (st.top().first == st.top().second) st.pop();
+        else {
+            auto it = ms.lower_bound(st.top().second);
+            if (it == ms.end() || *it != st.top().second) {
+                no();
+                return;
+            }
+            while (st.size() && st.top().second == *it) {
+                st.pop();
+            }
+            ms.erase(it);
+        }
+    }
+    yes();
 }
 
 signed main() {
