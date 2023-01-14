@@ -19,33 +19,12 @@ void solve(int CASE) {
     string s;
     cin >> s;
     int n = s.size();
-    int dir = 0;
-    if (s[0] == s[1]) {
-        cout << s[0] << ' ' << s[1] << ' ' << s.substr(2) << '\n';
-        return;
+    int cur = 0;
+    for (int i=1; i<n-1; i++) {
+        if (s[i] == 'a') cur = i;
     }
-    if (s[n-2] == s[n-1]) {
-        cout << s.substr(0, n-2) << ' ' << s[n-2] << ' ' << s[n-1] << '\n';
-        return;
-    }
-    for (int i=1; i<(int)s.size(); i++) {
-        if (dir == 0) {
-            if (s[i] > s[i-1]) dir = 1;
-            else if (s[i] < s[i-1]) dir = -1;
-        }
-        else {
-            if (s[i] > s[i-1] && dir == -1 || s[i] < s[i-1] && dir == 1) {
-                cout << s.substr(0, i-1) << ' ' << s[i-1] << ' ' << s.substr(i) << '\n';
-                return;
-            }
-
-        }
-    }
-    if (dir == 0) {
-        cout << s[0] << ' ' << string(s.size() - 2, s[0]) << ' ' << s[0] << '\n';
-        return;
-    }
-    cout << ":(\n";
+    if (cur) cout << s.substr(0, cur) << ' ' << 'a' << ' ' << s.substr(cur+1) << '\n';
+    else cout << s.front() << ' ' << string(n-2, 'b') << ' ' << s.back() << '\n';
 }
 
 signed main() {
