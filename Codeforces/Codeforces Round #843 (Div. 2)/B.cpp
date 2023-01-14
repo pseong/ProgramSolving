@@ -14,32 +14,25 @@ template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
-
-int chk[202020], c[202020];
-
+ 
 void solve(int CASE) {
     int n;
     cin >> n;
-    vector<int> v, lst(n);
+    vector<vector<int>> v(n);
+    map<int, int> chk;
     for (int i=0; i<n; i++) {
         int k;
         cin >> k;
-        lst[i] = k;
+        v[i].resize(k);
         for (int j=0; j<k; j++) {
-            int a;
-            cin >> a;
-            v.push_back(a);
-            if (c[a] != CASE) chk[a] = 0;
-            c[a] = CASE;
-            chk[a]++;
+            cin >> v[i][j];
+            chk[v[i][j]]++;
         }
     }
-    int now = 0;
     for (int i=0; i<n; i++) {
         bool ok = true;
-        for (int j=0; j<(int)lst[i]; j++) {
-            if (chk[v[now]] == 1) ok = false;
-            now++;
+        for (int j=0; j<(int)v[i].size(); j++) {
+            if (chk[v[i][j]] == 1) ok = false;
         }
         if (ok) {
             yes();
@@ -48,11 +41,11 @@ void solve(int CASE) {
     }
     no();
 }
-
+ 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-
+ 
     int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
