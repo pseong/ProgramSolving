@@ -16,7 +16,7 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 int dp[202020];
-vector<pi> hist[202020];
+pi hist[202020];
 vector<pi> v;
 
 void cal() {
@@ -33,39 +33,9 @@ void cal() {
         for (int j=0; j<=200000; j++) {
             if (j + v[i].first <= 200000 && dp[j + v[i].first] > dp[j] + v[i].second) {
                 dp[j + v[i].first] = dp[j] + v[i].second;
-                hist[j + v[i].first].clear();
-                hist[j + v[i].first].push_back({j, v[i].second});
-            }
-            else if (j + v[i].first <= 200000 && dp[j + v[i].first] == dp[j] + v[i].second) {
-                hist[j + v[i].first].push_back({j, v[i].second});
+                hist[j + v[i].first] = {j, v[i].second};
             }
         }
-    }
-}
-
-vector<int> now;
-ll ans = 0;
-
-void go(int x) {
-    if (x == 0) {
-        vector<int> s = now;
-        sort(s.begin(), s.end());
-        ll sum = 0;
-        for (int i=0; i<(int)s.size(); i++) {
-            sum += s[i];
-        }
-        ll res = 0;
-        for (int i=0; i<(int)s.size(); i++) {
-            sum -= s[i];
-            res += s[i] * sum;
-        }
-        ans = max(ans, res);
-        return;
-    }
-    for (auto [y, c] : hist[x]) {
-        now.push_back(c);
-        go(y);
-        now.pop_back();
     }
 }
 
@@ -76,7 +46,7 @@ signed main() {
     cal();
     int p;
     cin >> p;
-    int cnt = dp[p];
-    go(p);
+    ll cnt = dp[p];
+    ll ans = cnt * (cnt - 1) / 2 - p;
     cout << cnt << ' ' << ans << '\n';
 }
