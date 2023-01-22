@@ -20,14 +20,9 @@ void solve(int CASE) {
     cin >> n;
     vector<int> v(n);
     for (int i=0; i<n; i++) cin >> v[i];
-    int cnt = 1;
     int ans = 0;
-    for (int i=1; i<=n; i++) {
-        if (i == n || v[i]%2 != v[i-1]%2) {
-            ans += cnt - 1;
-            cnt = 1;
-        }
-        else cnt++;
+    for (int i=1; i<n; i++) {
+        if (v[i]%2 == v[i-1]%2) ans++;
     }
     cout << ans << '\n';
 }
