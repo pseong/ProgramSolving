@@ -24,11 +24,8 @@ void solve(int CASE) {
         cin >> v[i];
     }
     ll mx = *max_element(v.begin(), v.end());
-    ll cnt = 0;
-    for (int i=0; i<m; i++) {
-        if (v[i] == mx) cnt++;
-    }
-    if (mx > y || cnt > n - k*(mx-1)) no();
+    ll cnt = count(v.begin(), v.end(), mx);
+    if (k*(mx-1) + cnt > n) no();
     else yes();
 }
 

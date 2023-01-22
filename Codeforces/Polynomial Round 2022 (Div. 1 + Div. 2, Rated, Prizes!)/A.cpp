@@ -20,18 +20,10 @@ void solve(int CASE) {
     cin >> n;
     string s;
     cin >> s;
-    int now = 0;
-    if (s[0] == '1') now = 1;
+    char c = '-';
     for (int i=1; i<n; i++) {
-        if (s[i] == '0') cout << '+';
-        else if (now == 0) {
-            cout << '+';
-            now++;
-        }
-        else {
-            cout << '-';
-            now--;
-        }
+        cout << c;
+        if (s[i] == '1') c ^= '-' ^ '+';
     }
     cout << '\n';
 }
