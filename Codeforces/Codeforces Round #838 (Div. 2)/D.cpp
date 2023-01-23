@@ -15,31 +15,27 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
+int query(int x, int y) {
+    cout << "? " << x << ' ' << y << endl;
+    int res;
+    cin >> res;
+    return res;
+}
+
 void solve(int CASE) {
     int n;
     cin >> n;
-    set<int> st;
-    for (int i=1; i<=n; i++) st.insert(i);
-    while (st.size() >= 3) {
-        int a = *st.begin();
-        st.erase(st.begin());
-        int b = *st.begin();
-        st.erase(st.begin());
-        int c = *st.begin();
-        st.erase(st.begin());
-        cout << "? " << a << ' ' << b << endl;
-        int ab;
-        cin >> ab;
-        cout << "? " << b << ' ' << c << endl;
-        int bc;
-        cin >> bc;
-        if (ab == bc) st.insert(a), st.insert(c);
-        else if (ab > bc) st.insert(a), st.insert(b);
-        else st.insert(b), st.insert(c);
+    int x = 1;
+    int y = 2;
+    for (int i=3; i<=n; i++) {
+        int ix = query(x, i);
+        int iy = query(y, i);
+        if (ix > iy) y = i;
+        else if (ix < iy) x = i;
     }
-    cout << "! " << *st.begin() << ' ' << *st.rbegin() << endl;
-    int r;
-    cin >> r;
+    cout << "! " << x << ' ' << y << endl;
+    int res;
+    cin >> res;
 }
 
 signed main() {
