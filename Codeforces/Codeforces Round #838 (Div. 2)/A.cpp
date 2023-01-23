@@ -15,17 +15,6 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-int cal(int x) {
-    int c = x%2;
-    int res = 0;
-    while (true) {
-        if (x%2 != c) break;
-        x /= 2;
-        res++;
-    }
-    return res;
-}
-
 void solve(int CASE) {
     int n;
     cin >> n;
@@ -38,7 +27,13 @@ void solve(int CASE) {
     }
     int ans = 1e9;
     for (int i=0; i<n; i++) {
-        ans = min(ans, cal(v[i]));
+        int x = v[i];
+        int t = 0;
+        while (x%2 == v[i]%2) {
+            t++;
+            x /= 2;
+        }
+        ans = min(ans, t);
     }
     cout << ans << '\n';
 }

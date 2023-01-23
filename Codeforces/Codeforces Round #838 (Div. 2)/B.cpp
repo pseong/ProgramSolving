@@ -18,22 +18,11 @@ void yes() { cout << "Yes" << '\n'; }
 void solve(int CASE) {
     int n;
     cin >> n;
-    vector<pll> v(n);
+    cout << n << '\n';
     for (int i=0; i<n; i++) {
-        cin >> v[i].first;
-        v[i].second = i;
-    }
-    sort(v.begin(), v.end());
-    ll now = v.begin()->first;
-    vector<pll> ans;
-    for (int i=1; i<n; i++) {
-        if (v[i].first == now) continue;
-        while (v[i].first > now) now *= 2;
-        ans.push_back({v[i].second + 1, now - v[i].first});
-    }
-    cout << ans.size() << '\n';
-    for (auto [x, y] : ans) {
-        cout << x << ' ' << y << '\n';
+        ll a;
+        cin >> a;
+        cout << i + 1 << ' ' << (1LL << __lg(a) + 1) - a << '\n';
     }
 }
 
