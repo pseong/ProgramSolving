@@ -16,30 +16,20 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-    ll n, m;
+    int n, m;
     cin >> n >> m;
-    vector<ll> w(n), chk(n);
-    for (int i=0; i<n; i++) {
-        cin >> w[i];
-    }
+    vector<int> w(n);
+    for (int i=0; i<n; i++) cin >> w[i];
     auto v = w;
     sort(v.begin(), v.end());
-    ll lst = -1e9;
-    ll p = 0;
-    for (int i=0; i<n; i++) {
-        if (v[i] <= m) {
-            m -= v[i];
-            lst = v[i];
-            chk[i] = 1;
-            p++;
-        }
+    int p = 0;
+    for (int& i=p; i<n; i++) {
+        if (v[i] <= m) m -= v[i];
         else break;
     }
-    if (p == n) {
-        cout << 1 << '\n';
-        return;
-    }
-    if (m + lst >= w[p]) cout << n - p << '\n';
+    if (p == n) cout << 1 << '\n';
+    else if (p == 0) cout << n + 1 << '\n';
+    else if (m + v[p-1] >= w[p]) cout << n - p << '\n';
     else cout << n - p + 1 << '\n';
 }
 
