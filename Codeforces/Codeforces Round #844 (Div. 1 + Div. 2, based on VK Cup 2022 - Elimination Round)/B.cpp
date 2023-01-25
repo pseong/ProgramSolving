@@ -18,16 +18,17 @@ void yes() { cout << "Yes" << '\n'; }
 void solve(int CASE) {
     int n;
     cin >> n;
-    vector<int> v(n + 1);
-    for (int i=1; i<=n; i++) cin >> v[i];
+    vector<int> v(n);
+    for (int i=0; i<n; i++) cin >> v[i];
     sort(v.begin(), v.end());
     int ans = 0;
-    int line = -1;
-    for (int i=1; i<=n; i++) {
-        if (i > line && v[i] > i - 1) ans++;
-        line = max(line, v[i] + 1);
+    for (int i=0; i<=n; i++) {
+        if (i == 0 || v[i-1] < i) {
+            if (i == n || v[i] > i) {
+                ans++;
+            }
+        }
     }
-    if (v.back() <= n - 1) ans++;
     cout << ans << '\n';
 }
 

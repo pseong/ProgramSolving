@@ -34,44 +34,22 @@ void solve(int CASE) {
     for (int i=1; i<=26; i++) {
         if (n % i == 0) {
             int cnt = n / i;
-            int a = 0;
             int res = 0;
-            vector<int> chk(26), need(26);
-            for (int j=i; j<26; j++) {
-                res += v[j].first;
-            }
-            for (int j=0; j<i; j++) {
-                chk[v[j].second] = 1;
-                if (v[j].first > cnt) {
-                    chk[v[j].second] = 1;
-                    need[v[j].second] = cnt - v[j].first;
-                    res += v[j].first - cnt;
-                }
-                else if (v[j].first < cnt) {
-                    chk[v[j].second] = 1;
-                    need[v[j].second] = cnt - v[j].first;
-                }
+            vector<int> need(26);
+            for (int j=0; j<26; j++) {
+                if (j == i) cnt = 0;
+                need[v[j].second] = cnt - v[j].first;
+                res += abs(v[j].first - cnt);
             }
             if (res < ans) {
                 ans = res;
                 string t = s;
                 for (int i=0; i<n; i++) {
-                    if (chk[t[i]-'a']) {
-                        if (need[t[i]-'a'] < 0) {
-                            for (int j=0; j<26; j++) {
-                                if (need[j] > 0) {
-                                    need[j]--;
-                                    need[t[i]-'a']++;
-                                    t[i] = j + 'a';
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else {
+                    if (need[t[i]-'a'] < 0) {
                         for (int j=0; j<26; j++) {
                             if (need[j] > 0) {
                                 need[j]--;
+                                need[t[i]-'a']++;
                                 t[i] = j + 'a';
                                 break;
                             }
@@ -82,7 +60,7 @@ void solve(int CASE) {
             }
         }
     }
-    cout << ans << '\n' << ans2 << '\n';
+    cout << ans / 2 << '\n' << ans2 << '\n';
 }
 
 signed main() {

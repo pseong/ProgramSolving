@@ -15,16 +15,16 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-int dist(int x, int y, int a, int b) {
-    return abs(x - a) + abs(y - b);
-}
-
 void solve(int CASE) {
     int w, d, h;
     cin >> w >> d >> h;
     int a, b, f, g;
     cin >> a >> b >> f >> g;
-    cout << min({b + h + dist(a, 0, f, g), d - b + h + dist(a, d, f, g), a + h + dist(0, b, f, g), w - a + h + dist(w, b, f, g)}) << '\n';
+    int ans = b + abs(a - f) + g;
+    ans = min(ans, a + abs(b - g) + f);
+    ans = min(ans, d - b + abs(a - f) + d - g);
+    ans = min(ans, w - a + abs(b - g) + w - f);
+    cout << ans + h << '\n';
 }
 
 signed main() {

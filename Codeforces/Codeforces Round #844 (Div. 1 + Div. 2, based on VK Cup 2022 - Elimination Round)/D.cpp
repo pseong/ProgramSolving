@@ -27,7 +27,6 @@ void solve(int CASE) {
             for (int x=1; x*x<=d; x++) {
                 if (d%x == 0) {
                     int y = d/x;
-                    if ((x + y) % 2 != 0) continue;
                     ll a = (x + y) / 2;
                     ll df = a*a - v[j];
                     if (df < 0) continue;
