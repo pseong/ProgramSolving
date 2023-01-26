@@ -14,31 +14,26 @@ template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
-
+ 
 void solve(int CASE) {
-    ll n;
+    int n;
     cin >> n;
-    ll ans = 0;
-    ll d = 0;
-    for (ll x=n-1; x>=0; x--) {
-        ll now = 0;
-        for (ll i=0; i<d; i++) {
-            now |= (1LL << i);
-        }
-        now++;
-        cout << "- " << now << endl;
-        ll y;
+    int ans = 0;
+    int d = 0;
+    for (int x=n-1; x>=0; x--) {
+        cout << "- " << (1<<d) << endl;
+        int y;
         cin >> y;
         d = y - x;
         ans |= (1<<d);
     }
     cout << "! " << ans << endl;
 }
-
+ 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-
+ 
     int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
