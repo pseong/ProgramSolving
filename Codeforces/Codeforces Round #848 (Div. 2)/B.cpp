@@ -26,17 +26,18 @@ void solve(int CASE) {
     for (int i=0; i<m; i++) {
         cin >> a[i];
     }
-    bool ok = true;
     int mn = 1e9;
     for (int i=1; i<m; i++) {
-        if (!(idx[a[i]] > idx[a[i-1]] && idx[a[i]] <= idx[a[i-1]] + d)) ok = false;
+        if (idx[a[i]] < idx[a[i-1]] || idx[a[i]] > idx[a[i-1]] + d) {
+            mn = 0;
+            break;
+        }
         else {
             mn = min(mn, idx[a[i]] - idx[a[i-1]]);
-            if (d + 1 < n) mn = min(mn, idx[a[i-1]] + d + 1 - idx[a[i]]);
+            if (d + 2 <= n) mn = min(mn, idx[a[i-1]] + d + 1 - idx[a[i]]);
         }
     }
-    if (!ok) cout << 0 << '\n';
-    else cout << mn << '\n';
+    cout << mn << '\n';
 }
 
 signed main() {

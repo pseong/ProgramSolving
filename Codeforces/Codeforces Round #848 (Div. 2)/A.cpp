@@ -19,23 +19,20 @@ void solve(int CASE) {
     int n;
     cin >> n;
     vector<int> v(n);
+    int sum = 0;
     for (int i=0; i<n; i++) {
         cin >> v[i];
+        sum += v[i];
     }
-    int sum = accumulate(v.begin(), v.end(), 0);
+    int ans = -1e9;
     for (int i=1; i<n; i++) {
-        if (v[i] == -1 && v[i-1] == -1) {
-            cout << sum + 4 << '\n';
-            return;
+        if (v[i] == v[i-1]) {
+            if (v[i] == 1) ans = max(ans, sum - 4);
+            else ans = max(ans, sum + 4);
         }
+        else ans = max(ans, sum);
     }
-    for (int i=1; i<n; i++) {
-        if (v[i] != v[i-1]) {
-            cout << sum << '\n';
-            return;
-        }
-    }
-    cout << sum - 4 << '\n';
+    cout << ans << '\n';
 }
 
 signed main() {
