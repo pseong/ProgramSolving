@@ -60,7 +60,6 @@ Lazyseg::_T op(Lazyseg::_T a, Lazyseg::_T b) {
     return { max(a.mx, b.mx) };
 }
 
-
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
@@ -80,19 +79,14 @@ signed main() {
         mp[comp[i]] = i;
     }
     vector<ll> dp(n + 1);
-    Lazyseg seg(op, 202020, { -inf });
+    Lazyseg seg(op, (int)comp.size(), { -inf });
     for (int i=1; i<=n; i++) {
         dp[i] = dp[i-1];
-        if (v[i] >= 0) dp[i] = max(dp[i], 1LL);
         if (pref[i] >= 0) dp[i] = max(dp[i], (ll)i);
         ll mx = seg.query(mp[pref[i]], mp[pref[i]]).mx;
         auto at = seg.query(1, mp[pref[i]]);
-        if (at.mx != -inf) {    
-            dp[i] = max(dp[i], at.mx + i);
-        }
-        if (mx < dp[i] - i) {
-            seg.update_range(mp[pref[i]], mp[pref[i]], dp[i] - i);
-        }
+        dp[i] = max(dp[i], at.mx + i);
+        seg.update_range(mp[pref[i]], mp[pref[i]], dp[i] - i);
     }
     cout << dp[n] << '\n';
 }
