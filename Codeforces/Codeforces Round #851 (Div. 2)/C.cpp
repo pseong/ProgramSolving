@@ -14,7 +14,7 @@ template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
-
+ 
 void solve(int CASE) {
     int n;
     cin >> n;
@@ -23,7 +23,7 @@ void solve(int CASE) {
         return;
     }
     yes();
-    int x = (5*n+1)/2 - n + 1;
+    int x = (3*n+3)/2;
     int a = 1;
     int b = x - 1;
     for (int i=0; i<(n+1)/2; i++) {
@@ -35,11 +35,11 @@ void solve(int CASE) {
         cout << a + i << ' ' << b + i << '\n';
     }
 }
-
+ 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-
+ 
     int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
