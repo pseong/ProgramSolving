@@ -16,10 +16,11 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-    ll n, m, a, b;
+    ll a, b, n, m;
     cin >> a >> b >> n >> m;
+    b = min(a, b);
     ll c = n / (m+1);
-    cout << min({n*b, c*m*a + n % (m+1)*b, c*m*a + n % (m+1)*a}) << '\n';
+    cout << min(n*b, c*m*a + n % (m+1) * b) << '\n';
 }
 
 signed main() {
