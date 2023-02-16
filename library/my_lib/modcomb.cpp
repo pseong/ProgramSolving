@@ -15,6 +15,7 @@ ll powll(int n, int r) {
 }
 
 ll comb(int n, int r) {
+    if (n < 0 || r < 0 || n < r) return 0;
     return fact[n] * p[n-r] % mod * p[r] % mod;
 }
 
