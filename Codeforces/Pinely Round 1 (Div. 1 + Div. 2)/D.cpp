@@ -27,7 +27,7 @@ ll powll(ll n, ll r) {
 }
 
 ll comb(ll n, ll r) {
-    if (n < 0 || r < 0 || n-r < 0 || n < r) return 0;
+    if (n < 0 || r < 0 || n < r) return 0;
     return fact[n] * p[n-r] % mod * p[r] % mod;
 }
 
@@ -47,16 +47,15 @@ signed main() {
 
     ll n, k;
     cin >> n >> k;
-    if (k == 0) {
+    if (k == 0) {ㅉ
         cout << powll(3, n) << '\n';
         return 0;
     }
     init();
-    ll ans = powll(3, n-1);
-    ans %= mod;
-    for (ll q=3; q<=n+1; q++) {
-        ans += powll(3, n-(q-1)) * comb(k-1, q/2-1) % mod * comb((n-k+1)-1, (q+1)/2-1) % mod;
+    ll ans = 0;
+    for (ll q=1; q<=k; q++) {
+        ans += comb(k-1, q-1) * comb(n-k, q) % mod * powll(3, n - q*2) % mod; // 왼쪽 끝을 0이 가져갔을 때
+        ans += comb(k-1, q-1) * comb(n-k, q-1) % mod * powll(3, n - q*2 + 1) % mod; // 왼쪽 끝을 1이 가져갔을 때
         ans %= mod;
     }
-    cout << ans << '\n';
 }
