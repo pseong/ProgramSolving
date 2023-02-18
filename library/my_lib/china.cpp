@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-pair<ll, ll> exgcd(ll a, ll b) {
+tuple<ll, ll, ll> xgcd(ll a, ll b) {
     ll s, t;
     ll r1 = a, r2 = b, s1 = 1, s2 = 0, t1 = 0, t2 = 1;
     ll r, q;
@@ -20,22 +20,22 @@ pair<ll, ll> exgcd(ll a, ll b) {
         s += b;
         t -= a;
     }
-    return {s, t};
+    return {s, t, r1};
 }
 
-ll inverse(ll A, ll B) {
-    auto [s, t] = exgcd(A, B);
-    if (s < 0) s += B;
-    return s;
-}
-
-ll china(vector<pair<ll, ll>> vec) {
-    i128 mod = 1;
-    for (auto [a, md] : vec) mod *= md;
-    ll x = 0;
-    for (auto [a, md] : vec) {
-        x += (mod/md * inverse(mod/md, md) % mod * a % mod) % mod;
-        x %= mod;
+pair<ll, ll> crt(vector<pair<ll, ll>> v) {
+    int n = v.size();
+    auto [a1, m1] = v[0];
+    a1 %= m1;
+    for (int i=1; i<n; i++) {
+        auto [a2, m2] = v[i];
+        ll g = __gcd(m1, m2);
+        if (a1%g != a2%g) return {-1, -1};
+        auto [s, t, e] = xgcd(m1/g, m2/g);
+        i128 mod = (i128)m1 / g * m2; // set mod to lcm(m1, m2)
+        a1 = ((i128)a1 * (m2/g) % mod) * t % mod + ((i128)a2 * (m1/g) % mod) * s % mod;
+        a1 = (a1 + mod) % mod;
+        m1 = mod;
     }
-    return x;
+    return {a1, m1};
 }
