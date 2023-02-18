@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-ll exgcd(ll a, ll b, ll &s, ll &t) {
+pair<ll, ll> exgcd(ll a, ll b) {
+    ll s, t;
     ll r1 = a, r2 = b, s1 = 1, s2 = 0, t1 = 0, t2 = 1;
     ll r, q;
     while (r2) {
@@ -19,16 +20,22 @@ ll exgcd(ll a, ll b, ll &s, ll &t) {
         s += b;
         t -= a;
     }
-    return r1;
+    return {s, t};
 }
+
 ll inverse(ll A, ll B) {
-    ll u, tmp;
-    exgcd(A, B, u, tmp);
-    return u;
-}
-ll china(ll a, ll b, ll A, ll B, ll MOD) { 
-    ll s = 0;
-    s = (s + MOD / A * inverse(MOD / A, A) * a) % MOD;
-    s = (s + MOD / B * inverse(MOD / B, B) * b) % MOD;
+    auto [s, t] = exgcd(A, B);
+    if (s < 0) s += B;
     return s;
+}
+
+ll china(vector<pair<ll, ll>> vec) {
+    i128 mod = 1;
+    for (auto [a, md] : vec) mod *= md;
+    ll x = 0;
+    for (auto [a, md] : vec) {
+        x += (mod/md * inverse(mod/md, md) % mod * a % mod) % mod;
+        x %= mod;
+    }
+    return x;
 }
