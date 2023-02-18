@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// input inverse a by b
+// ouput a*s + b*t = r1
 tuple<ll, ll, ll> xgcd(ll a, ll b) {
     ll s, t;
     ll r1 = a, r2 = b, s1 = 1, s2 = 0, t1 = 0, t2 = 1;
@@ -23,6 +25,8 @@ tuple<ll, ll, ll> xgcd(ll a, ll b) {
     return {s, t, r1};
 }
 
+// input {{a1, m1}, {a2, m2}} : x = a1 (mod m1), y = a2 (mod m2)
+// output {ans, lcm}
 pair<ll, ll> crt(vector<pair<ll, ll>> v) {
     int n = v.size();
     auto [a1, m1] = v[0];
@@ -32,7 +36,7 @@ pair<ll, ll> crt(vector<pair<ll, ll>> v) {
         ll g = __gcd(m1, m2);
         if (a1%g != a2%g) return {-1, -1};
         auto [s, t, e] = xgcd(m1/g, m2/g);
-        i128 mod = (i128)m1 / g * m2; // set mod to lcm(m1, m2)
+        i128 mod = (i128)m1 / g * m2;
         a1 = ((i128)a1 * (m2/g) % mod) * t % mod + ((i128)a2 * (m1/g) % mod) * s % mod;
         a1 = (a1 + mod) % mod;
         m1 = mod;
