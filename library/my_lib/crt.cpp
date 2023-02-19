@@ -34,7 +34,7 @@ pair<ll, ll> crt(vector<pair<ll, ll>> v) {
         auto [a2, m2] = v[i];
         ll g = __gcd(m1, m2);
         if (a1%g != a2%g) return {-1, -1};
-        auto [s, t, e] = xgcd(m1/g, m2/g);
+        auto [s, t, G] = xgcd(m1/g, m2/g);
         i128 mod = (i128)m1 / g * m2;
         a1 = ((i128)a1 * (m2/g) % mod) * t % mod + ((i128)a2 * (m1/g) % mod) * s % mod;
         a1 = (a1 + mod) % mod;
