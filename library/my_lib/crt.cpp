@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// input inverse a by b
-// ouput a*s + b*t = r1
+// ouput: a*s + b*t = gcd(a, b)
 tuple<ll, ll, ll> xgcd(ll a, ll b) {
     ll s, t;
     ll r1 = a, r2 = b, s1 = 1, s2 = 0, t1 = 0, t2 = 1;
@@ -25,8 +24,8 @@ tuple<ll, ll, ll> xgcd(ll a, ll b) {
     return {s, t, r1};
 }
 
-// input {{a1, m1}, {a2, m2}} : x = a1 (mod m1), y = a2 (mod m2)
-// output {ans, lcm}
+// input: {{a1, m1}, {a2, m2}, ...} : x = a1 (mod m1), y = a2 (mod m2)
+// output: {ans, lcm}
 pair<ll, ll> crt(vector<pair<ll, ll>> v) {
     int n = v.size();
     auto [a1, m1] = v[0];
