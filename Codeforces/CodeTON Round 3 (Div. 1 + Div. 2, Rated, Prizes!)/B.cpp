@@ -19,19 +19,14 @@ void solve(int CASE) {
     int n;
     string s;
     cin >> n >> s;
-    ll ans = 0, cnt = 0;
-    ll zero = 0, one = 0;
-    for (int i=0; i<=n; i++) {
-        if (i == n || i>0 && s[i-1] != s[i]) {
-            ans = max(ans, cnt*cnt);
-            cnt = 1;
-            if (i == n) break;
-        }
-        else cnt++;
-        if (s[i] == '0') zero++;
-        else one++;
+    ll cnt = count(s.begin(), s.end(), '0');
+    ll ans = cnt * (n - cnt);
+    for (int i=0; i<n;) {
+        int j = i;
+        while (j < n && s[i] == s[j]) j++;
+        ans = max(ans, 1LL * (j - i) * (j - i));
+        i = j;
     }
-    ans = max(ans, zero * one);
     cout << ans << '\n';
 }
 
