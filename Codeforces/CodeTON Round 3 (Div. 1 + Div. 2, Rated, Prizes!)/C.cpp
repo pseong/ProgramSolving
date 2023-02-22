@@ -19,27 +19,17 @@ void solve(int CASE) {
     int n;
     string a, b;
     cin >> n >> a >> b;
-    string ra = a;
-    for (int i=0; i<n; i++) ra[i] ^= '0' ^ '1';
-    if (b != a && b != ra) {
-        no();
-        return;
+    for (int i=0; i<n; i++) {
+        if (a[0] ^ b[0] ^ a[i] ^ b[i]) {
+            no();
+            return;
+        }
     }
     vector<pi> ans;
-    int s = 0;
-    int cnt = 0;
-    if (a != b) {
-        ans.push_back({1, n});
-        a = ra;
+    for (int i=0; i<n; i++) {
+        if (a[i] == '1') ans.push_back({i + 1, i + 1});
     }
-    for (int i=0; i<=n; i++) {
-        if (i == n && a[i-1] == '1' || i>0 && a[i] == '0' && a[i-1] == '1') {
-            ans.push_back({s+1, i});
-            cnt++;
-        }
-        else if (i>0 && i<n && a[i] == '1' && a[i-1] == '0') s = i;
-    }
-    if (cnt%2) {
+    if (a[0] ^ b[0] ^ (ans.size() % 2 )) {
         ans.push_back({1, n});
         ans.push_back({1, 1});
         ans.push_back({2, n});
