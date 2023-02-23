@@ -1,59 +1,46 @@
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <string>
-#include <cstring>
-#include <cmath>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <tuple>
-#include <map>
-#include <set>
-
+#include <bits/stdc++.h>
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
-using ll = long long;
-using ld = long double;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
-using tiii = tuple<int, int, int>;
-using tlll = tuple<long long, long long, long long>;
+using ll=long long;
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
-int main() {
-    ios::sync_with_stdio(0); 
-    cin.tie(0); cout.tie(0);
+int o[1010];
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    o['+'] = 1;
+    o['-'] = 1;
+    o['*'] = 2;
+    o['/'] = 2;
 
     string s;
     cin >> s;
-
     stack<char> st;
-    for(int i=0; i<s.size(); i++) {
-        if(s[i]>=65&&s[i]<=90) {
-            cout << s[i];
-        } else if(s[i]==')') {
-            while(st.top()!='(') {
-                cout << st.top();
-                st.pop();
-            }
+    int n = s.size();
+    for (int i=0; i<n; i++) {   
+        if (s[i] >= 'A' && s[i] <= 'Z') cout << s[i];
+        else if (s[i] == ')') {
+            while (st.size() && st.top() != '(') cout << st.top(), st.pop();
             st.pop();
-        } else if(s[i]=='+'||s[i]=='-') {
-            while(!st.empty() && (st.top()=='*'||st.top()=='/'||st.top()=='+'||st.top()=='-')) {
-                cout << st.top();
-                st.pop();
-            }
-            st.push(s[i]);
-        } else if(s[i]=='*'||s[i]=='/') {
-            if(!st.empty() && (st.top()=='*'||st.top()=='/')) {
-                cout << st.top();
-                st.pop();
-            }
-            st.push(s[i]);
-        } else {
+        }
+        else if (s[i] == '(') st.push(s[i]);
+        else {
+            while (st.size() && o[st.top()] >= o[s[i]]) cout << st.top(), st.pop();
             st.push(s[i]);
         }
     }
-    while(!st.empty()) {
-        cout << st.top();
-        st.pop();
-    }
+    while (st.size()) cout << st.top(), st.pop();
 }
