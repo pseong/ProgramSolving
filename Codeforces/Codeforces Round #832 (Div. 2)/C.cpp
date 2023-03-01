@@ -19,23 +19,14 @@ void solve(int CASE) {
     int n;
     cin >> n;
     vector<int> v(n);
-    bool ok = false;
     ll sum = 0;
     for (int i=0; i<n; i++) {
         cin >> v[i];
     }
-    if (v[0] == 1) cout << "Bob\n";
-    else {
-        int x = v[0];
-        bool ok = false;
-        for (int i=1; i<n; i++) {
-            if (v[i] >= 1 && v[i] <= x-1) {
-                ok = true;
-            }
-        }
-        if (ok) cout << "Alice\n";
-        else cout << "Bob\n";
+    if (v[0] > *min_element(v.begin()+1, v.end())) {
+        cout << "Alice\n";
     }
+    else cout << "Bob\n";
 }
 
 signed main() {
