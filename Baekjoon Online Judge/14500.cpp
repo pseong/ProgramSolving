@@ -1,98 +1,58 @@
 #include <bits/stdc++.h>
-
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
+using ll=long long;
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
-int main() {
-    ios::sync_with_stdio(0); 
-    cin.tie(0); 
-    cout.tie(0);
+int v[555][555], chk[555][555], ans, now;
+int n, m;
+int dx[] {-1, 1, 0, 0};
+int dy[] {0, 0, -1, 1};
 
-    int a[501][501]{ 0 };
-    int n, m;
+void dfs(int x, int y, int cnt) {
+    chk[x][y] = 1;
+    now += v[x][y];
+    if (cnt == 4) ans = max(ans, now);
+    else {
+        for (int d=0; d<4; d++) {
+            int a = x + dx[d];
+            int b = y + dy[d];
+            if (a < 1 || a > n || b < 1 || b > m) continue;
+            if (chk[a][b]) continue;
+            dfs(a, b, cnt+1);
+        }
+    }
+    chk[x][y] = 0;
+    now -= v[x][y];
+}
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
     cin >> n >> m;
-    for(int i = 1; i <= n; i++) {
-        for(int j = 1; j <= m; j++) {
-            cin >> a[i][j];
+    for (int i=1; i<=n; i++) {
+        for (int j=1; j<=m; j++) {
+            cin >> v[i][j];
         }
     }
-
-    int ans = 0;
-
-    for(int i = 1; i <= n; i++) {
-        for(int j = 4; j <= m; j++) {
-            int res = a[i][j] + a[i][j-1] + a[i][j-2] + a[i][j-3];
-            if(res > ans) ans = res;
+    for (int i=1; i<=n; i++) {
+        for (int j=1; j<=m; j++) {
+            dfs(i, j, 1);
+            int a = v[i][j] + v[i-1][j] + v[i+1][j] + v[i][j-1] + v[i][j+1];
+            ans = max({ans, a-v[i-1][j], a-v[i+1][j], a-v[i][j-1], a-v[i][j+1]});
         }
     }
-
-    for(int i = 4; i <= n; i++) {
-        for(int j = 1; j <= m; j++) {
-            int res = a[i][j] + a[i-1][j] + a[i-2][j] + a[i-3][j];
-            if(res > ans) ans = res;
-        }
-    }
-
-    for(int i = 2; i <= n; i++) {
-        for(int j = 2; j <= m; j++) {
-            int res = a[i][j] + a[i][j-1] + a[i-1][j] + a[i-1][j-1];
-            if(res > ans) ans = res;
-        }
-    }
-
-    for(int i = 3; i <= n; i++) {
-        for(int j = 2; j <= m; j++) {
-            int res = a[i][j] + a[i][j-1] + a[i-1][j-1] + a[i-2][j-1];
-            if(res > ans) ans = res;
-
-            res = a[i][j-1] + a[i][j] + a[i-1][j] + a[i-2][j];
-            if(res > ans) ans = res;
-
-            res = a[i][j] + a[i-1][j] + a[i-2][j] + a[i-2][j-1];
-            if(res > ans) ans = res;
-
-            res = a[i-2][j] + a[i-2][j-1] + a[i-1][j-1] + a[i][j-1];
-            if(res > ans) ans = res;
-
-            res = a[i][j] + a[i-1][j] + a[i-1][j-1] + a[i-2][j-1];
-            if(res > ans) ans = res;
-
-            res = a[i][j-1] + a[i-1][j-1] + a[i-1][j] + a[i-2][j];
-            if(res > ans) ans = res;
-
-            res = a[i][j] + a[i-1][j] + a[i-1][j-1] + a[i-2][j];
-            if(res > ans) ans = res;
-
-            res = a[i][j-1] + a[i-1][j] + a[i-1][j-1] + a[i-2][j-1];
-            if(res > ans) ans = res;
-        }
-    }
-
-    for(int i = 2; i <= n; i++) {
-        for(int j = 3; j <= m; j++) {
-            int res = a[i][j-2] + a[i-1][j-2] + a[i-1][j-1] + a[i-1][j];
-            if(res > ans) ans = res;
-
-            res = a[i-1][j-2] + a[i-1][j-1] + a[i-1][j] + a[i][j];
-            if(res > ans) ans = res;
-
-            res = a[i][j-2] + a[i][j-1] + a[i][j] + a[i-1][j];
-            if(res > ans) ans = res;
-
-            res = a[i-1][j-2] + a[i][j-2] + a[i][j-1] + a[i][j];
-            if(res > ans) ans = res;
-
-            res = a[i][j-2] + a[i][j-1] + a[i-1][j-1] + a[i-1][j];
-            if(res > ans) ans = res;
-
-            res = a[i-1][j-2] + a[i-1][j-1] + a[i][j-1] + a[i][j];
-            if(res > ans) ans = res;
-
-            res = a[i-1][j-1] + a[i][j-2] + a[i][j-1] + a[i][j];
-            if(res > ans) ans = res;
-
-            res = a[i-1][j-2] + a[i-1][j-1] + a[i-1][j] + a[i][j-1];
-            if(res > ans) ans = res;
-        }
-    }
-    cout << ans;
+    cout << ans << '\n';
 }
