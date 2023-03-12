@@ -72,7 +72,10 @@
         "string_view": "cpp",
         "charconv": "cpp",
         "optional": "cpp",
-        "bit": "cpp"
+        "bit": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "stacktrace": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
