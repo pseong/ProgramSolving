@@ -35,12 +35,11 @@ void solve(int CASE) {
             mn += hot[v[i]];
             if (d[v[i]] + add > mn - hot[v[i]] + cold[v[i]]) {
                 d[v[i]] = mn - hot[v[i]] + cold[v[i]] - add;
-                if (mn > d[v[i]] + add) mn = d[v[i]] + add;
             }
             if (d[v[i]] + add > dvi + hot[v[i]]) {
                 d[v[i]] = dvi + hot[v[i]] - add;
-                if (mn > d[v[i]] + add) mn = d[v[i]] + add;
             }
+            if (mn > d[v[i]] + add) mn = d[v[i]] + add;
         }
         else {
             ll dvi = d[v[i]] + add;
@@ -48,12 +47,11 @@ void solve(int CASE) {
             mn += cold[v[i]];
             if (d[v[i-1]] + add > mn) {
                 d[v[i-1]] = mn - add;
-                if (mn > d[v[i-1]] + add) mn = d[v[i-1]] + add;
             }
             if (d[v[i-1]] + add > dvi + hot[v[i]]) {
                 d[v[i-1]] = dvi + hot[v[i]] - add;
-                if (mn > d[v[i-1]] + add) mn = d[v[i-1]] + add;
             }
+            if (mn > d[v[i-1]] + add) mn = d[v[i-1]] + add;
         }
     }
     cout << mn << '\n';
