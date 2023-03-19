@@ -37,13 +37,11 @@ void solve(int CASE) {
                     store--;
                 }
                 else if (man%2 == 0) {
-                    // (store + 1) / 2
                     man += store;
                     left += store - (store + 1) / 2;
                     store = 0;
                 }
                 else {
-                    // store / 2
                     man += store;
                     left += store - store / 2;
                     store = 0;
