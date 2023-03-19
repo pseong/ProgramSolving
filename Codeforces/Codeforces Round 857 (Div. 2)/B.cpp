@@ -19,35 +19,20 @@ void solve(int CASE) {
     int n;
     cin >> n;
     int ans = 0;
-    int store = 0;
-    int left = 0;
-    int man = 0;
-    int girl = 0;
+    int unknown = 0;
+    int known = 0;
     for (int i=0; i<n; i++) {
         int b;
         cin >> b;
         if (b == 1) {
-            if (left) left--, store++;
-            else store++, ans++;
+            unknown++;
         }
         else {
-            while (store) {
-                if (girl == 0) {
-                    girl++;
-                    store--;
-                }
-                else if (man%2 == 0) {
-                    man += store;
-                    left += store - (store + 1) / 2;
-                    store = 0;
-                }
-                else {
-                    man += store;
-                    left += store - store / 2;
-                    store = 0;
-                }
-            }
+            known += unknown;
+            unknown = 0;
         }
+        if (known) ans = max(ans, unknown + (known + 2) / 2);
+        else ans = max(ans, unknown);
     }
     cout << ans << '\n';
 }

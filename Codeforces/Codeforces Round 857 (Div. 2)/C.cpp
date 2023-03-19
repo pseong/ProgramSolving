@@ -34,18 +34,9 @@ signed main() {
     cin.tie(0);
 
     int now = 0;
-    for (int i=0; i<8; i+=2) {
-        for (int j=0; j<8; j+=2) {
+    for (int i=0; i<256; i++) {
+        for (int j=0; j<256; j++) {
             v[i][j] = now++;
-            v[i][j+1] = now++;
-            v[i+1][j] = now++;
-            v[i+1][j+1] = now++;
-        }
-    }
-
-    for (int i=0; i<8; i++) {
-        for (int j=0; j<8; j++) {
-            cout << v[i][j] << '\n';
         }
     }
     int T = 1;
