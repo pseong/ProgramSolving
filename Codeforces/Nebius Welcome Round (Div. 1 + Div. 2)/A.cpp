@@ -21,10 +21,7 @@ void solve(int CASE) {
     a = abs(a);
     b = abs(b);
     if (b < a) swap(a, b);
-    int ans = min(a, b) * 2;
-    if (b-a) ans++;
-    if (b-a > 1) ans += (b-a-1) * 2;
-    cout << ans << '\n';
+    cout << a + b + max(0, b - a - 1) << '\n';
 }
 
 signed main() {
