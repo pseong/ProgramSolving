@@ -21,7 +21,7 @@ void solve(int CASE) {
     int n, x, p;
     cin >> n >> x >> p;
     int m = (n - x) % n;
-    for (int i=1; i<=min(n*10, p); i++) {
+    for (int i=1; i<=min(n*2, p); i++) {
         if (sum[i] % n == m) {
             yes();
             return;
