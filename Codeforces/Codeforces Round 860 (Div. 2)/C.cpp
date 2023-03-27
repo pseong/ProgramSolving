@@ -26,13 +26,13 @@ void solve(int CASE) {
     ll l = 1;
     int ans = 1;
     for (int i=0; i<n; i++) {
-        if (gcd(g, a[i] * b[i]) % lcm(l, a[i]) != 0) {
+        if (gcd(g, a[i] * b[i]) % lcm(l, b[i]) != 0) {
             ans++;
             g = 0;
             l = 1;
         }
         g = gcd(g, a[i] * b[i]);
-        l = lcm(l, a[i]);
+        l = lcm(l, b[i]);
     }
     cout << ans << '\n';
 }
