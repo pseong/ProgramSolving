@@ -75,7 +75,10 @@
         "bit": "cpp",
         "ranges": "cpp",
         "span": "cpp",
-        "stacktrace": "cpp"
+        "stacktrace": "cpp",
+        "barrier": "cpp",
+        "latch": "cpp",
+        "semaphore": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
