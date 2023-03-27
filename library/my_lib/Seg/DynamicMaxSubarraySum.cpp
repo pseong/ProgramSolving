@@ -1,7 +1,6 @@
 /*
 Empty Subarray는 고려하지 않는다.
 */
-
 struct DynamicMaxSubarraySum {
 	typedef struct {
 		ll lval, rval, val, all;
