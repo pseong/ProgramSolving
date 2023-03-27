@@ -3,46 +3,62 @@ using namespace std;
 using ll=long long;
 
 struct Lazyseg {
-	// EDIT TYPE
+	//////////////////// EDIT TYPE
 	typedef struct {
 		long long sum;
 	} _T;
-	typedef long long _L;
-	_T op(_T a, _T b) {
-		return { a.sum + b.sum };
-	}
-    //
+	typedef struct {
+		long long lz;
+	} _L;
+    ////////////////////
+    _T(*op)(_T, _T);
 	int n;
 	vector<_T> S;
 	vector<_L> lazy;
 	_T t;
-	Lazyseg(int n, _T t) : n(n), t(t) {
-		S.resize(4*n+10, {0});
-		lazy.resize(4*n+10, {0});
+	Lazyseg() {}
+	Lazyseg(_T(*op)(_T, _T), int n, _T t) : op(op), n(n), t(t) {
+		S.assign(4*n+10, {0});
+		lazy.assign(4*n+10, {0});
 	}
-	Lazyseg(const vector<long long>& A, int n, _T t) : n(n), t(t) {
-		S.resize(4*n+10, {0});
-		lazy.resize(4*n+10, {0});
-		init(A, 1, 1, n);
+	Lazyseg(_T(*op)(_T, _T), const vector<ll>& A, int n, _T t) : op(op), n(n), t(t) {
+		S.assign(4*n+10, {0});
+		lazy.assign(4*n+10, {0});
+		_init(A, 1, 1, n);
 	}
-	_T init(const vector<long long>& A, int node, int s, int e) {
+	void init(_T(*op)(_T, _T), int n, _T t) {
+		this->op = op;
+		this->n = n;
+		this->t = t;
+		S.assign(4*n+10, {0});
+		lazy.assign(4*n+10, {0});
+	}
+	void init(_T(*op)(_T, _T), const vector<ll>& A, int n, _T t) {
+		this->op = op;
+		this->n = n;
+		this->t = t;
+		S.assign(4*n+10, {0});
+		lazy.assign(4*n+10, {0});
+		_init(A, 1, 1, n);
+	}
+	_T _init(const vector<ll>& A, int node, int s, int e) {
 		if (s == e) {
 			S[node].sum = A[s];
 			return S[node];
 		}
 		int mid = (s+e)/2;
-		return S[node] = op(init(A, node*2, s, mid), init(A, node*2+1, mid+1, e));
+		return S[node] = op(_init(A, node*2, s, mid), _init(A, node*2+1, mid+1, e));
 	}
 	void propagate(int node, int s, int e) {
-		if (lazy[node] == 0) return;
-        // EDIT HERE
-        S[node].sum += ((long long)e-s+1)*lazy[node];
+		if (lazy[node].lz == 0) return;
+        //////////////////// EDIT HERE
+        S[node].sum += ((ll)e-s+1)*lazy[node].lz;
         if (s!=e) {
-            lazy[node*2] += lazy[node];
-            lazy[node*2+1] += lazy[node];
+            lazy[node*2].lz += lazy[node].lz;
+            lazy[node*2+1].lz += lazy[node].lz;
         }
-        //
-		lazy[node] = 0;
+		lazy[node].lz = 0;
+        ////////////////////
 	}
 	_T query(int node, int s, int e, int l, int r) {
         propagate(node, s, e);
@@ -58,9 +74,9 @@ struct Lazyseg {
         propagate(node, s, e);
 		if (e < l || r < s) return;
 		if (l <= s && e <= r) {
-			// EDIT HERE
-			lazy[node] += x;
-            //
+			//////////////////// EDIT HERE
+			lazy[node].lz += x.lz;
+            ////////////////////
 			propagate(node, s, e);
 			return;
 		}
@@ -74,6 +90,10 @@ struct Lazyseg {
 	}
 };
 
+Lazyseg::_T op(Lazyseg::_T a, Lazyseg::_T b) {
+    return { a.sum + b.sum };
+}
+
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
@@ -81,12 +101,12 @@ int main() {
     int n, m, k;
     cin >> n >> m >> k;
 
-    vector<ll> an(n+1, 0);
+    vector<ll> v(n+1, 0);
     for (int i=1; i<=n; i++) {
-        cin >> an[i];
+        cin >> v[i];
     }
 
-    Lazyseg seg(an, n, { 0 });
+    Lazyseg seg(op, v, n, { 0 });
 
     for (int i=0; i<m+k; i++) {
         int a;
@@ -95,7 +115,7 @@ int main() {
             int b, c;
             ll d;
             cin >> b >> c >> d;
-            seg.update_range(b, c, d);
+            seg.update_range(b, c, { d });
         }
         else if (a==2) {
             int b, c;
