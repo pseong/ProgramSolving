@@ -22,11 +22,7 @@ void solve(int CASE) {
     queue<ll> q;
     for (int i=1; i<=n; i++) {
         cin >> v[i];
-        if (v[i] >= q.size() + 1) q.push(v[i]);
-        else {
-            q.push(v[i]);
-            q.pop();
-        }
+        q.push(v[i]);
         while (q.size() && q.size() > q.front()) q.pop();
         cout << q.size() << ' ';
     }
