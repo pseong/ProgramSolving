@@ -78,7 +78,18 @@
         "stacktrace": "cpp",
         "barrier": "cpp",
         "latch": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "any": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "coroutine": "cpp",
+        "expected": "cpp",
+        "source_location": "cpp",
+        "numbers": "cpp",
+        "spanstream": "cpp",
+        "stop_token": "cpp",
+        "syncstream": "cpp",
+        "variant": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
