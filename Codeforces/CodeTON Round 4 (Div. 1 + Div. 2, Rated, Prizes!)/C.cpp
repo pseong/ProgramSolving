@@ -24,10 +24,10 @@ void solve(int CASE) {
     }
     sort(v.begin(), v.end());
     ll ans = c * n + d;
-    ll t = 0;
+    ll x = 0;
     for (int i=0; i<n; i++) {
-        if (i == 0 || v[i] != v[i-1]) t++;
-        ans = min(ans, c * n + d * v[i] - (c + d) * t);
+        if (i == 0 || v[i] != v[i-1]) x++;
+        ans = min(ans, n * c - x * c + (v[i] - x) * d);
     }
     cout << ans << '\n';
 }
