@@ -15,36 +15,30 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-bool comp(pi a, pi b) {
-    if (a.first != b.first) return a.first > b.first;
-    return a.second < b.second;
+bool cmp(pi x, pi y) {
+    if (x.first == y.first) return x.second < y.second;
+    else return x.first > y.first;
 }
 
 void solve(int CASE) {
     int n;
     cin >> n;
-    vector<pi> v(n);
+    vector<pi> v(n + 1);
     multiset<int> ms;
-    for (int i=0; i<n; i++) {
+    for (int i=1; i<=n; i++) {
         cin >> v[i].first >> v[i].second;
-        ms.insert(v[i].second);
     }
-    sort(v.begin(), v.end(), comp);
-    int mx = -2e9;
-    int ans = 2e9;
-    for (int i=0; i<n; i++) {
-        auto [x, y] = v[i];
-        ms.erase(ms.find(y));
-        auto it = ms.lower_bound(x);
-        int a = mx;
-        int b = mx;
-        if (it != ms.end()) a = max(a, *it);
-        if (it != ms.begin()) {
-            it--;
-            b = max(b, *it);
-        }
-        ans = min(ans, min(abs(x - a), abs(x - b)));
-        mx = max(mx, y);
+    sort(v.begin() + 1, v.end(), cmp);
+    for (int i=1; i<=n; i++) ms.insert(v[i].second);
+    int ans = 1e9;
+    int mx = -1e9;
+    for (int i=1; i<=n; i++) {
+        ms.erase(ms.find(v[i].second));
+        auto it = ms.lower_bound(v[i].first);
+        ans = min(ans, abs(v[i].first - mx));
+        if (it != ms.end()) ans = min(ans, abs(v[i].first - max(mx, *it)));
+        if (it != ms.begin()) ans = min(ans, abs(v[i].first - max(mx, *(--it))));
+        mx = max(mx, v[i].second);
     }
     cout << ans << '\n';
 }
