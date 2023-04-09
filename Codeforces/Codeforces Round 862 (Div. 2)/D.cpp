@@ -56,14 +56,15 @@ signed main() {
     vector<int> a = bfs(x);
     vector<int> b = bfs(y);
     vector<int> d(n + 1);
+    vector<int> sum(n + 2);
     for (int i=1; i<=n; i++) {
         d[i] = max(a[i], b[i]);
+        sum[d[i] + 1]++;
     }
-    sort(d.begin(), d.end());
-    int cur = 1;
+    vector<int> pref(n + 1);
+    for (int i=1; i<=n; i++) pref[i] = pref[i-1] + sum[i];
     for (int i=1; i<=n; i++) {
-        while (cur <= n && d[cur] < i) cur++;
-        if (cur == n + 1) cout << n << ' ';
-        else cout << cur << ' ';
+        if (pref[i] != n) cout << pref[i] + 1 << ' ';
+        else cout << pref[i] << ' ';
     }
 }
