@@ -15,17 +15,11 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-vector<int> depth[2000], adj[2000];
-int c[2000];
-
 void solve(int CASE) {
     int n, m;
     cin >> n >> m;
-    for (int i=1; i<=n; i++) {
-        adj[i].clear();
-        depth[i].clear();
-        c[i] = 1e9;
-    }
+    vector<vector<int>> depth(n + 1), adj(n + 1);
+    vector<int> c(n + 1, 1e9);
     int s = n * (n + 1)/2;
     vector<int> v(s + 1);
     int to = 1;
@@ -43,7 +37,6 @@ void solve(int CASE) {
         cin >> a >> b;
         adj[b].push_back(a);
     }
-    vector<int> chk(n + 1);
     queue<int> q;
     c[1] = 1;
     q.push(1);
@@ -51,9 +44,8 @@ void solve(int CASE) {
         int x = q.front();
         q.pop();
         for (int y : adj[x]) {
-            c[y] = min(c[y], c[x] + 1);
-            if (chk[y]) continue;
-            chk[y] = 1;
+            if (c[y] != 1e9) continue;
+            c[y] = c[x] + 1;
             q.push(y);
         }
     }
@@ -88,3 +80,6 @@ signed main() {
         solve(t);
     }
 }
+
+
+// 사이클이 생겼을 때 1로 갈 수 없다면 INFINITE 있다면 FINITE
