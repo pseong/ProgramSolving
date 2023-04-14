@@ -18,10 +18,11 @@ void yes() { cout << "Yes" << '\n'; }
 void solve(int CASE) {
     int n;
     cin >> n;
-    vector<ll> v(n + 1), right(n + 1), left(n + 1), pref(n + 1);
+    vector<ll> v(n + 1), right(n + 1), left(n + 1);
+    ll sum = 0;
     for (int i=1; i<=n; i++) {
         cin >> v[i];
-        pref[i] = pref[i - 1] + v[i];
+        sum += v[i];
     }
     ll m = 0;
     deque<pll> q;
@@ -89,7 +90,7 @@ void solve(int CASE) {
     }
     ll ans = 1e18;
     for (int i=1; i<=n; i++) {
-        ll d = pref[n] - (cleft[i] + cright[i] - v[i]);
+        ll d = sum - (cleft[i] + cright[i] - v[i]);
         ans = min(ans, d + v[i]);
     }
     cout << ans << '\n';
