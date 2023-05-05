@@ -19,14 +19,12 @@ void solve(int CASE) {
     int n;
     cin >> n;
     vector<int> v(n);
-    bool ok = true;
     for (int i=0; i<n; i++) {
         cin >> v[i];
     }
     ll g = 0;
     for (int i=0; i<n/2; i++) {
-        ll df = abs(v[i] - v[n-1-i]);
-        g = gcd(df, g);
+        g = gcd(g, abs(v[i] - v[n-1-i]));
     }
     if (g == 0) cout << 0 << '\n';
     else cout << g << '\n';

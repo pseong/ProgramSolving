@@ -22,7 +22,6 @@ void solve(int CASE) {
     for (int i=0; i<n; i++) {
         cin >> v[i];
     }
-    sort(all(v));
     for (int i=0; i<=n; i++) {
         int cnt = 0;
         for (int j=0; j<n; j++) {
