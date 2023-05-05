@@ -15,8 +15,37 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
+const int MAX_PRIME = 1010101;
+ll prime[MAX_PRIME];
 vector<ll> primes;
-ll prime[1010101];
+
+void init_prime() {
+    for (int i=2; i<MAX_PRIME; i++) {
+        if (prime[i] == 0) {
+            primes.push_back(i);
+            for (int j=i+i; j<MAX_PRIME; j+=i) {
+                prime[j] = 1;
+            }
+        }
+    }
+}
+
+vector<ll> get_factors(ll n) {
+    vector<ll> v;
+    for (ll p : primes) {
+        if (p*p > n) break;
+        if (n%p == 0) {
+            v.push_back(p);
+            v.push_back(n/p);
+            while (n%p == 0) {
+                n /= p;
+            }
+        }
+    }
+    if (n != 1) v.push_back(n);
+    sort(v.begin(), v.end());
+    return v;
+}
 
 void solve(int CASE) {
     ll n, m;
@@ -25,21 +54,8 @@ void solve(int CASE) {
         yes();
         return;
     }
-    vector<ll> v;
-    for (ll i=2; i*i<=n; i++) {
-        if (n%i == 0) {
-            v.push_back(i);
-            v.push_back(n/i);
-            while (n%i == 0) {
-                n /= i;
-            }
-        }
-    }
-    if (n != 1) v.push_back(n);
-    sort(v.begin(), v.end());
-    if (v.size() && v.front() <= m) {
-        no();
-    }
+    vector<ll> v = get_factors(n);
+    if (v.front() <= m) no();
     else yes();
 }
 
@@ -47,15 +63,7 @@ signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    for (int i=2; i<1010101; i++) {
-        if (prime[i] == 0) {
-            primes.push_back(i);
-            for (int j=i+i; j<1010101; j+=i) {
-                prime[j] = 1;
-            }
-        }
-    }
-
+    init_prime();
     int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
