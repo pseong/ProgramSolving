@@ -1,63 +1,78 @@
 #include <bits/stdc++.h>
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
 using ll=long long;
-using pii=pair<int,int>;
-using pll=pair<ll,ll>;
-#define pb push_back
-#define F first
-#define S second
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
-int n, depth[510000], parent[510000][20];
-vector<int> v[510000];
+int n, parent[101010][20], d[101010];
+vector<int> adj[101010];
 
-void dfs(int node, int par, int d) {
-    for(int i : v[node]) {
-        if(i==par) continue;
-        parent[i][0] = node;
-        depth[i] = d+1;
-        dfs(i, node, d+1);
+void dfs(int x, int p, int depth) {
+    d[x] = depth;
+    parent[x][0] = p;
+    for (int y : adj[x]) {
+        if (y == p) continue;
+        dfs(y, x, depth + 1);
     }
 }
 
-int main() {
-    ios::sync_with_stdio(0); 
-    cin.tie(0); cout.tie(0);
-
-    cin >> n;
-    for(int i=0; i<n-1; i++) {
-        int a, b;
-        cin >> a >> b;
-        v[a].push_back(b);
-        v[b].push_back(a);
-    }
+void precal_lca() {
     dfs(1, 0, 0);
-    for(int k=1; k<20; k++) {
-        for(int i=1; i<=n; i++) {
-            parent[i][k] = parent[parent[i][k-1]][k-1];
+    for (int j=1; j<20; j++) {
+        for (int i=1; i<=n; i++) {
+            parent[i][j] = parent[parent[i][j-1]][j-1];
         }
     }
+}
+
+int lca(int x, int y) {
+    if (d[x] < d[y]) swap(x, y);
+    for (int i=19; i>=0; i--) {
+        if (d[x] - d[y] >= (1<<i)) x = parent[x][i];
+    }
+
+    if (x == y) return x;
+
+    for (int i=19; i>=0; i--) {
+        if (parent[x][i] != parent[y][i]) {
+            x = parent[x][i];
+            y = parent[y][i];
+        }
+    }
+
+    return parent[y][0];
+}
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    cin >> n;
+    for (int i=0; i<n-1; i++) {
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+
+    precal_lca();
 
     int m;
     cin >> m;
-    for(int i=0; i<m; i++) {
+    while (m--) {
         int a, b;
         cin >> a >> b;
-        if(depth[a]<depth[b]) swap(a, b);
-        for(int k=19; k>=0; k--) {
-            if(depth[a]-depth[b]>=(1<<k)) {
-                a = parent[a][k];
-            }
-        }
-        for(int k=19; k>=0; k--) {
-            if(parent[a][k]!=parent[b][k]) {
-                a = parent[a][k];
-                b = parent[b][k];
-            }
-        }
-        if(a!=b) {
-            a = parent[a][0];
-            b = parent[b][0];
-        }
-        cout << a << '\n';
+        cout << lca(a, b) << '\n';
     }
 }
