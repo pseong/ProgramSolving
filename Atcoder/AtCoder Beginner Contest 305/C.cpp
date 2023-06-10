@@ -15,6 +15,9 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
+int dx[]{ -1, 0, 0, 1};
+int dy[]{ 0, -1, 1, 0};
+
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
@@ -23,22 +26,20 @@ signed main() {
     cin >> n >> m;
     vector<string> v(n);
     for (int i=0; i<n; i++) cin >> v[i];
-    int x=n, y=m, r=0, c=0;
     for (int i=0; i<n; i++) {
         for (int j=0; j<m; j++) {
-            if (v[i][j] == '#') {
-                x = min(x, i);
-                r = max(r, i);
-                y = min(y, j);
-                c = max(c, j);
-            }
-        }
-    }
-    for (int i=x; i<=r; i++) {
-        for (int j=y; j<=c; j++) {
-            if (v[i][j] != '#') {
-                cout << i + 1 << ' ' << j + 1;
-                return 0;
+            if (v[i][j] == '.') {
+                int cnt = 0;
+                for (int d=0; d<4; d++) {
+                    int a = i + dx[d];
+                    int b = j + dy[d];
+                    if (a < 0 || a >= n || b < 0 || b >= m) continue;
+                    if (v[a][b] == '#') cnt++;
+                }
+                if (cnt >= 2) {
+                    cout << i + 1 << ' ' << j + 1;
+                    return 0;
+                }
             }
         }
     }
