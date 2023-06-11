@@ -14,21 +14,20 @@ template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
 ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
-
+ 
 vector<int> adj[101010];
 int dp[101010], mx[101010];
-
+ 
 void go(int x) {
     mx[x] = 1;
     for (int y : adj[x]) {
         go(y);
-        mx[x] = max(mx[x], mx[y]);
         dp[x] += dp[y];
         mx[x] = max(mx[x], mx[y] + 1);
     }
     dp[x] = max(dp[x], mx[x]);
 }
-
+ 
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
