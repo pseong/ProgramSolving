@@ -19,27 +19,12 @@ void solve(int CASE) {
     int n;
     string s;
     cin >> n >> s;
-    s.insert(s.begin(), ' ');
-    vector<int> pref(n + 1);
-    for (int i=2; i<=n; i++) {
-        pref[i] = pref[i-1];
-        if (s[i] != s[i-1]) pref[i]++;
+    s.insert(s.begin(), '0');
+    int cnt = 0;
+    for (int i=1; i<=n; i++) {
+        if (s[i] != s[i-1]) cnt++;
     }
-    
-    int ans = pref[n];
-    for (int i=1; i<n; i++) {
-        int c = pref[i] + (s[1] == '1');
-        int d = pref[n] - pref[i+1];
-        if (c%2) {
-            if (s[i+1] == '1') d++;
-        }
-        else {
-            if (s[i+1] == '0') d++;
-        }
-        ans = min(ans, c + d);
-    }
-
-    cout << ans << '\n';
+    cout << max(0, cnt-1) << '\n';
 }
 
 signed main() {
