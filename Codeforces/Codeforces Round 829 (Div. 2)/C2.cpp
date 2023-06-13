@@ -16,7 +16,47 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-
+    int n;
+    cin >> n;
+    vector<int> v(n + 1);
+    for (int i=1; i<=n; i++) cin >> v[i];
+    int sum = 0;
+    for (int i=1; i<=n; i++) {
+        sum += v[i];
+    }
+    if (abs(sum)%2) {
+        cout << -1 << '\n';
+        return;
+    }
+    if (sum == 0) {
+        cout << n << '\n';
+        for (int i=1; i<=n; i++) {
+            cout << i << ' ' << i << '\n';
+        }
+        return;
+    }
+    if (sum < 0) {
+        sum = -sum;
+        for (int i=1; i<=n; i++) v[i] = -v[i];
+    }
+    vector<pi> ans;
+    for (int i=2; i<=n; i++) {
+        if (sum > 0 && v[i] == 1) {
+            sum -= 2;
+            ans.push_back({i - 1, i});
+            i++;
+        }
+        else ans.push_back({i - 1, i - 1});
+    }
+    if (ans.empty() || ans.back().second != n) ans.push_back({n, n});
+    if (sum != 0) {
+        cout << -1 << '\n';
+        return;
+    }
+    cout << ans.size() << '\n';
+    for (auto [x, y] : ans) {
+        cout << x << ' ' << y << '\n';
+    }
 }
 
 signed main() {
