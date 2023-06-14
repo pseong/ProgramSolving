@@ -15,9 +15,8 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-const i128 mod = 998244353;
-i128 prime[303030];
-vector<i128> primes;
+const ll mod = 998244353;
+ll prime[303030];
 
 signed main() {
     ios::sync_with_stdio(false);
@@ -25,43 +24,28 @@ signed main() {
     
     for (int i=2; i<303030; i++) {
         if (!prime[i]) {
-            primes.push_back(i);
             for (int j=i+i; j<303030; j+=i) {
                 prime[j] = 1;
             }
         }
     }
 
-    ll N, M;
-    cin >> N >> M;
-    i128 n = N, m = M;
-    i128 ans = 0;
-    i128 mul = 1;
+    ll n, m;
+    cin >> n >> m;
+    ll ans = 0;
+    ll mul = 1;
     for (int i=0; i<n; i++) {
-        mul *= m;
-        mul %= mod;
-        ans += mul;
-        ans %= mod;
+        mul = mul * (m % mod) % mod;
+        ans = (ans + mul) % mod;
     }
-    i128 p = 1;
+    ll p = 1;
     int cur = 0;
-    vector<i128> dp(n + 1);
-    dp[1] = m;
-    ans -= m % mod;
-    if (ans < 0) ans += mod;
-    ans %= mod;
-    for (int i=2; i<=n; i++) {
-        if (primes[cur] <= i) {
-            p *= primes[cur];
-            cur++;
-        }
+    ll now = 1;
+    for (int i=1; i<=n; i++) {
+        if (!prime[i]) p *= i;
         if (p > m) break;
-        else {
-            dp[i] = dp[i-1] * (m / p % mod) % mod;
-        }
-        ans -= dp[i];
-        if (ans < 0) ans += mod;
-        ans %= mod;
+        else now = now * (m / p % mod) % mod;
+        ans = (ans + mod - now) % mod;
     }
-    cout << (ll)ans << '\n';
+    cout << ans << '\n';
 }
