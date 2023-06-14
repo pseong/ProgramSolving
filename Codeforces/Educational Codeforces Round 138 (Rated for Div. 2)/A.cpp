@@ -18,20 +18,12 @@ void yes() { cout << "Yes" << '\n'; }
 void solve(int CASE) {
     int n, m;
     cin >> n >> m;
-    vector<int> x(n + 1), y(n + 1);
-    vector<pi> v(m);
     for (int i=0; i<m; i++) {
-        cin >> v[i].first >> v[i].second;
-        x[v[i].first] = 1;
-        y[v[i].second] = 1;
+        int a, b;
+        cin >> a >> b;
     }
-    for (int i=1; i<=n; i++) {
-        if (!x[i] || !y[i]) {
-            yes();
-            return;
-        }
-    }
-    no();
+    if (n == m) no();
+    else yes();
 }
 
 signed main() {

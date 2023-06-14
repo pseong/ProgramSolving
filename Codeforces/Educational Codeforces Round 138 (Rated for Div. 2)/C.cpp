@@ -15,15 +15,14 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-bool game(vector<int> v, int k) {
-    multiset<int> ms(v.begin(), v.end());
+bool game(vector<int>& v, int k) {
+    int l = 0;
+    int r = (int)v.size() - 1;
     for (int i=1; i<=k; i++) {
-        if (ms.empty()) return false;
-        auto it = ms.upper_bound(k-i+1);
-        it--;
-        if (*it > k-i+1) return false;
-        ms.erase(it);
-        if (ms.size()) ms.erase(ms.begin());
+        while (r >= 0 && v[r] > k - i + 1) r--;
+        if (r < l) return false;
+        r--;
+        l++;
     }
     return true;
 }
@@ -33,6 +32,7 @@ void solve(int CASE) {
     cin >> n;
     vector<int> v(n);
     for (int i=0; i<n; i++) cin >> v[i];
+    sort(v.begin(), v.end());
     int lo = 1, hi = n;
     int ans = -1;
     while (lo <= hi) {
