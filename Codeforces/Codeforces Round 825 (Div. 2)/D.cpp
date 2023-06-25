@@ -19,55 +19,30 @@ void solve(int CASE) {
     int n;
     string s;
     cin >> n >> s;
-    int o = 0, z = 0;
+    int o = 0;
     for (int i=0; i<n*2; i++) {
         if (s[i] == '1') o++;
-        else z++;
     }
-    if (o%2 || z%2) {
+    if (o%2) {
         cout << -1 << '\n';
         return;
     }
-    int l = 0;
-    int r = n*2-1;
+    char c = '0';
     vector<int> ans;
-    char c = ' ';
-    while (true) {
-        while (l < r && s[l] == s[l+1]) l += 2;
-        while (l < r && s[r] == s[r-1]) r -= 2;
-        if (l > r) break;
-        if (s[l] == s[r]) {
-            if (c == ' ' || c == s[l]) {
-                ans.push_back(r);
-                ans.push_back(l+1);
-                c = s[l+1];
-                swap(s[r], s[l+1]);
-            }
-            else {
-                ans.push_back(r-1);
-                ans.push_back(l);
-                c = s[l];
-                swap(s[r-1], s[l]);
-            }
+    for (int i=0; i<n*2; i+=2) {
+        if (s[i] == s[i+1]) continue;
+        if (s[i] == c) {
+            ans.push_back(i+1);
+            c = s[i+1];
         }
         else {
-            if (c == ' ' || c != s[l]) {
-                ans.push_back(r);
-                ans.push_back(l);
-                c = s[l];
-                swap(s[r], s[l]);
-            }
-            else {
-                ans.push_back(r-1);
-                ans.push_back(l+1);
-                c = s[l+1];
-                swap(s[r-1], s[l+1]);
-            }
+            ans.push_back(i);
+            c = s[i];
         }
     }
-    sort(all(ans));
+    srt(ans);
     cout << ans.size() << ' ';
-    for (auto a : ans) cout << a + 1 << ' ';
+    for (int a : ans) cout << a + 1 << ' ';
     cout << '\n';
     for (int i=1; i<=n*2; i+=2) cout << i << ' ';
     cout << '\n';
