@@ -22,38 +22,21 @@ void solve(int CASE) {
     cin >> a >> b;
     map<pair<char, char>, int> mp;
     for (int i=0; i<n; i++) {
-        char c1 = a[i];
-        char c2 = b[n-1-i];
-        if (c1 > c2) swap(c1, c2);
-        mp[{c1, c2}]++;
+        mp[minmax(a[i], b[n-1-i])]++;
     }
-    if (n%2) {
-        int left = 1;
-        for (auto [p, cnt] : mp) {
-            if (p.first == p.second) {
-                if (cnt%2) {
-                    if (left) left--;
-                    else {
-                        no();
-                        return;
-                    }
-                }
-            }
-            else {
-                if (cnt%2) {
-                    no();
-                    return;
-                }
-            }
-        }
-    }
-    else {
-        for (auto [p, cnt] : mp) {
-            if (cnt%2) {
+    int x = n % 2;
+    for (auto [p, cnt] : mp) {
+        if (cnt%2) {
+            if (p.first != p.second) {
                 no();
                 return;
             }
+            else x--;
         }
+    }
+    if (x < 0) {
+        no();
+        return;
     }
     yes();
 }
