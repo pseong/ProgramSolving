@@ -15,39 +15,29 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-void solve(int CASE) {
-    int n;
-    cin >> n;
-    string a, b;
-    cin >> a >> b;
-    map<pair<char, char>, int> mp;
-    for (int i=0; i<n; i++) {
-        mp[minmax(a[i], b[n-1-i])]++;
-    }
-    int x = n % 2;
-    for (auto [p, cnt] : mp) {
-        if (cnt%2) {
-            if (p.first != p.second) {
-                no();
-                return;
-            }
-            else x--;
-        }
-    }
-    if (x < 0) {
-        no();
-        return;
-    }
-    yes();
-}
-
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-
-    int T = 1;
-    cin >> T;
-    for (int t=1; t<=T; t++) {
-        solve(t);
+    int n;
+    cin >> n;
+    vector<vector<int>> v(n, vector<int>(n));
+    for (int i=0; i<n; i++) {
+        cin >> v[i][i];
+    }
+    for (int i=0; i<n-1; i++) {
+        int prev = v[i][i];
+        for (int j=i+1; j<i+n; j++) {
+            v[i][j%n] = (prev+i+1) % n;
+            prev = v[i][j%n];
+        }
+    }
+    for (int j=0; j<n; j++) {
+        v[n-1][j] = v[n-1][n-1];
+    }
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<n; j++) {
+            cout << v[i][j] << ' ';
+        }
+        cout << '\n';
     }
 }

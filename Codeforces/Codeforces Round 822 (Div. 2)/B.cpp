@@ -18,27 +18,17 @@ void yes() { cout << "Yes" << '\n'; }
 void solve(int CASE) {
     int n;
     cin >> n;
-    string a, b;
-    cin >> a >> b;
-    map<pair<char, char>, int> mp;
-    for (int i=0; i<n; i++) {
-        mp[minmax(a[i], b[n-1-i])]++;
+    vector<vector<int>> v(n + 1, vector<int>(n + 1));
+    for (int i=1; i<=n; i++) {
+        v[i][1] = 1;
+        v[i][i] = 1;
     }
-    int x = n % 2;
-    for (auto [p, cnt] : mp) {
-        if (cnt%2) {
-            if (p.first != p.second) {
-                no();
-                return;
-            }
-            else x--;
+    for (int i=1; i<=n; i++) {
+        for (int j=1; j<=i; j++) {
+            cout << v[i][j] << ' ';
         }
+        cout << '\n';
     }
-    if (x < 0) {
-        no();
-        return;
-    }
-    yes();
 }
 
 signed main() {

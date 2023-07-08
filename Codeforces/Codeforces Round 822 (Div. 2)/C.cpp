@@ -17,28 +17,20 @@ void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
     int n;
-    cin >> n;
-    string a, b;
-    cin >> a >> b;
-    map<pair<char, char>, int> mp;
-    for (int i=0; i<n; i++) {
-        mp[minmax(a[i], b[n-1-i])]++;
-    }
-    int x = n % 2;
-    for (auto [p, cnt] : mp) {
-        if (cnt%2) {
-            if (p.first != p.second) {
-                no();
-                return;
+    string s;
+    cin >> n >> s;
+    string t(n, '1');
+    ll ans = 0;
+    for (int i=1; i<=n; i++) {
+        for (int j=i; j<=n; j+=i) {
+            if (s[j-1] == '1') break;
+            if (t[j-1] == '1') {
+                t[j-1] = '0';
+                ans += i;
             }
-            else x--;
         }
     }
-    if (x < 0) {
-        no();
-        return;
-    }
-    yes();
+    cout << ans << '\n';
 }
 
 signed main() {
