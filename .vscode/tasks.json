@@ -25,7 +25,7 @@
         {
             "type": "shell",
             "label": "execute",
-            "command": "${fileDirname}/${fileBasenameNoExtension}",
+            "command": "${fileDirname}/${fileBasenameNoExtension}.a",
             "group": "test",
             "presentation": {
                 "clear": true
