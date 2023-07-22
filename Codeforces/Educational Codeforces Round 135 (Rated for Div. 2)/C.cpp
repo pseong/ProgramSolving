@@ -16,43 +16,37 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-    vector<multiset<int>> A(10), B(10);
     int n;
     cin >> n;
-    vector<int> a(n), b(n);
+    pq<int> a, b;
     for (int i=0; i<n; i++) {
         int x;
         cin >> x;
-        A[to_string(x).size()].insert(x);
+        a.push(x);
     }
     for (int i=0; i<n; i++) {
         int x;
         cin >> x;
-        B[to_string(x).size()].insert(x);
+        b.push(x);
     }
-    ll ans = 0;
-    for (int k=9; k>=1; k--) {
-        vector<int> e;
-        for (auto x : A[k]) {
-            if (B[k].count(x)) B[k].erase(B[k].find(x)), e.push_back(x);
+    int ans = 0;
+    while (a.size()) {
+        int x = a.top();
+        int y = b.top();
+        if (x > y) {
+            a.pop();
+            a.push(to_string(x).size());
+            ans++;
         }
-        for (auto x : e) {
-            A[k].erase(A[k].find(x));
+        else if (y > x) {
+            b.pop();
+            b.push(to_string(y).size());
+            ans++;
         }
-        if (k == 1) break;
-        ans += A[k].size() + B[k].size();
-        for (auto x : A[k]) {
-            A[to_string(k).size()].insert(k);
+        else {
+            a.pop();
+            b.pop();
         }
-        for (auto x : B[k]) {
-            B[to_string(k).size()].insert(k);
-        }
-    }
-    for (auto x : A[1]) {
-        if (x != 1) ans++;
-    }
-    for (auto x : B[1]) {
-        if (x != 1) ans++;
     }
     cout << ans << '\n';
 }
