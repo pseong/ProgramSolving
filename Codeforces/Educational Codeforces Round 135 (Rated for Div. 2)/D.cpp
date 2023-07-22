@@ -15,36 +15,27 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-vector<vector<vector<int>>> dp;
-
+vector<vector<int>> dp;
 string s;
 vector<int> v;
-int DP(int x, int y, int c) {
-    if (dp[x][y][c] != -1) return dp[x][y][c];
+
+int cmp(int x, int y) {
+    if (x > y) return 0;
+    else if (x < y) return 2;
+    else return 1;
+}
+
+int DP(int x, int y) {
+    if (dp[x][y] != -1) return dp[x][y];
     if (x + 1 == y) {
         if (v[x] != v[y]) return 2;
-        else return c;
+        else return 1;
     }
-    int res1 = 2;
-    int res2 = 2;
-
-    if (v[x] > v[x+1]) res1 = min(res1, DP(x + 2, y, 0));
-    else if (v[x] < v[x+1]) res1 = min(res1, DP(x + 2, y, 2));
-    else res1 = min(res1, DP(x + 2, y, c));
-
-    if (v[x] > v[y]) res1 = min(res1, DP(x + 1, y - 1, 0));
-    else if (v[x] < v[y]) res1 = min(res1, DP(x + 1, y - 1, 2));
-    else res1 = min(res1, DP(x + 1, y - 1, c));
-
-    if (v[y] > v[y-1]) res2 = min(res2, DP(x, y - 2, 0));
-    else if (v[y] < v[y-1]) res2 = min(res2, DP(x, y - 2, 2));
-    else res2 = min(res2, DP(x, y - 2, c));
-
-    if (v[x] < v[y]) res2 = min(res2, DP(x + 1, y - 1, 0));
-    else if (v[x] > v[y]) res2 = min(res2, DP(x + 1, y - 1, 2));
-    else res2 = min(res2, DP(x + 1, y - 1, c));
-
-    return dp[x][y][c] = max(res1, res2);
+    int r1 = (DP(x + 2, y) != 1 ? DP(x + 2, y) : cmp(v[x], v[x + 1]));
+    int r2 = (DP(x + 1, y - 1) != 1 ? DP(x + 1, y - 1) : cmp(v[x], v[y]));
+    int r3 = (DP(x, y - 2) != 1 ? DP(x, y - 2) : cmp(v[y], v[y - 1]));
+    int r4 = (DP(x + 1, y - 1) != 1 ? DP(x + 1, y - 1) : cmp(v[y], v[x]));
+    return dp[x][y] = max(min(r1, r2), min(r3, r4));
 }
 
 void solve(int CASE) {
@@ -53,9 +44,9 @@ void solve(int CASE) {
     int n = s.size();
     v.resize(n + 1);
     for (int i=1; i<=n; i++) v[i] = s[i-1]-'a';
-    dp.assign(n + 1, vector<vector<int>>(n + 1, vector<int>(3, -1)));
-    if (DP(1, n, 1) == 0) cout << "Bob\n";
-    else if (DP(1, n, 1) == 2) cout << "Alice\n";
+    dp.assign(n + 1, vector<int>(n + 1, -1));
+    if (DP(1, n) == 0) cout << "Bob\n";
+    else if (DP(1, n) == 2) cout << "Alice\n";
     else cout << "Draw\n";
 }
 
