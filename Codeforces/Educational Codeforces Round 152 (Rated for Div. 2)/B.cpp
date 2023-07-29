@@ -15,25 +15,19 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-bool cmp(pi a, pi b) {
-    if (a.first != b.first) return a.first > b.first;
-    else return a.second < b.second;
-}
-
 void solve(int CASE) {
     int n, k;
     cin >> n >> k;
     vector<int> v(n);
-    for (int i=0; i<n; i++) cin >> v[i];
-    for (int i=0; i<n; i++) {
-        v[i] %= k;
-        if (v[i] == 0) v[i] += k;
-    }
     vector<pi> w(n);
     for (int i=0; i<n; i++) {
-        w[i] = { v[i], i };
+        int x;
+        cin >> x;
+        x %= k;
+        if (x == 0) x += k;
+        w[i] = {-x, i};
     }
-    sort(w.begin(), w.end(), cmp);
+    srt(w);
     for (int i=0; i<n; i++) {
         cout << w[i].second + 1 << ' ';
     }

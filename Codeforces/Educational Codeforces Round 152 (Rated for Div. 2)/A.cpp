@@ -18,9 +18,7 @@ void yes() { cout << "Yes" << '\n'; }
 void solve(int CASE) {
     int b, c, h;
     cin >> b >> c >> h;
-    c += h;
-    if (b > c) cout << c*2 + 1 << '\n';
-    else cout << (b-1)*2 + 1 << '\n';
+    cout << min(b - 1, c + h) * 2 + 1 << '\n';
 }
 
 signed main() {

@@ -21,45 +21,31 @@ signed main() {
 
     int n;
     cin >> n;
-    vector<int> v(n + 2);
+    vector<int> v(n + 2), chk(n + 2);
+    chk[0] = 1;
     for (int i=1; i<=n; i++) cin >> v[i];
-    for (int i=1; i<=n; i++) {
-        if (v[i] == 2) {
-            int l = i;
-            int r = i;
-            while (v[l] != 0) v[l] = 2, l--;
-            while (v[r] != 0) v[r] = 2, r++;
-            i = r - 1;
-        }
-    }
-    vector<int> w{ 0 };
-    for (int i=1; i<=n; i++) {
-        if (v[i] == 0) w.push_back(0);
-        else {
-            w.push_back(v[i]);
-            int j = i;
-            while (j <= n && v[i] == v[j]) j++;
-            i = j - 1;
-        }
-    }
-    n = w.size() - 1;
-    vector<int> d(n + 2);
-    d[0] = 1;
     int ans = 0;
     for (int i=1; i<=n; i++) {
-        if (w[i] == 1) {
+        if (v[i]) {
             ans++;
-            d[i] = 1;
-            if (!d[i-1]) d[i-1] = 1;
-            else d[i+1] = 1;
-        }
-        else if (w[i] == 2) {
-            ans++;
-            d[i] = 1;
-            d[i-1] = 1;
-            d[i+1] = 1;
+            int j = i;
+            bool k = 0;
+            while (j<=n && v[j]) {
+                chk[j] = 1;
+                if (v[j] == 2) k = 1;
+                j++;
+            }
+            if (k) {
+                chk[i-1] = 1;
+                chk[j] = 1;
+            }
+            else {
+                if (chk[i-1]) chk[j] = 1;
+                else chk[i-1] = 1;
+            }
+            i = j;
         }
     }
-    for (int i=1; i<=n; i++) if (!d[i]) ans++;
+    for (int i=1; i<=n; i++) if (!chk[i]) ans++;
     cout << ans << '\n';
 }

@@ -20,7 +20,7 @@ void solve(int CASE) {
     string s;
     cin >> n >> m >> s;
     s.insert(s.begin(), ' ');
-    vector<int> l(n + 2), r(n + 2);
+    vector<int> l(n + 2, n + 1), r(n + 2);
     for (int i=1; i<=n; i++) {
         r[i] = r[i-1];
         if (s[i] == '0') r[i] = i;
@@ -34,7 +34,7 @@ void solve(int CASE) {
     for (int i=0; i<m; i++) {
         int x, y;
         cin >> x >> y;
-        if (x == y || l[x] == 0 || r[y] == 0 || l[x] > r[y]) k = 1;
+        if (l[x] > r[y]) k = 1;
         else st.insert({l[x], r[y]});
     }
     cout << st.size() + k << '\n';
