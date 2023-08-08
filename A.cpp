@@ -25,7 +25,7 @@ signed main() {
 #if TEST
     freopen("input.txt", "r", stdin);
 #endif
-    int T = 1;
+    int T;
     cin >> T;
     for (int t=1; t<=T; t++) {
         solve(t);
