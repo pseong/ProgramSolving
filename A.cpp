@@ -22,7 +22,9 @@ void solve(int CASE) {
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-
+#if TEST
+    freopen("input.txt", "r", stdin);
+#endif
     int T = 1;
     cin >> T;
     for (int t=1; t<=T; t++) {
