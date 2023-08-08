@@ -23,7 +23,7 @@ signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 #if TEST
-    freopen("input.txt", "r", stdin);
+    freopen("/Users/seonguk/project/ProgramSolving/input.txt", "r", stdin);
 #endif
     int T;
     cin >> T;
