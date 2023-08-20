@@ -15,23 +15,15 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-bool test(string& s, string& a) {
-    int n = a.size();
-    for (int i=0; i<=n; i++) {
-        if (s.substr(i, n) == a) return false;
-    }
-    return true;
-}
-
 void solve(int CASE) {
     string s;
     cin >> s;
     int n = s.size();
     string ans1 = string(n, '(') + string(n, ')');
-    string ans2 = "";
+    string ans2;
     for (int i=0; i<n; i++) ans2 += "()";
-    if (test(ans1, s)) yes(), cout << ans1 << '\n';
-    else if (test(ans2, s)) yes(), cout << ans2 << '\n';
+    if (ans1.find(s) == string::npos) yes(), cout << ans1 << '\n';
+    else if (ans2.find(s) == string::npos) yes(), cout << ans2 << '\n';
     else no();
 }
 
