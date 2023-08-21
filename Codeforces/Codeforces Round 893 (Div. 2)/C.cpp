@@ -1,4 +1,4 @@
-    #include <bits/stdc++.h>
+#include <bits/stdc++.h>
 #define all(c) (c).begin(),(c).end()
 #define srt(c) sort(all(c))
 #define srtrev(c) sort(all(c)); reverse(all(c))
@@ -16,7 +16,18 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-
+    int n;
+    cin >> n;
+    
+    vector<int> a;
+    for (int i=1; i<=n; i+=2) {
+        for (int j = i; j <= n; j *= 2) {
+            a.push_back(j);
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        std::cout << a[i] << " \n"[i == n - 1];
+    }
 }
 
 signed main() {
