@@ -16,7 +16,24 @@ void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
 void solve(int CASE) {
-
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (int i=0; i<n; i++) cin >> v[i];
+    srt(v);
+    vector<int> b, c;
+    for (int i=0; i<n; i++) {
+        if (v[i] == v[0]) b.push_back(v[i]);
+        else c.push_back(v[i]);
+    }
+    if (c.empty()) cout << -1 << '\n';
+    else {
+        cout << b.size() << ' ' << c.size() << '\n';
+        for (int y : b) cout << y << ' ';
+        cout << '\n';
+        for (int y : c) cout << y << ' ';
+        cout << '\n';
+    }
 }
 
 signed main() {
