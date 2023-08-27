@@ -1,71 +1,64 @@
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <string>
-#include <cstring>
-#include <cmath>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <tuple>
-#include <map>
-#include <set>
-
+#include <bits/stdc++.h>
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define srtrev(c) sort(all(c)); reverse(all(c))
 using namespace std;
-using ll = long long;
-using ld = long double;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
+using ll=long long;
+using i128 = __int128_t;
+using pi=pair<int, int>;
+using pll=pair<ll, ll>;
+using ti=tuple<int, int, int>;
+using tll=tuple<ll, ll, ll>;
+template <class T> using pq = priority_queue<T>;
+template <class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
+void no() { cout << "No" << '\n'; }
+void yes() { cout << "Yes" << '\n'; }
 
-string in;
-string pattern;
+const int MX = 10000 * 500 + 10;
+int num = 1;
+int chk[MX], nxt[MX][26];
 
-struct Node{
-    map<char, Node*> child;
-    bool exist=false;
-    void insert(int idx) {
-        if(idx==in.size()) {
-            exist = true;
-            return;
+void insert(string& s) {
+    int cur = 1;
+    for (char c : s) {
+        int x = c - 'a';
+        if (nxt[cur][x] == 0) {
+            nxt[cur][x] = ++num;
         }
-        Node* node=child[in[idx]];
-        if(node==nullptr) {
-            node = new Node;
-            child[in[idx]] = node;
-        }
-        node->insert(idx+1);
+        cur = nxt[cur][x];
     }
-    bool find(int idx) {
-        if(idx==pattern.size()) {
-            if(exist) return 1;
-            else return 0;
-        }
-        Node* node=child[pattern[idx]];
-        if(node==nullptr) {
-            return 0;
-        } else {
-            return node->find(idx+1);
-        }
+    chk[cur] = 1;
+}
+
+bool find(string& s) {
+    int cur = 1;
+    for (int c : s) {
+        int x = c - 'a';
+        if (nxt[cur][x] == 0) return false;
+        cur = nxt[cur][x];
     }
-};
+    return chk[cur];
+}
 
-Node trie;
-
-int main() {
-    ios::sync_with_stdio(0); 
-    cin.tie(0); cout.tie(0);
-
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+#if TEST
+    freopen("/Users/seonguk/project/ProgramSolving/input.txt", "r", stdin);
+#endif
     int n, m;
     cin >> n >> m;
-    for(int i=0; i<n; i++) {
-        cin >> in;
-        trie.insert(0);
+    for (int i=0; i<n; i++) {
+        string s;
+        cin >> s;
+        insert(s);
     }
-
-    int ans=0;
-    for(int i=0; i<m; i++) {
-        cin >> pattern;
-        ans += trie.find(0);
+    int ans = 0;
+    for (int i=0; i<m; i++) {
+        string s;
+        cin >> s;
+        if (find(s)) ans++;
     }
-    cout << ans;
+    cout << ans << '\n';
 }
