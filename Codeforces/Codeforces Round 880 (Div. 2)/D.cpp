@@ -15,37 +15,36 @@ ll gcd(ll a, ll b) { for (; b; a %= b, swap(a, b)); return a; }
 void no() { cout << "No" << '\n'; }
 void yes() { cout << "Yes" << '\n'; }
 
-ll n, m, k;
-vector<ll> v;
-ll posl, posr;
-
-ll cal(ll x) {
-    while (posl < n && v[posl] < x) posl++;
-    while (posr < n && v[posr] <= x) posr++;
-    ll l = posr < k ? 0 : (x + v[posr - k]) / 2 + 1;
-    ll r = posl + k - 1 >= n ? m : (v[posl + k - 1] + x - 1) / 2;
-    return max(0LL, r - l + 1);
-}
-
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-
+#if TEST
+    freopen("/Users/seonguk/project/ProgramSolving/input.txt", "r", stdin);
+#endif
+    ll n, m, k;
     cin >> n >> m >> k;
-    v.assign(n, 0);
+    vector<ll> v(n);
     for (int i=0; i<n; i++) cin >> v[i];
     srt(v);
-    ll res = cal(0), best = 0;
+    ll posl = 0, posr = 0;
+    auto cal = [&](ll x) -> ll {
+        while (posl < n && v[posl] < x) posl++;
+        while (posr < n && v[posr] <= x) posr++;
+        ll l = posr < k ? 0 : (v[posr - k] + x) / 2 + 1;
+        ll r = posl + k - 1 >= n ? m : (v[posl + k - 1] + x + 1) / 2 - 1;
+        return max(0LL, r - l + 1);
+    };
+    vector<ll> ans { cal(0), 0 };
     for (int i=0; i<n; i++) {
-        ll posz = i == 0 ? max(0LL, v[i] - 2) : max(v[i] - 2, v[i-1] + 3);
-        ll kon = min(m, v[i] + 2);
-        for (ll s=posz; s<=kon; s++) {
-            ll ile = cal(s);
-            if (ile > res) {
-                res = ile;
-                best = s;
+        ll s = i == 0 ? max(0LL, v[i] - 2) : max(v[i - 1] + 3, v[i] - 2);
+        ll e = min(m, v[i] + 2);
+        for (ll x=s; x<=e; x++) {
+            ll res = cal(x);
+            if (res > ans[0]) {
+                ans[0] = res;
+                ans[1] = x;
             }
         }
     }
-    cout << res << ' ' << best << '\n';
+    cout << ans[0] << ' ' << ans[1] << '\n';
 }
