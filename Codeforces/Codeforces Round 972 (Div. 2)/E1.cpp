@@ -37,20 +37,10 @@ void solve(int CASE) {
             }
         }
         for (int i=n; i>=1; i--) {
-            bool b = false;
             for (int j=m; j>=1; j--) {
-                if (now[i][j] == 1) b = true;
-                if (b) {
-                    now[i][j] = 1;
-                }
-            }
-        }
-        for (int j=m; j>=1; j--) {
-            bool b = false;
-            for (int i=n; i>=1; i--) {
-                if (now[i][j] == 1) b = true;
-                if (b) {
-                    now[i][j] = 1;
+                if (now[i][j]) {
+                    now[i - 1][j] = 1;
+                    now[i][j - 1] = 1;
                 }
             }
         }
